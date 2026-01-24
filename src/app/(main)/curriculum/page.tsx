@@ -1,8 +1,20 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Icons } from "@/components/icons";
 import { CURRICULUM_DATA, getAllChapters } from "@/lib/curriculum-data";
+import { createClient } from "@/lib/supabase/server";
+
+// Part 이미지 매핑
+const PART_IMAGES: Record<number, string> = {
+  1: "/images/p1.png",
+  2: "/images/p2.png",
+  3: "/images/p3.png",
+  4: "/images/p4.png",
+  5: "/images/p5.png",
+  6: "/images/p6.png",
+};
 
 // "Chapter XX: " 접두사 제거 함수
 function removeChapterPrefix(title: string): string {
@@ -10,13 +22,54 @@ function removeChapterPrefix(title: string): string {
 }
 
 export default async function CurriculumPage() {
-  // Mock completed chapters - will be replaced with real data
-  const completedChapterIds = ["01", "02", "03"];
+  const supabase = await createClient();
+
+  // Fetch user and their progress
+  const { data: { user } } = await supabase.auth.getUser();
+
+  let completedChapterIds: string[] = [];
+  let inProgressChapterId: string | null = null;
+
+  if (user) {
+    // Fetch user's progress from Supabase
+    const { data: progressData } = await supabase
+      .from("progress")
+      .select("chapter_id, status")
+      .eq("user_id", user.id);
+
+    if (progressData) {
+      completedChapterIds = progressData
+        .filter((p) => p.status === "completed")
+        .map((p) => p.chapter_id);
+
+      const inProgressRecord = progressData.find((p) => p.status === "in_progress");
+      if (inProgressRecord) {
+        inProgressChapterId = inProgressRecord.chapter_id;
+      }
+    }
+  }
 
   const getChapterStatus = (chapterId: string) => {
     if (completedChapterIds.includes(chapterId)) return "completed";
-    const chapterIndex = getAllChapters().findIndex((c) => c.id === chapterId);
-    if (chapterIndex === completedChapterIds.length) return "in_progress";
+
+    // If there's an explicit in_progress chapter, use it
+    if (inProgressChapterId === chapterId) return "in_progress";
+
+    // Otherwise, the next chapter after completed ones is in_progress
+    const allChapters = getAllChapters();
+    const chapterIndex = allChapters.findIndex((c) => c.id === chapterId);
+
+    // First chapter is always accessible if no progress exists
+    if (chapterIndex === 0 && completedChapterIds.length === 0) return "in_progress";
+
+    // Check if the previous chapter is completed
+    if (chapterIndex > 0) {
+      const prevChapterId = allChapters[chapterIndex - 1].id;
+      if (completedChapterIds.includes(prevChapterId) && !completedChapterIds.includes(chapterId)) {
+        return "in_progress";
+      }
+    }
+
     return "not_started";
   };
 
@@ -24,93 +77,55 @@ export default async function CurriculumPage() {
   const progressPercent = Math.round((completedChapterIds.length / totalChapters) * 100);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-stone-100 to-stone-200 relative overflow-hidden">
-      {/* Warm ambient glow - softer ochre tones */}
-      <div className="fixed top-20 left-1/4 w-[500px] h-[500px] bg-yellow-800/5 rounded-full blur-[150px] pointer-events-none" />
-      <div className="fixed bottom-20 right-1/4 w-[400px] h-[400px] bg-stone-600/5 rounded-full blur-[120px] pointer-events-none" />
+    <div className="min-h-screen bg-[#0d1117] relative overflow-hidden">
+      {/* Subtle ambient glow */}
+      <div className="fixed top-20 left-1/4 w-[500px] h-[500px] bg-[#79c0ff]/5 rounded-full blur-[150px] pointer-events-none" />
+      <div className="fixed bottom-20 right-1/4 w-[400px] h-[400px] bg-[#f0b429]/5 rounded-full blur-[120px] pointer-events-none" />
 
-      {/* Wood floor texture overlay - subtle horizontal lines */}
-      <div className="fixed inset-0 opacity-[0.015] pointer-events-none" style={{
-        backgroundImage: `repeating-linear-gradient(0deg, transparent, transparent 60px, rgba(139,90,43,0.2) 60px, rgba(139,90,43,0.2) 61px)`
-      }} />
-
-      {/* Decorative Kanji - softer brown tones */}
-      <div className="fixed top-1/4 left-4 text-[12rem] font-serif text-stone-400/[0.08] select-none pointer-events-none hidden lg:block">
+      {/* Decorative Kanji */}
+      <div className="fixed top-1/4 left-4 text-[12rem] font-serif text-[#f0b429]/[0.03] select-none pointer-events-none hidden lg:block">
         修
       </div>
-      <div className="fixed bottom-1/4 right-4 text-[12rem] font-serif text-stone-400/[0.08] select-none pointer-events-none hidden lg:block">
+      <div className="fixed bottom-1/4 right-4 text-[12rem] font-serif text-[#f0b429]/[0.03] select-none pointer-events-none hidden lg:block">
         練
       </div>
 
       {/* Header */}
-      <div className="relative border-b border-stone-300/60">
-        <div className="absolute inset-0 bg-gradient-to-b from-yellow-900/5 to-transparent" />
-
-        <div className="container relative py-8 sm:py-10">
-          <div className="flex items-center justify-between gap-6 mb-5">
-            <div className="flex items-center gap-4">
-              <div className="w-1.5 h-12 bg-gradient-to-b from-yellow-700 to-yellow-900 rounded-full" />
-              <div>
-                <h1 className="text-2xl sm:text-3xl font-bold text-stone-800">
-                  수련 과정
-                </h1>
-                <p className="text-sm text-stone-500 mt-1">바이브코딩의 비기를 전수받으세요</p>
-              </div>
-            </div>
-
-            {/* Quick Stats */}
-            <div className="hidden sm:flex items-center gap-4">
-              <div className="flex items-center gap-2 px-4 py-3 bg-white/80 border border-stone-300 rounded-sm shadow-sm">
-                <Icons.bookOpen className="h-4 w-4 text-stone-600" />
-                <span className="text-sm font-bold text-stone-700">{totalChapters}</span>
-                <span className="text-xs text-stone-500">Chapters</span>
-              </div>
-              <div className="flex items-center gap-2 px-4 py-3 bg-white/80 border border-stone-300 rounded-sm shadow-sm">
-                <Icons.check className="h-4 w-4 text-stone-600" />
-                <span className="text-sm font-bold text-stone-700">{completedChapterIds.length}</span>
-                <span className="text-xs text-stone-500">완료</span>
-              </div>
-            </div>
+      <div className="container pt-5">
+        <div className="flex items-center gap-3 mb-3 pb-3 shadow-[0_1px_0_rgba(255,255,255,0.03)]">
+          <div className="p-2.5 bg-[#daa520]/10 rounded-lg shadow-[0_2px_6px_rgba(0,0,0,0.25)]">
+            <Icons.brain className="h-5 w-5 text-[#daa520]" />
           </div>
-
-          {/* Progress Bar */}
-          <div className="flex items-center gap-5 ml-5">
-            <p className="text-stone-600 text-sm">
-              <span className="text-yellow-800 font-bold">{completedChapterIds.length}</span>
-              <span className="text-stone-500">/{totalChapters}장 완료</span>
-              <span className="text-stone-700 font-medium ml-2">({progressPercent}%)</span>
-            </p>
-            <div className="bg-stone-300/50 h-3 flex-1 max-w-[300px] overflow-hidden border border-stone-400/30 rounded-sm relative">
-              <div
-                className="bg-gradient-to-r from-yellow-600 to-yellow-700 h-full transition-all"
-                style={{ width: `${progressPercent}%` }}
-              />
-            </div>
+          <div>
+            <h1 className="text-xl font-semibold text-[#c9d1d9]">
+              수련 과정
+            </h1>
+            <p className="text-sm text-[#8b949e] font-mono">바이브코딩의 비기를 전수받으세요</p>
           </div>
         </div>
       </div>
 
-      <div className="container relative py-8 sm:py-10">
-        <Tabs defaultValue="all" className="space-y-8">
-          <TabsList className="bg-white/80 backdrop-blur-sm border border-stone-300 rounded-sm p-2 h-auto flex-wrap gap-2 shadow-sm">
+      <div className="container relative py-3 sm:py-4">
+        <Tabs defaultValue="all" className="space-y-4">
+          <TabsList className="bg-[#1c2128] backdrop-blur-sm rounded-lg p-2 h-auto flex-wrap gap-2 shadow-[0_4px_12px_rgba(0,0,0,0.35)]">
             <TabsTrigger
               value="all"
-              className="rounded-sm h-9 px-4 text-sm data-[state=active]:bg-stone-800 data-[state=active]:text-white text-stone-600 hover:text-stone-800 transition-all border-0"
+              className="rounded-md h-9 px-4 text-sm data-[state=active]:bg-[#f0b429] data-[state=active]:text-[#0d1117] text-[#8b949e] hover:text-[#c9d1d9] transition-all border-0"
             >
-              전체 단계
+              전체 보기
             </TabsTrigger>
             {CURRICULUM_DATA.map((part) => (
               <TabsTrigger
                 key={part.id}
                 value={String(part.id)}
-                className="rounded-sm h-9 px-4 text-sm data-[state=active]:bg-stone-800 data-[state=active]:text-white text-stone-600 hover:text-stone-800 transition-all border-0"
+                className="rounded-md h-9 px-4 text-sm data-[state=active]:bg-[#f0b429] data-[state=active]:text-[#0d1117] text-[#8b949e] hover:text-[#c9d1d9] transition-all border-0"
               >
-                {part.id}단계
+                Part {part.id}
               </TabsTrigger>
             ))}
           </TabsList>
 
-          <TabsContent value="all" className="space-y-10 mt-8">
+          <TabsContent value="all" className="space-y-8 mt-4">
             {CURRICULUM_DATA.map((part, partIndex) => {
               const completedInPart = part.chapters.filter(c => completedChapterIds.includes(c.id)).length;
               const partProgress = Math.round((completedInPart / part.chapters.length) * 100);
@@ -118,53 +133,62 @@ export default async function CurriculumPage() {
               const isPartComplete = partProgress === 100;
 
               return (
-                <div key={part.id} className="space-y-5">
-                  {/* Part Header */}
-                  <div className="relative bg-white/90 backdrop-blur-sm border border-stone-300 p-6 sm:p-7 rounded-sm shadow-sm hover:shadow-md transition-all">
-                    {/* Part Number Badge */}
-                    <div className={`absolute -top-3 -left-2 px-4 py-1.5 text-sm font-bold uppercase tracking-wider rounded-sm ${
-                      isPartActive
-                        ? 'bg-stone-800 text-white shadow-md'
-                        : isPartComplete
-                          ? 'bg-stone-600 text-white shadow-sm'
-                          : 'bg-stone-400 text-white'
-                    }`}>
-                      Part {part.id}
-                    </div>
+                <div key={part.id} className="space-y-4">
+                  {/* Part Header with Image */}
+                  <div className="relative rounded-lg overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.4)] group hover:shadow-[0_8px_24px_rgba(0,0,0,0.5)] transition-all duration-500">
+                    {/* Background Image */}
+                    <div className="relative aspect-[5/1] overflow-hidden">
+                      <Image
+                        src={PART_IMAGES[part.id]}
+                        alt={part.subtitle.ko}
+                        fill
+                        className="object-cover object-[center_60%] transition-transform duration-700 group-hover:scale-105 saturate-[0.8]"
+                      />
+                      {/* Gradient Overlays - lighter for better image visibility */}
+                      <div className="absolute inset-0 bg-gradient-to-r from-[#0d1117]/85 via-[#0d1117]/40 to-transparent" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#0d1117]/70 via-transparent to-transparent" />
 
-                    <div className="mt-3">
-                      <div className="flex items-center justify-between gap-4 mb-3">
-                        <h2 className={`text-xl sm:text-2xl font-bold ${
-                          isPartActive
-                            ? 'text-stone-800'
-                            : isPartComplete
-                              ? 'text-stone-700'
-                              : 'text-stone-800'
-                        }`}>
-                          {part.subtitle.ko}
-                        </h2>
-                        {isPartComplete && (
-                          <div className="flex items-center gap-1.5 px-3 py-1 bg-stone-100 border border-stone-300 rounded-sm">
-                            <Icons.check className="h-4 w-4 text-stone-600" />
-                            <span className="text-xs font-medium text-stone-600 uppercase tracking-wider">완료</span>
-                          </div>
-                        )}
+                      {/* Part Number Badge */}
+                      <div className={`absolute top-3 left-3 px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-md backdrop-blur-sm font-mono ${
+                        isPartActive
+                          ? 'bg-[#f0b429] text-[#0d1117]'
+                          : isPartComplete
+                            ? 'bg-[#56d364] text-[#0d1117]'
+                            : 'bg-[#21262d]/90 text-[#8b949e] shadow-[0_2px_6px_rgba(0,0,0,0.3)]'
+                      }`}>
+                        Part {part.id}
                       </div>
 
-                      <div className="flex items-center justify-between gap-4">
-                        <p className="text-sm text-stone-500">{part.description.ko}</p>
-                        <div className="flex items-center gap-4 shrink-0">
-                          <span className="text-sm text-stone-500">{part.chapters.length} Chapters</span>
-                          <span className="text-stone-400">·</span>
-                          <div className="flex items-center gap-3">
-                            <div className="w-28 h-2.5 bg-stone-200 overflow-hidden border border-stone-300/50 rounded-sm">
+                      {/* Complete Badge */}
+                      {isPartComplete && (
+                        <div className="absolute top-3 right-3 flex items-center gap-1 px-2 py-1 bg-[#1c2128]/80 backdrop-blur-sm rounded-md shadow-[0_2px_8px_rgba(86,211,100,0.2)]">
+                          <Icons.check className="h-3 w-3 text-[#56d364]" />
+                          <span className="text-[10px] font-medium text-[#56d364] uppercase tracking-wider font-mono">완료</span>
+                        </div>
+                      )}
+
+                      {/* Content Overlay */}
+                      <div className="absolute bottom-0 left-0 right-0 p-5">
+                        <h2 className="text-2xl sm:text-2xl font-bold text-[#c9d1d9] mb-1.5">
+                          {part.subtitle.ko}
+                        </h2>
+                        <p className="text-sm text-[#8b949e] mb-3 max-w-xl">
+                          {part.description.ko}
+                        </p>
+
+                        {/* Progress */}
+                        <div className="flex items-center gap-4">
+                          <span className="text-sm text-[#8b949e] font-mono">{part.chapters.length} Chapters</span>
+                          <span className="text-[#30363d]">·</span>
+                          <div className="flex items-center gap-2">
+                            <div className="w-28 h-2 bg-[#21262d]/60 overflow-hidden rounded-full backdrop-blur-sm shadow-[inset_0_1px_3px_rgba(0,0,0,0.3)]">
                               <div
-                                className={`h-full transition-all ${isPartComplete ? 'bg-stone-500' : 'bg-yellow-700'}`}
+                                className={`h-full transition-all duration-500 rounded-full ${isPartComplete ? 'bg-[#56d364]' : 'bg-gradient-to-r from-[#f0b429] to-[#56d364]'}`}
                                 style={{ width: `${partProgress}%` }}
                               />
                             </div>
                             <span className={`text-sm font-mono font-bold ${
-                              isPartComplete ? 'text-stone-600' : isPartActive ? 'text-yellow-800' : 'text-stone-400'
+                              isPartComplete ? 'text-[#56d364]' : isPartActive ? 'text-[#f0b429]' : 'text-[#484f58]'
                             }`}>
                               {completedInPart}/{part.chapters.length}
                             </span>
@@ -175,7 +199,7 @@ export default async function CurriculumPage() {
                   </div>
 
                   {/* Chapters */}
-                  <div className="grid gap-4 pl-5">
+                  <div className="grid gap-3 pl-10">
                     {part.chapters.map((chapter, chapterIndex) => {
                       const status = getChapterStatus(chapter.id);
                       const isCompleted = status === "completed";
@@ -183,67 +207,67 @@ export default async function CurriculumPage() {
                       const isNotStarted = status === "not_started";
 
                       const ChapterContent = (
-                        <div className={`relative transition-all duration-300 overflow-hidden flex group rounded-sm ${
+                        <div className={`relative transition-all duration-300 overflow-hidden flex group rounded-lg ${
                           isActive
-                            ? 'bg-white/95 border-2 border-yellow-600/60 shadow-md'
+                            ? 'bg-[#1c2128] shadow-[0_4px_16px_rgba(240,180,41,0.2),0_4px_16px_rgba(0,0,0,0.4)]'
                             : isCompleted
-                              ? 'bg-white/90 border border-stone-400/50 shadow-sm'
-                              : 'bg-stone-100/50 border border-stone-300/50 opacity-50'
-                        } ${!isNotStarted ? 'hover:border-stone-500 hover:shadow-lg hover:-translate-y-0.5' : 'cursor-not-allowed'}`}>
+                              ? 'bg-[#1c2128]/80 shadow-[0_4px_12px_rgba(86,211,100,0.15),0_4px_12px_rgba(0,0,0,0.35)]'
+                              : 'bg-[#1c2128]/50 shadow-[0_4px_12px_rgba(0,0,0,0.25)] opacity-50'
+                        } ${!isNotStarted ? 'hover:shadow-[0_8px_24px_rgba(240,180,41,0.15)] hover:-translate-y-0.5' : 'cursor-not-allowed'}`}>
 
                           {/* Chapter Number Area */}
-                          <div className={`shrink-0 w-20 flex flex-col items-center justify-center text-center py-5 rounded-l-sm ${
+                          <div className={`shrink-0 w-18 flex flex-col items-center justify-center text-center py-4 ${
                             isActive
-                              ? 'bg-stone-800'
+                              ? 'bg-[#f0b429]'
                               : isCompleted
-                                ? 'bg-stone-600'
-                                : 'bg-stone-300'
+                                ? 'bg-[#56d364]'
+                                : 'bg-[#21262d]'
                           }`}>
                             {isNotStarted ? (
-                              <Icons.lock className="h-6 w-6 text-stone-500" />
+                              <Icons.lock className="h-5 w-5 text-[#484f58]" />
                             ) : (
                               <>
-                                <span className={`text-[10px] font-medium uppercase tracking-wider ${isActive || isCompleted ? 'text-white/80' : 'text-stone-500'}`}>Chapter</span>
-                                <span className={`text-2xl font-bold ${isActive ? 'text-white' : isCompleted ? 'text-white' : 'text-stone-500'}`}>{chapter.id}</span>
+                                <span className={`text-[10px] font-medium uppercase tracking-wider font-mono ${isActive || isCompleted ? 'text-[#0d1117]/70' : 'text-[#484f58]'}`}>Ch</span>
+                                <span className={`text-2xl font-bold font-mono ${isActive || isCompleted ? 'text-[#0d1117]' : 'text-[#484f58]'}`}>{chapter.id}</span>
                               </>
                             )}
                           </div>
 
-                          <div className="flex-1 flex items-center gap-4 p-5">
+                          <div className="flex-1 flex items-center gap-4 p-4">
                             <div className="flex-1 min-w-0">
-                              <div className="flex items-center gap-3 mb-3 flex-wrap">
-                                <h3 className={`font-bold text-lg transition-colors ${
+                              <div className="flex items-center gap-2.5 mb-2 flex-wrap">
+                                <h3 className={`font-bold text-base transition-colors ${
                                   isActive
-                                    ? 'text-stone-800 group-hover:text-stone-900'
+                                    ? 'text-[#c9d1d9] group-hover:text-[#f0b429]'
                                     : isCompleted
-                                      ? 'text-stone-700 group-hover:text-stone-800'
-                                      : 'text-stone-500'
+                                      ? 'text-[#8b949e] group-hover:text-[#c9d1d9]'
+                                      : 'text-[#484f58]'
                                 }`}>
                                   {removeChapterPrefix(chapter.title.ko)}
                                 </h3>
-                                <span className={`text-base font-mono ${isActive || isCompleted ? 'text-stone-500' : 'text-stone-400'}`}>+{chapter.xpReward} XP</span>
+                                <span className={`text-sm font-mono ${isActive || isCompleted ? 'text-[#8b949e]' : 'text-[#30363d]'}`}>+{chapter.xpReward} XP</span>
                                 {isCompleted && (
-                                  <div className="flex items-center gap-1.5 px-2 py-0.5 bg-stone-100 border border-stone-300 rounded-sm">
-                                    <Icons.check className="h-3 w-3 text-stone-600" />
-                                    <span className="text-xs font-medium text-stone-600 uppercase tracking-wider">완료</span>
+                                  <div className="flex items-center gap-1 px-2 py-0.5 bg-[#56d364]/10 rounded-md shadow-[0_1px_3px_rgba(86,211,100,0.2)]">
+                                    <Icons.check className="h-3 w-3 text-[#56d364]" />
+                                    <span className="text-xs font-medium text-[#56d364] uppercase tracking-wider font-mono">완료</span>
                                   </div>
                                 )}
                                 {isActive && (
-                                  <Badge className="bg-stone-800 text-white border-0 text-xs h-6 font-medium animate-pulse rounded-sm">
+                                  <Badge className="bg-[#f0b429] text-[#0d1117] border-0 text-xs h-5 font-medium animate-pulse rounded-md font-mono shadow-[0_2px_6px_rgba(240,180,41,0.3)]">
                                     수련 중
                                   </Badge>
                                 )}
                                 {isNotStarted && (
-                                  <span className="text-xs text-stone-500">이전 챕터를 먼저 완료하세요</span>
+                                  <span className="text-xs text-[#484f58]">이전 챕터를 먼저 완료하세요</span>
                                 )}
                               </div>
                               {chapter.bullets && (
-                                <ul className="space-y-1.5">
+                                <ul className="space-y-1">
                                   {chapter.bullets.map((bullet, idx) => (
                                     <li key={idx} className={`text-sm flex items-start gap-2 ${
-                                      isActive || isCompleted ? 'text-stone-600' : 'text-stone-400'
+                                      isActive || isCompleted ? 'text-[#8b949e]' : 'text-[#484f58]'
                                     }`}>
-                                      <span className={`mt-0.5 ${isActive ? 'text-yellow-700' : isCompleted ? 'text-stone-500' : 'text-stone-400'}`}>•</span>
+                                      <span className={`mt-0.5 ${isActive ? 'text-[#f0b429]' : isCompleted ? 'text-[#56d364]' : 'text-[#30363d]'}`}>•</span>
                                       <span>{bullet}</span>
                                     </li>
                                   ))}
@@ -252,14 +276,14 @@ export default async function CurriculumPage() {
                             </div>
                             <div className="shrink-0 flex items-center justify-center">
                               {isNotStarted ? (
-                                <Icons.lock className="h-6 w-6 text-stone-400" />
+                                <Icons.lock className="h-5 w-5 text-[#30363d]" />
                               ) : (
-                                <Icons.chevronRight className={`h-8 w-8 transition-all ${
+                                <Icons.chevronRight className={`h-7 w-7 transition-all ${
                                   isActive
-                                    ? 'text-stone-600 group-hover:text-stone-800 group-hover:translate-x-1'
+                                    ? 'text-[#f0b429] group-hover:translate-x-1'
                                     : isCompleted
-                                      ? 'text-stone-400 group-hover:text-stone-600 group-hover:translate-x-1'
-                                      : 'text-stone-300'
+                                      ? 'text-[#56d364] group-hover:translate-x-1'
+                                      : 'text-[#30363d]'
                                 }`} />
                               )}
                             </div>
@@ -298,54 +322,63 @@ export default async function CurriculumPage() {
             const isPartComplete = partProgress === 100;
 
             return (
-              <TabsContent key={part.id} value={String(part.id)} className="mt-8">
-                <div className="space-y-8">
-                  {/* Part Header */}
-                  <div className="relative bg-white/90 backdrop-blur-sm border border-stone-300 p-6 sm:p-7 rounded-sm shadow-sm">
-                    {/* Part Number Badge */}
-                    <div className={`absolute -top-3 -left-2 px-4 py-1.5 text-sm font-bold uppercase tracking-wider rounded-sm ${
-                      isPartActive
-                        ? 'bg-stone-800 text-white shadow-md'
-                        : isPartComplete
-                          ? 'bg-stone-600 text-white shadow-sm'
-                          : 'bg-stone-400 text-white'
-                    }`}>
-                      Part {part.id}
-                    </div>
+              <TabsContent key={part.id} value={String(part.id)} className="mt-4">
+                <div className="space-y-4">
+                  {/* Part Header with Image */}
+                  <div className="relative rounded-lg overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.4)] group hover:shadow-[0_8px_24px_rgba(0,0,0,0.5)] transition-all duration-500">
+                    {/* Background Image */}
+                    <div className="relative aspect-[5/1] overflow-hidden">
+                      <Image
+                        src={PART_IMAGES[part.id]}
+                        alt={part.subtitle.ko}
+                        fill
+                        className="object-cover object-[center_60%] transition-transform duration-700 group-hover:scale-105 saturate-[0.8]"
+                      />
+                      {/* Gradient Overlays - lighter for better image visibility */}
+                      <div className="absolute inset-0 bg-gradient-to-r from-[#0d1117]/85 via-[#0d1117]/40 to-transparent" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#0d1117]/70 via-transparent to-transparent" />
 
-                    <div className="mt-3">
-                      <div className="flex items-center justify-between gap-4 mb-3">
-                        <h2 className={`text-xl sm:text-2xl font-bold ${
-                          isPartActive
-                            ? 'text-stone-800'
-                            : isPartComplete
-                              ? 'text-stone-700'
-                              : 'text-stone-800'
-                        }`}>
-                          {part.subtitle.ko}
-                        </h2>
-                        {isPartComplete && (
-                          <div className="flex items-center gap-1.5 px-3 py-1 bg-stone-100 border border-stone-300 rounded-sm">
-                            <Icons.check className="h-4 w-4 text-stone-600" />
-                            <span className="text-xs font-medium text-stone-600 uppercase tracking-wider">완료</span>
-                          </div>
-                        )}
+                      {/* Part Number Badge */}
+                      <div className={`absolute top-3 left-3 px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-md backdrop-blur-sm font-mono ${
+                        isPartActive
+                          ? 'bg-[#f0b429] text-[#0d1117]'
+                          : isPartComplete
+                            ? 'bg-[#56d364] text-[#0d1117]'
+                            : 'bg-[#21262d]/90 text-[#8b949e] shadow-[0_2px_6px_rgba(0,0,0,0.3)]'
+                      }`}>
+                        Part {part.id}
                       </div>
 
-                      <div className="flex items-center justify-between gap-4">
-                        <p className="text-sm text-stone-500">{part.description.ko}</p>
-                        <div className="flex items-center gap-4 shrink-0">
-                          <span className="text-sm text-stone-500">{part.chapters.length} Chapters</span>
-                          <span className="text-stone-400">·</span>
-                          <div className="flex items-center gap-3">
-                            <div className="w-28 h-2.5 bg-stone-200 overflow-hidden border border-stone-300/50 rounded-sm">
+                      {/* Complete Badge */}
+                      {isPartComplete && (
+                        <div className="absolute top-3 right-3 flex items-center gap-1 px-2 py-1 bg-[#1c2128]/80 backdrop-blur-sm rounded-md shadow-[0_2px_8px_rgba(86,211,100,0.2)]">
+                          <Icons.check className="h-3 w-3 text-[#56d364]" />
+                          <span className="text-[10px] font-medium text-[#56d364] uppercase tracking-wider font-mono">완료</span>
+                        </div>
+                      )}
+
+                      {/* Content Overlay */}
+                      <div className="absolute bottom-0 left-0 right-0 p-5">
+                        <h2 className="text-2xl sm:text-2xl font-bold text-[#c9d1d9] mb-1.5">
+                          {part.subtitle.ko}
+                        </h2>
+                        <p className="text-sm text-[#8b949e] mb-3 max-w-xl">
+                          {part.description.ko}
+                        </p>
+
+                        {/* Progress */}
+                        <div className="flex items-center gap-4">
+                          <span className="text-sm text-[#8b949e] font-mono">{part.chapters.length} Chapters</span>
+                          <span className="text-[#30363d]">·</span>
+                          <div className="flex items-center gap-2">
+                            <div className="w-28 h-2 bg-[#21262d]/60 overflow-hidden rounded-full backdrop-blur-sm shadow-[inset_0_1px_3px_rgba(0,0,0,0.3)]">
                               <div
-                                className={`h-full transition-all ${isPartComplete ? 'bg-stone-500' : 'bg-yellow-700'}`}
+                                className={`h-full transition-all duration-500 rounded-full ${isPartComplete ? 'bg-[#56d364]' : 'bg-gradient-to-r from-[#f0b429] to-[#56d364]'}`}
                                 style={{ width: `${partProgress}%` }}
                               />
                             </div>
                             <span className={`text-sm font-mono font-bold ${
-                              isPartComplete ? 'text-stone-600' : isPartActive ? 'text-yellow-800' : 'text-stone-400'
+                              isPartComplete ? 'text-[#56d364]' : isPartActive ? 'text-[#f0b429]' : 'text-[#484f58]'
                             }`}>
                               {completedInPart}/{part.chapters.length}
                             </span>
@@ -356,7 +389,7 @@ export default async function CurriculumPage() {
                   </div>
 
                   {/* Chapters Grid */}
-                  <div className="grid gap-4">
+                  <div className="grid gap-3 pl-10">
                     {part.chapters.map((chapter) => {
                       const status = getChapterStatus(chapter.id);
                       const isCompleted = status === "completed";
@@ -364,67 +397,67 @@ export default async function CurriculumPage() {
                       const isNotStarted = status === "not_started";
 
                       const ChapterContent = (
-                        <div className={`relative transition-all duration-300 overflow-hidden flex group rounded-sm ${
+                        <div className={`relative transition-all duration-300 overflow-hidden flex group rounded-lg ${
                           isActive
-                            ? 'bg-white/95 border-2 border-yellow-600/60 shadow-md'
+                            ? 'bg-[#1c2128] shadow-[0_4px_16px_rgba(240,180,41,0.2),0_4px_16px_rgba(0,0,0,0.4)]'
                             : isCompleted
-                              ? 'bg-white/90 border border-stone-400/50 shadow-sm'
-                              : 'bg-stone-100/50 border border-stone-300/50 opacity-50'
-                        } ${!isNotStarted ? 'hover:border-stone-500 hover:shadow-lg hover:-translate-y-0.5' : 'cursor-not-allowed'}`}>
+                              ? 'bg-[#1c2128]/80 shadow-[0_4px_12px_rgba(86,211,100,0.15),0_4px_12px_rgba(0,0,0,0.35)]'
+                              : 'bg-[#1c2128]/50 shadow-[0_4px_12px_rgba(0,0,0,0.25)] opacity-50'
+                        } ${!isNotStarted ? 'hover:shadow-[0_8px_24px_rgba(240,180,41,0.15)] hover:-translate-y-0.5' : 'cursor-not-allowed'}`}>
 
                           {/* Chapter Number Area */}
-                          <div className={`shrink-0 w-20 flex flex-col items-center justify-center text-center py-5 rounded-l-sm ${
+                          <div className={`shrink-0 w-18 flex flex-col items-center justify-center text-center py-4 ${
                             isActive
-                              ? 'bg-stone-800'
+                              ? 'bg-[#f0b429]'
                               : isCompleted
-                                ? 'bg-stone-600'
-                                : 'bg-stone-300'
+                                ? 'bg-[#56d364]'
+                                : 'bg-[#21262d]'
                           }`}>
                             {isNotStarted ? (
-                              <Icons.lock className="h-6 w-6 text-stone-500" />
+                              <Icons.lock className="h-5 w-5 text-[#484f58]" />
                             ) : (
                               <>
-                                <span className={`text-[10px] font-medium uppercase tracking-wider ${isActive || isCompleted ? 'text-white/80' : 'text-stone-500'}`}>Chapter</span>
-                                <span className={`text-2xl font-bold ${isActive ? 'text-white' : isCompleted ? 'text-white' : 'text-stone-500'}`}>{chapter.id}</span>
+                                <span className={`text-[10px] font-medium uppercase tracking-wider font-mono ${isActive || isCompleted ? 'text-[#0d1117]/70' : 'text-[#484f58]'}`}>Ch</span>
+                                <span className={`text-2xl font-bold font-mono ${isActive || isCompleted ? 'text-[#0d1117]' : 'text-[#484f58]'}`}>{chapter.id}</span>
                               </>
                             )}
                           </div>
 
-                          <div className="flex-1 flex items-center gap-4 p-5">
+                          <div className="flex-1 flex items-center gap-4 p-4">
                             <div className="flex-1 min-w-0">
-                              <div className="flex items-center gap-3 mb-3 flex-wrap">
-                                <h3 className={`font-bold text-lg transition-colors ${
+                              <div className="flex items-center gap-2.5 mb-2 flex-wrap">
+                                <h3 className={`font-bold text-base transition-colors ${
                                   isActive
-                                    ? 'text-stone-800 group-hover:text-stone-900'
+                                    ? 'text-[#c9d1d9] group-hover:text-[#f0b429]'
                                     : isCompleted
-                                      ? 'text-stone-700 group-hover:text-stone-800'
-                                      : 'text-stone-500'
+                                      ? 'text-[#8b949e] group-hover:text-[#c9d1d9]'
+                                      : 'text-[#484f58]'
                                 }`}>
                                   {removeChapterPrefix(chapter.title.ko)}
                                 </h3>
-                                <span className={`text-base font-mono ${isActive || isCompleted ? 'text-stone-500' : 'text-stone-400'}`}>+{chapter.xpReward} XP</span>
+                                <span className={`text-sm font-mono ${isActive || isCompleted ? 'text-[#8b949e]' : 'text-[#30363d]'}`}>+{chapter.xpReward} XP</span>
                                 {isCompleted && (
-                                  <div className="flex items-center gap-1.5 px-2 py-0.5 bg-stone-100 border border-stone-300 rounded-sm">
-                                    <Icons.check className="h-3 w-3 text-stone-600" />
-                                    <span className="text-xs font-medium text-stone-600 uppercase tracking-wider">완료</span>
+                                  <div className="flex items-center gap-1 px-2 py-0.5 bg-[#56d364]/10 rounded-md shadow-[0_1px_3px_rgba(86,211,100,0.2)]">
+                                    <Icons.check className="h-3 w-3 text-[#56d364]" />
+                                    <span className="text-xs font-medium text-[#56d364] uppercase tracking-wider font-mono">완료</span>
                                   </div>
                                 )}
                                 {isActive && (
-                                  <Badge className="bg-stone-800 text-white border-0 text-xs h-6 font-medium animate-pulse rounded-sm">
+                                  <Badge className="bg-[#f0b429] text-[#0d1117] border-0 text-xs h-5 font-medium animate-pulse rounded-md font-mono shadow-[0_2px_6px_rgba(240,180,41,0.3)]">
                                     수련 중
                                   </Badge>
                                 )}
                                 {isNotStarted && (
-                                  <span className="text-xs text-stone-500">이전 챕터를 먼저 완료하세요</span>
+                                  <span className="text-xs text-[#484f58]">이전 챕터를 먼저 완료하세요</span>
                                 )}
                               </div>
                               {chapter.bullets && (
-                                <ul className="space-y-1.5">
+                                <ul className="space-y-1">
                                   {chapter.bullets.map((bullet, idx) => (
                                     <li key={idx} className={`text-sm flex items-start gap-2 ${
-                                      isActive || isCompleted ? 'text-stone-600' : 'text-stone-400'
+                                      isActive || isCompleted ? 'text-[#8b949e]' : 'text-[#484f58]'
                                     }`}>
-                                      <span className={`mt-0.5 ${isActive ? 'text-yellow-700' : isCompleted ? 'text-stone-500' : 'text-stone-400'}`}>•</span>
+                                      <span className={`mt-0.5 ${isActive ? 'text-[#f0b429]' : isCompleted ? 'text-[#56d364]' : 'text-[#30363d]'}`}>•</span>
                                       <span>{bullet}</span>
                                     </li>
                                   ))}
@@ -433,14 +466,14 @@ export default async function CurriculumPage() {
                             </div>
                             <div className="shrink-0 flex items-center justify-center">
                               {isNotStarted ? (
-                                <Icons.lock className="h-6 w-6 text-stone-400" />
+                                <Icons.lock className="h-5 w-5 text-[#30363d]" />
                               ) : (
-                                <Icons.chevronRight className={`h-8 w-8 transition-all ${
+                                <Icons.chevronRight className={`h-7 w-7 transition-all ${
                                   isActive
-                                    ? 'text-stone-600 group-hover:text-stone-800 group-hover:translate-x-1'
+                                    ? 'text-[#f0b429] group-hover:translate-x-1'
                                     : isCompleted
-                                      ? 'text-stone-400 group-hover:text-stone-600 group-hover:translate-x-1'
-                                      : 'text-stone-300'
+                                      ? 'text-[#56d364] group-hover:translate-x-1'
+                                      : 'text-[#30363d]'
                                 }`} />
                               )}
                             </div>
@@ -474,7 +507,7 @@ export default async function CurriculumPage() {
         </Tabs>
 
         {/* Decorative bottom element */}
-        <div className="h-1 w-full bg-gradient-to-r from-stone-400/30 via-stone-500/50 to-stone-400/30 rounded-full mt-10" />
+        <div className="h-1 w-full bg-gradient-to-r from-[#f0b429]/20 via-[#f0b429]/50 to-[#f0b429]/20 rounded-full mt-8" />
       </div>
     </div>
   );

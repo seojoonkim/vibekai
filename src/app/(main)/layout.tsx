@@ -18,7 +18,7 @@ export default async function MainLayout({
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#fafafa]">
+    <div className="min-h-screen flex flex-col bg-[#0d1117]">
       <Header isLoggedIn={true} />
       <main className="flex-1">{children}</main>
       <Footer />

@@ -22,13 +22,17 @@ export function BeltBadge({ xp, size = "md", showProgress = false, className }: 
     lg: "h-6 text-xs px-2.5",
   };
 
+  // Text color based on belt
+  const textColorClass = belt.id === 'white' ? 'text-[#6e7681]' : belt.id === 'black' ? 'text-white' : 'text-[#0d1117]';
+
   return (
     <div className={cn("flex items-center gap-1.5", className)}>
       <div
         className={cn(
-          "inline-flex items-center rounded-full font-medium",
+          "inline-flex items-center rounded-full font-medium shadow-[0_1px_3px_rgba(0,0,0,0.25)]",
           sizeClasses[size],
-          `belt-${belt.id}`
+          belt.bgColor,
+          textColorClass
         )}
       >
         <span className="truncate">{belt.nameKo} {belt.rank}</span>
@@ -107,19 +111,19 @@ export function BeltProgressCard({ xp, className }: BeltProgressCardProps) {
 
   return (
     <div className={cn(
-      "relative bg-white/90 backdrop-blur-sm p-6 sm:p-7 border border-stone-300 rounded-sm shadow-sm",
+      "relative bg-[#1c2128] backdrop-blur-sm p-6 sm:p-7 rounded-lg shadow-[0_4px_12px_rgba(0,0,0,0.35)]",
       className
     )}>
       {/* Header with XP */}
       <div className="flex items-center justify-between mb-6 sm:mb-7">
         <div className="flex items-center gap-4 sm:gap-5">
-          <div className="relative p-3 bg-yellow-100 border border-yellow-200 rounded-sm">
-            <Zap className="h-7 sm:h-9 w-7 sm:w-9 text-yellow-600 fill-yellow-600" />
+          <div className="relative p-3 bg-[#daa520]/10 rounded-lg shadow-[0_2px_6px_rgba(0,0,0,0.25)]">
+            <Zap className="h-7 sm:h-9 w-7 sm:w-9 text-[#daa520] fill-[#daa520]" />
           </div>
           <div>
-            <p className="text-xs sm:text-sm text-stone-500 uppercase tracking-wider">총 경험치</p>
-            <p className="text-2xl sm:text-3xl font-bold text-stone-800">
-              {xp.toLocaleString()} <span className="text-sm sm:text-base text-stone-500">XP</span>
+            <p className="text-xs sm:text-sm text-[#8b949e] uppercase tracking-wider">총 경험치</p>
+            <p className="text-2xl sm:text-3xl font-bold text-[#c9d1d9]">
+              {xp.toLocaleString()} <span className="text-sm sm:text-base text-[#8b949e]">XP</span>
             </p>
           </div>
         </div>
@@ -127,20 +131,20 @@ export function BeltProgressCard({ xp, className }: BeltProgressCardProps) {
           <div className="inline-flex items-center gap-3">
             <div
               className={cn(
-                "w-10 sm:w-12 h-6 sm:h-7 rounded-sm flex items-center justify-center border border-stone-300",
+                "w-10 sm:w-12 h-6 sm:h-7 rounded-md flex items-center justify-center shadow-[0_2px_4px_rgba(0,0,0,0.3)]",
                 currentBelt.bgColor
               )}
             >
               <span className={cn(
                 "text-[10px] sm:text-xs font-bold",
-                currentBelt.id === 'white' ? 'text-stone-500' : currentBelt.id === 'black' ? 'text-white' : 'text-stone-700'
+                currentBelt.id === 'white' ? 'text-[#6e7681]' : currentBelt.id === 'black' ? 'text-white' : 'text-[#0d1117]'
               )}>
                 {currentBelt.rank}
               </span>
             </div>
-            <span className="text-sm sm:text-base font-semibold text-stone-700">{currentBelt.nameKo}</span>
+            <span className="text-sm sm:text-base font-semibold text-[#c9d1d9]">{currentBelt.nameKo}</span>
           </div>
-          <p className="text-xs sm:text-sm text-stone-500 mt-2">{currentBelt.description}</p>
+          <p className="text-xs sm:text-sm text-[#8b949e] mt-2">{currentBelt.description}</p>
         </div>
       </div>
 
@@ -148,15 +152,15 @@ export function BeltProgressCard({ xp, className }: BeltProgressCardProps) {
       {nextBelt && (
         <div className="mb-6 sm:mb-7">
           <div className="flex items-center justify-between mb-3">
-            <span className="text-xs sm:text-sm text-stone-500 uppercase tracking-wider">다음 띠까지</span>
-            <span className="text-xs sm:text-sm font-medium text-stone-700">
+            <span className="text-xs sm:text-sm text-[#8b949e] uppercase tracking-wider">다음 띠까지</span>
+            <span className="text-xs sm:text-sm font-medium text-[#c9d1d9]">
               {xpToNext.toLocaleString()} XP 남음
             </span>
           </div>
-          <div className="relative h-3 sm:h-4 bg-stone-200 overflow-hidden border border-stone-300/50 rounded-sm">
+          <div className="relative h-3 sm:h-4 bg-[#21262d] overflow-hidden rounded-md shadow-[inset_0_1px_3px_rgba(0,0,0,0.3)]">
             {/* Progress bar */}
             <div
-              className="absolute inset-y-0 left-0 transition-all duration-500 rounded-sm"
+              className="absolute inset-y-0 left-0 transition-all duration-500 rounded-md"
               style={{
                 width: `${progress}%`,
                 background: `linear-gradient(90deg, ${currentBelt.color}, ${nextBelt.color})`,
@@ -164,8 +168,8 @@ export function BeltProgressCard({ xp, className }: BeltProgressCardProps) {
             />
           </div>
           <div className="flex items-center justify-between mt-3">
-            <span className="text-xs sm:text-sm text-stone-500">
-              {currentBelt.nameKo} {currentBelt.rank} <span className="text-stone-400">{currentBelt.minXp.toLocaleString()} XP</span>
+            <span className="text-xs sm:text-sm text-[#8b949e]">
+              {currentBelt.nameKo} {currentBelt.rank} <span className="text-[#6e7681]">{currentBelt.minXp.toLocaleString()} XP</span>
             </span>
             <span
               className="text-xs sm:text-sm font-medium"
@@ -179,7 +183,7 @@ export function BeltProgressCard({ xp, className }: BeltProgressCardProps) {
 
       {/* All Belts Overview */}
       <div>
-        <p className="text-xs sm:text-sm text-stone-500 mb-4 sm:mb-5 uppercase tracking-wider">VibeDojo 띠 등급 체계</p>
+        <p className="text-xs sm:text-sm text-[#8b949e] mb-4 sm:mb-5">VibeDojo 띠 등급 체계</p>
         <div className="flex items-start gap-1 sm:gap-1.5">
           {BELTS.map((belt, index) => {
             const isCurrentOrPast = index <= currentBeltIndex;
@@ -192,15 +196,15 @@ export function BeltProgressCard({ xp, className }: BeltProgressCardProps) {
               >
                 <div
                   className={cn(
-                    "w-full h-5 sm:h-6 rounded-sm flex items-center justify-center transition-all border",
+                    "w-full h-5 sm:h-6 rounded-md flex items-center justify-center transition-all shadow-[0_2px_4px_rgba(0,0,0,0.25)]",
                     belt.bgColor,
-                    isCurrent ? "border-stone-600 ring-1 ring-stone-500/50" : "border-stone-300",
+                    isCurrent ? "ring-2 ring-[#daa520]/50" : "",
                     !isCurrentOrPast && "opacity-40"
                   )}
                 >
                   <span className={cn(
                     "text-[8px] sm:text-[10px] font-bold",
-                    belt.id === 'white' ? 'text-stone-500' : belt.id === 'black' ? 'text-white' : 'text-stone-700'
+                    belt.id === 'white' ? 'text-[#6e7681]' : belt.id === 'black' ? 'text-white' : 'text-[#0d1117]'
                   )}>
                     {belt.rank}
                   </span>
@@ -208,14 +212,14 @@ export function BeltProgressCard({ xp, className }: BeltProgressCardProps) {
                 {/* Belt name */}
                 <span className={cn(
                   "text-[8px] sm:text-[10px] mt-2 text-center",
-                  isCurrent ? "text-stone-700 font-medium" : "text-stone-400"
+                  isCurrent ? "text-[#c9d1d9] font-medium" : "text-[#6e7681]"
                 )}>
                   {belt.nameKo}
                 </span>
                 {/* Tooltip on hover */}
-                <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-white border border-stone-300 shadow-md rounded-sm text-xs sm:text-sm whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
+                <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-[#1c2128] rounded-lg shadow-[0_4px_12px_rgba(0,0,0,0.4)] text-xs sm:text-sm whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
                   <span style={{ color: belt.color }}>{belt.nameKo} {belt.rank}</span>
-                  <span className="text-stone-500 ml-1">{belt.minXp.toLocaleString()}+ XP</span>
+                  <span className="text-[#8b949e] ml-1">{belt.minXp.toLocaleString()}+ XP</span>
                 </div>
               </div>
             );
