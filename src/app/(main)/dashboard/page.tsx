@@ -102,10 +102,10 @@ export default async function DashboardPage() {
             <Icons.code className="h-5 w-5 text-[#daa520]" />
           </div>
           <div>
-            <h1 className="text-xl font-semibold text-[#c9d1d9]">
+            <h1 className="text-lg sm:text-xl font-semibold text-[#c9d1d9]">
               내 도장
             </h1>
-            <p className="text-sm text-[#8b949e] font-mono">나의 수련 현황</p>
+            <p className="text-xs sm:text-sm text-[#8b949e] font-mono">나의 수련 현황</p>
           </div>
         </div>
       </div>
@@ -117,9 +117,9 @@ export default async function DashboardPage() {
           {/* Welcome Message */}
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-0 mb-5">
             <div className="flex items-center gap-3">
-              <div className="w-1.5 h-9 sm:h-11 bg-gradient-to-b from-[#daa520] to-[#58a6ff] rounded-full" />
+              <div className="w-1.5 h-8 sm:h-10 bg-gradient-to-b from-[#daa520] to-[#58a6ff] rounded-full" />
               <div>
-                <h2 className="text-lg sm:text-2xl font-bold text-[#c9d1d9]">
+                <h2 className="text-base sm:text-xl font-bold text-[#c9d1d9]">
                   <span className="text-[#daa520]">{userStats.displayName}</span> 수련생님, 환영합니다!
                 </h2>
                 <p className="text-xs sm:text-sm text-[#8b949e] mt-0.5">오늘도 무공을 갈고닦으러 오셨군요</p>
@@ -127,11 +127,11 @@ export default async function DashboardPage() {
             </div>
             {/* Quick Stats - Mobile visible */}
             <div className="flex items-center gap-2 sm:gap-3 ml-4 sm:ml-0">
-              <div className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3.5 py-2 sm:py-2.5 bg-[#1c2128] rounded-lg shadow-[0_2px_8px_rgba(0,0,0,0.3)]">
+              <div className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1.5 sm:py-2 bg-[#1c2128] rounded-lg shadow-[0_2px_8px_rgba(0,0,0,0.3)]">
                 <Icons.flame className="h-3.5 sm:h-4 w-3.5 sm:w-4 text-[#e3b341]" />
                 <span className="text-xs sm:text-sm font-bold text-[#c9d1d9] font-mono">{userStats.currentStreak}일</span>
               </div>
-              <div className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3.5 py-2 sm:py-2.5 bg-[#1c2128] rounded-lg shadow-[0_2px_8px_rgba(0,0,0,0.3)]">
+              <div className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1.5 sm:py-2 bg-[#1c2128] rounded-lg shadow-[0_2px_8px_rgba(0,0,0,0.3)]">
                 <Icons.zap className="h-3.5 sm:h-4 w-3.5 sm:w-4 text-[#daa520]" />
                 <span className="text-xs sm:text-sm font-bold text-[#c9d1d9] font-mono">{userStats.totalXp}</span>
                 <span className="text-[10px] sm:text-xs text-[#8b949e]">XP</span>
@@ -142,7 +142,7 @@ export default async function DashboardPage() {
           {/* 1:2 Layout - Character : XP Progress */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {/* Character Card - 1 portion */}
-            <div className="relative bg-[#161b22] border border-[#30363d] p-5 rounded-xl shadow-sm hover:border-[#f0b429]/30 hover:shadow-[0_0_20px_rgba(240,180,41,0.08)] transition-all duration-300 group">
+            <div className="relative bg-[#161b22] p-5 rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.4)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.5)] transition-all duration-300 group">
               <CharacterDisplay
                 initialCharacterId={userStats.characterId}
                 displayName={userStats.displayName}
@@ -157,34 +157,33 @@ export default async function DashboardPage() {
           </div>
 
           {/* Activity Heatmap - GitHub Style */}
-          <div className="mt-5 bg-[#161b22] border border-[#30363d] p-5 rounded-xl shadow-sm">
+          <div className="mt-5 bg-[#161b22] p-5 rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.4)]">
             <ActivityHeatmap activities={activityData} />
           </div>
         </div>
       </div>
 
-      <div className="container relative py-6 sm:py-8 space-y-8">
+      {/* Divider with more padding */}
+      <div className="container py-6 sm:py-8">
+        <div className="h-px w-full bg-[#21262d]" />
+      </div>
+
+      <div className="container relative pb-6 sm:pb-8 space-y-8">
         {/* Curriculum Section Header */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-5 sm:gap-6">
           <div className="flex-1">
-            <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-4">
-              <div className="flex items-center gap-3">
-                <div className="w-1.5 h-10 sm:h-12 bg-gradient-to-b from-[#daa520] to-[#3fb950] rounded-full" />
-                <h2 className="text-xl sm:text-2xl font-bold text-[#c9d1d9]">수련 과정</h2>
-              </div>
-              <div className="hidden sm:flex items-center gap-2 bg-[#1c2128] px-3.5 py-2 rounded-lg shadow-[0_2px_8px_rgba(0,0,0,0.3)]">
-                <Icons.flame className="h-4 w-4 text-[#e3b341]" />
-                <span className="text-sm font-bold text-[#c9d1d9] font-mono">{userStats.currentStreak}일 연속 수련중</span>
-              </div>
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-1.5 h-8 sm:h-10 bg-gradient-to-b from-[#daa520] to-[#3fb950] rounded-full" />
+              <h2 className="text-lg sm:text-xl font-bold text-[#c9d1d9]">수련 과정</h2>
             </div>
-            {/* Progress Stats - Bigger and More Prominent */}
-            <div className="flex items-center gap-4 sm:gap-6 ml-4 sm:ml-5">
+            {/* Progress Stats */}
+            <div className="flex items-center gap-4 sm:gap-5 ml-4 sm:ml-5">
               <div className="flex items-baseline gap-1">
-                <span className="text-2xl sm:text-3xl font-black text-[#daa520] font-mono">{userStats.completedChapters}</span>
-                <span className="text-base sm:text-lg text-[#8b949e] font-medium">/{totalChapters}장</span>
-                <span className="text-sm sm:text-base text-[#6e7681] ml-2 font-mono">({progressPercent}%)</span>
+                <span className="text-xl sm:text-2xl font-black text-[#daa520] font-mono">{userStats.completedChapters}</span>
+                <span className="text-sm sm:text-base text-[#8b949e] font-medium">/{totalChapters}장</span>
+                <span className="text-xs sm:text-sm text-[#6e7681] ml-2 font-mono">({progressPercent}%)</span>
               </div>
-              <div className="bg-[#21262d] h-3 sm:h-4 flex-1 max-w-[280px] sm:max-w-[400px] overflow-hidden rounded-full relative shadow-[inset_0_2px_4px_rgba(0,0,0,0.4)]">
+              <div className="bg-[#21262d] h-2.5 sm:h-3 flex-1 max-w-[240px] sm:max-w-[320px] overflow-hidden rounded-full relative shadow-[inset_0_2px_4px_rgba(0,0,0,0.4)]">
                 <div
                   className="bg-gradient-to-r from-[#daa520] via-[#e6b82e] to-[#3fb950] h-full transition-all duration-500 rounded-full"
                   style={{ width: `${progressPercent}%` }}
@@ -192,10 +191,10 @@ export default async function DashboardPage() {
               </div>
             </div>
           </div>
-          <Button asChild size="default" className="rounded-lg h-10 sm:h-11 px-5 sm:px-7 text-sm sm:text-base font-bold bg-[#daa520] hover:bg-[#e6b82e] text-[#0d1117] border-0 transition-all duration-300 w-full sm:w-auto shadow-[0_2px_8px_rgba(218,165,32,0.3)] hover:shadow-[0_4px_16px_rgba(218,165,32,0.4)]">
+          <Button asChild size="default" className="rounded-lg h-9 sm:h-10 px-4 sm:px-6 text-xs sm:text-sm font-bold bg-[#daa520] hover:bg-[#e6b82e] text-[#0d1117] border-0 transition-all duration-300 w-full sm:w-auto shadow-[0_2px_8px_rgba(218,165,32,0.3)] hover:shadow-[0_4px_16px_rgba(218,165,32,0.4)]">
             <Link href={`/curriculum/${nextChapterId}`}>
               수련하기
-              <Icons.swords className="ml-2 h-4 sm:h-5 w-4 sm:w-5" />
+              <Icons.swords className="ml-2 h-4 w-4" />
             </Link>
           </Button>
         </div>
@@ -219,16 +218,16 @@ export default async function DashboardPage() {
                 href={`/curriculum?part=${part.id}`}
                 className="block group"
               >
-                <div className={`relative h-full transition-all duration-300 backdrop-blur-sm p-4 sm:p-6 rounded-xl border ${
+                <div className={`relative h-full transition-all duration-300 backdrop-blur-sm p-4 sm:p-6 rounded-xl ${
                   isActive
-                    ? 'bg-[#161b22] border-[#30363d] shadow-sm'
+                    ? 'bg-[#161b22] shadow-[0_4px_12px_rgba(0,0,0,0.4)]'
                     : isCompleted
-                      ? 'bg-[#161b22]/80 border-[#30363d]/80 shadow-sm'
-                      : 'bg-[#161b22]/50 border-[#30363d]/50 shadow-sm opacity-70'
-                } hover:border-[#f0b429]/40 hover:shadow-[0_0_24px_rgba(240,180,41,0.1)] hover:-translate-y-0.5`}>
+                      ? 'bg-[#161b22]/80 shadow-[0_4px_12px_rgba(0,0,0,0.3)]'
+                      : 'bg-[#161b22]/50 shadow-[0_4px_12px_rgba(0,0,0,0.2)] opacity-70'
+                } hover:shadow-[0_8px_24px_rgba(0,0,0,0.5)] hover:-translate-y-0.5`}>
 
                   {/* Part Number Badge */}
-                  <div className={`absolute -top-2 sm:-top-2.5 -left-1.5 sm:-left-2 px-2.5 sm:px-3.5 py-1 sm:py-1.5 text-xs sm:text-sm font-bold uppercase tracking-wider rounded-md font-mono shadow-[0_2px_6px_rgba(0,0,0,0.3)] ${
+                  <div className={`absolute -top-2 sm:-top-2.5 -left-1.5 sm:-left-2 px-2 sm:px-3 py-0.5 sm:py-1 text-[10px] sm:text-xs font-bold uppercase tracking-wider rounded-md font-mono shadow-[0_2px_6px_rgba(0,0,0,0.3)] ${
                     isActive
                       ? 'bg-[#daa520] text-[#0d1117]'
                       : isCompleted
@@ -261,11 +260,11 @@ export default async function DashboardPage() {
                         </div>
                       )}
                     </div>
-                    <p className="text-xs sm:text-sm text-[#8b949e] mb-2 sm:mb-4 group-hover:text-[#c9d1d9] transition-colors line-clamp-2">
+                    <p className="text-xs sm:text-sm text-[#8b949e] mb-2 sm:mb-3 group-hover:text-[#c9d1d9] transition-colors line-clamp-2">
                       {part.description.ko}
                     </p>
-                    <div className="flex items-center gap-2 sm:gap-4">
-                      <div className="flex-1 h-1.5 sm:h-2 bg-[#21262d] overflow-hidden rounded-md relative shadow-[inset_0_1px_3px_rgba(0,0,0,0.3)]">
+                    <div className="flex items-center gap-2 sm:gap-3">
+                      <div className="flex-1 h-1.5 bg-[#21262d] overflow-hidden rounded-md relative shadow-[inset_0_1px_3px_rgba(0,0,0,0.3)]">
                         <div
                           className={`h-full transition-all ${isCompleted ? 'bg-[#3fb950]' : 'bg-gradient-to-r from-[#daa520] to-[#3fb950]'}`}
                           style={{ width: `${partProgress}%` }}
@@ -285,7 +284,7 @@ export default async function DashboardPage() {
         </div>
 
         {/* Key Visual Banner */}
-        <div className="relative overflow-hidden rounded-xl border border-[#30363d] shadow-sm group hover:border-[#f0b429]/30 hover:shadow-[0_0_24px_rgba(240,180,41,0.1)] transition-all duration-500">
+        <div className="relative overflow-hidden rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.4)] group hover:shadow-[0_8px_24px_rgba(0,0,0,0.5)] transition-all duration-500">
           <div className="relative h-44 sm:h-56 md:h-64 bg-[#0d1117]">
             <Image
               src="/images/bg.jpg"
@@ -299,17 +298,17 @@ export default async function DashboardPage() {
             {/* Decorative elements */}
             <div className="absolute top-4 right-4 text-6xl sm:text-7xl md:text-8xl font-serif text-[#daa520]/10 select-none group-hover:text-[#daa520]/15 transition-all duration-500">武</div>
 
-            <div className="absolute bottom-6 sm:bottom-8 left-6 sm:left-8">
-              <p className="text-[#c9d1d9] text-lg sm:text-2xl md:text-3xl font-bold mb-2.5">
+            <div className="absolute bottom-5 sm:bottom-7 left-5 sm:left-7">
+              <p className="text-[#c9d1d9] text-base sm:text-xl md:text-2xl font-bold mb-2">
                 바이브 코딩의 도장, 준비됐나요?
               </p>
-              <p className="text-[#8b949e] text-sm sm:text-base md:text-lg mb-4">
+              <p className="text-[#8b949e] text-xs sm:text-sm md:text-base mb-3 sm:mb-4">
                 AI와 함께 코딩 무술을 익히고 검은띠에 도전하세요
               </p>
-              <Button asChild className="rounded-lg px-5 py-2 bg-[#1c2128]/90 border-0 text-[#c9d1d9] text-sm hover:bg-[#262c36] shadow-[0_2px_8px_rgba(0,0,0,0.35)] hover:shadow-[0_4px_12px_rgba(218,165,32,0.2)] hover:scale-105 transition-all duration-300">
+              <Button asChild className="rounded-lg px-4 py-1.5 bg-[#1c2128]/90 border-0 text-[#c9d1d9] text-xs sm:text-sm hover:bg-[#262c36] shadow-[0_2px_8px_rgba(0,0,0,0.35)] hover:shadow-[0_4px_12px_rgba(218,165,32,0.2)] hover:scale-105 transition-all duration-300">
                 <Link href="/curriculum">
                   수련 과정 보기
-                  <Icons.chevronRight className="ml-2 h-4 w-4 group-hover:translate-x-0.5 transition-transform duration-300" />
+                  <Icons.chevronRight className="ml-1.5 h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform duration-300" />
                 </Link>
               </Button>
             </div>

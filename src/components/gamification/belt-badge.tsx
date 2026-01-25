@@ -111,27 +111,27 @@ export function BeltProgressCard({ xp, className }: BeltProgressCardProps) {
 
   return (
     <div className={cn(
-      "relative bg-[#161b22] backdrop-blur-sm p-6 sm:p-7 rounded-xl border border-[#30363d] shadow-sm hover:border-[#f0b429]/30 hover:shadow-[0_0_20px_rgba(240,180,41,0.08)] transition-all duration-300",
+      "relative bg-[#161b22] backdrop-blur-sm p-6 sm:p-7 rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.4)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.5)] transition-all duration-300",
       className
     )}>
       {/* Header with XP */}
-      <div className="flex items-center justify-between mb-6 sm:mb-7">
-        <div className="flex items-center gap-4 sm:gap-5">
-          <div className="relative p-3 bg-[#daa520]/10 rounded-lg shadow-[0_2px_6px_rgba(0,0,0,0.25)]">
-            <Zap className="h-7 sm:h-9 w-7 sm:w-9 text-[#daa520] fill-[#daa520]" />
+      <div className="flex items-center justify-between mb-5 sm:mb-6">
+        <div className="flex items-center gap-3 sm:gap-4">
+          <div className="relative p-2.5 bg-[#daa520]/10 rounded-lg shadow-[0_2px_6px_rgba(0,0,0,0.25)]">
+            <Zap className="h-6 sm:h-7 w-6 sm:w-7 text-[#daa520] fill-[#daa520]" />
           </div>
           <div>
-            <p className="text-xs sm:text-sm text-[#8b949e] uppercase tracking-wider">총 경험치</p>
-            <p className="text-2xl sm:text-3xl font-bold text-[#c9d1d9]">
-              {xp.toLocaleString()} <span className="text-sm sm:text-base text-[#8b949e]">XP</span>
+            <p className="text-[10px] sm:text-xs text-[#8b949e] uppercase tracking-wider">총 경험치</p>
+            <p className="text-xl sm:text-2xl font-bold text-[#c9d1d9]">
+              {xp.toLocaleString()} <span className="text-xs sm:text-sm text-[#8b949e]">XP</span>
             </p>
           </div>
         </div>
         <div className="text-right">
-          <div className="inline-flex items-center gap-3">
+          <div className="inline-flex items-center gap-2 sm:gap-3">
             <div
               className={cn(
-                "w-10 sm:w-12 h-6 sm:h-7 rounded-md flex items-center justify-center shadow-[0_2px_4px_rgba(0,0,0,0.3)]",
+                "w-9 sm:w-10 h-5 sm:h-6 rounded-md flex items-center justify-center shadow-[0_2px_4px_rgba(0,0,0,0.3)]",
                 currentBelt.bgColor
               )}
             >
@@ -142,22 +142,22 @@ export function BeltProgressCard({ xp, className }: BeltProgressCardProps) {
                 {currentBelt.rank}
               </span>
             </div>
-            <span className="text-sm sm:text-base font-semibold text-[#c9d1d9]">{currentBelt.nameKo}</span>
+            <span className="text-xs sm:text-sm font-semibold text-[#c9d1d9]">{currentBelt.nameKo}</span>
           </div>
-          <p className="text-xs sm:text-sm text-[#8b949e] mt-2">{currentBelt.description}</p>
+          <p className="text-[10px] sm:text-xs text-[#8b949e] mt-1.5">{currentBelt.description}</p>
         </div>
       </div>
 
       {/* Next Belt Progress */}
       {nextBelt && (
-        <div className="mb-6 sm:mb-7">
-          <div className="flex items-center justify-between mb-3">
-            <span className="text-xs sm:text-sm text-[#8b949e] uppercase tracking-wider">다음 띠까지</span>
-            <span className="text-xs sm:text-sm font-medium text-[#c9d1d9]">
+        <div className="mb-5 sm:mb-6">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-[10px] sm:text-xs text-[#8b949e] uppercase tracking-wider">다음 띠까지</span>
+            <span className="text-[10px] sm:text-xs font-medium text-[#c9d1d9]">
               {xpToNext.toLocaleString()} XP 남음
             </span>
           </div>
-          <div className="relative h-3 sm:h-4 bg-[#21262d] overflow-hidden rounded-md shadow-[inset_0_1px_3px_rgba(0,0,0,0.3)]">
+          <div className="relative h-2.5 sm:h-3 bg-[#21262d] overflow-hidden rounded-md shadow-[inset_0_1px_3px_rgba(0,0,0,0.3)]">
             {/* Progress bar */}
             <div
               className="absolute inset-y-0 left-0 transition-all duration-500 rounded-md"
@@ -167,12 +167,12 @@ export function BeltProgressCard({ xp, className }: BeltProgressCardProps) {
               }}
             />
           </div>
-          <div className="flex items-center justify-between mt-3">
-            <span className="text-xs sm:text-sm text-[#8b949e]">
+          <div className="flex items-center justify-between mt-2">
+            <span className="text-[10px] sm:text-xs text-[#8b949e]">
               {currentBelt.nameKo} {currentBelt.rank} <span className="text-[#6e7681]">{currentBelt.minXp.toLocaleString()} XP</span>
             </span>
             <span
-              className="text-xs sm:text-sm font-medium"
+              className="text-[10px] sm:text-xs font-medium"
               style={{ color: nextBelt.color }}
             >
               {nextBelt.nameKo} {nextBelt.rank} <span className="opacity-70">{nextBelt.minXp.toLocaleString()} XP</span>
@@ -183,7 +183,7 @@ export function BeltProgressCard({ xp, className }: BeltProgressCardProps) {
 
       {/* All Belts Overview */}
       <div>
-        <p className="text-xs sm:text-sm text-[#8b949e] mb-4 sm:mb-5">VibeDojo 띠 등급 체계</p>
+        <p className="text-[10px] sm:text-xs text-[#8b949e] mb-3 sm:mb-4">VibeDojo 띠 등급 체계</p>
         <div className="flex items-start gap-1 sm:gap-1.5">
           {BELTS.map((belt, index) => {
             const isCurrentOrPast = index <= currentBeltIndex;
@@ -196,14 +196,14 @@ export function BeltProgressCard({ xp, className }: BeltProgressCardProps) {
               >
                 <div
                   className={cn(
-                    "w-full h-5 sm:h-6 rounded-md flex items-center justify-center transition-all shadow-[0_2px_4px_rgba(0,0,0,0.25)]",
+                    "w-full h-4 sm:h-5 rounded-md flex items-center justify-center transition-all shadow-[0_2px_4px_rgba(0,0,0,0.25)]",
                     belt.bgColor,
                     isCurrent ? "ring-2 ring-[#daa520]/50" : "",
                     !isCurrentOrPast && "opacity-40"
                   )}
                 >
                   <span className={cn(
-                    "text-[8px] sm:text-[10px] font-bold",
+                    "text-[7px] sm:text-[9px] font-bold",
                     belt.id === 'white' ? 'text-[#6e7681]' : belt.id === 'black' ? 'text-white' : 'text-[#0d1117]'
                   )}>
                     {belt.rank}
@@ -211,13 +211,13 @@ export function BeltProgressCard({ xp, className }: BeltProgressCardProps) {
                 </div>
                 {/* Belt name */}
                 <span className={cn(
-                  "text-[8px] sm:text-[10px] mt-2 text-center",
+                  "text-[7px] sm:text-[9px] mt-1.5 text-center",
                   isCurrent ? "text-[#c9d1d9] font-medium" : "text-[#6e7681]"
                 )}>
                   {belt.nameKo}
                 </span>
                 {/* Tooltip on hover */}
-                <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-[#1c2128] rounded-lg shadow-[0_4px_12px_rgba(0,0,0,0.4)] text-xs sm:text-sm whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
+                <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-[#1c2128] rounded-lg shadow-[0_4px_12px_rgba(0,0,0,0.4)] text-[10px] sm:text-xs whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
                   <span style={{ color: belt.color }}>{belt.nameKo} {belt.rank}</span>
                   <span className="text-[#8b949e] ml-1">{belt.minXp.toLocaleString()}+ XP</span>
                 </div>
