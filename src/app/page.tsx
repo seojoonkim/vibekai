@@ -96,7 +96,7 @@ export default async function LandingPage() {
         </div>
 
         <div className="absolute inset-0 flex items-center">
-          <div className="mx-auto max-w-5xl w-full px-12 sm:px-16 md:px-20 lg:px-28 xl:px-32">
+          <div className="mx-auto max-w-5xl w-full px-5 sm:px-16 md:px-20 lg:px-28 xl:px-32">
             <div className="max-w-lg lg:max-w-xl relative z-10">
               {/* Badge */}
               <div className="inline-flex items-center gap-1.5 px-3 sm:px-4 py-1.5 sm:py-2 bg-[#1c2128] text-[#daa520] text-xs sm:text-sm font-medium mb-4 sm:mb-3 lg:mb-4 backdrop-blur-sm rounded-md shadow-[0_2px_8px_rgba(0,0,0,0.3)] animate-float-up opacity-0 stagger-1" style={{ animationFillMode: 'forwards' }}>
@@ -105,10 +105,10 @@ export default async function LandingPage() {
               </div>
 
               {/* Title */}
-              <h1 className="text-[1.75rem] sm:text-[2.125rem] md:text-[2.5rem] lg:text-[2.875rem] font-black tracking-tight mb-5 sm:mb-4 lg:mb-5 leading-snug sm:leading-tight animate-float-up opacity-0 stagger-2" style={{ animationFillMode: 'forwards' }}>
+              <h1 className="text-[1.65rem] sm:text-[2.125rem] md:text-[2.5rem] lg:text-[2.875rem] font-black tracking-tight mb-5 sm:mb-4 lg:mb-5 leading-snug sm:leading-tight animate-float-up opacity-0 stagger-2" style={{ animationFillMode: 'forwards' }}>
                 <span className="text-[#c9d1d9]">{t("hero.title1")}</span>
                 <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#daa520] via-[#e6b82e] to-[#daa520]">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#daa520] via-[#e6b82e] to-[#daa520] break-keep">
                   {t("hero.title2")}
                 </span>
                 <br />
@@ -176,24 +176,26 @@ export default async function LandingPage() {
       {/* Belt System Preview */}
       <section className="py-5 sm:py-6 bg-[#13171d] shadow-[0_-1px_0_rgba(255,255,255,0.03),0_1px_0_rgba(255,255,255,0.03)]">
         <div className="container px-4 sm:px-6">
-          <div className="flex items-center justify-center gap-1.5 sm:gap-2 flex-wrap">
-            <span className="text-xs sm:text-sm text-[#a8b2bd] mr-2 sm:mr-3 tracking-wider font-medium font-mono">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-2">
+            <span className="text-xs sm:text-sm text-[#a8b2bd] sm:mr-3 tracking-wider font-medium font-mono">
               {t("dojoSystem.badge")}
             </span>
-            {BELTS.map((belt, index) => (
-              <div
-                key={belt.id}
-                className={`w-6 h-4 sm:w-8 sm:h-5 rounded-sm ${belt.bgColor} transition-all duration-300 hover:scale-110 hover:shadow-[0_0_12px_rgba(240,180,41,0.3)] flex items-center justify-center cursor-pointer shadow-[0_2px_4px_rgba(0,0,0,0.3)]`}
-                title={`${belt.nameKo} (${belt.minXp}+ XP)`}
-              >
-                <span
-                  className="text-[6px] sm:text-[8px] font-bold font-mono"
-                  style={{ color: index === 0 ? "#6b5344" : index === 8 ? "#f5f0e6" : "#3d2c1e" }}
+            <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap justify-center">
+              {BELTS.map((belt, index) => (
+                <div
+                  key={belt.id}
+                  className={`w-6 h-4 sm:w-8 sm:h-5 rounded-sm ${belt.bgColor} transition-all duration-300 hover:scale-110 hover:shadow-[0_0_12px_rgba(240,180,41,0.3)] flex items-center justify-center cursor-pointer shadow-[0_2px_4px_rgba(0,0,0,0.3)]`}
+                  title={`${belt.nameKo} (${belt.minXp}+ XP)`}
                 >
-                  {belt.rank}
-                </span>
-              </div>
-            ))}
+                  <span
+                    className="text-[6px] sm:text-[8px] font-bold font-mono"
+                    style={{ color: index === 0 ? "#6b5344" : index === 8 ? "#f5f0e6" : "#3d2c1e" }}
+                  >
+                    {belt.rank}
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
