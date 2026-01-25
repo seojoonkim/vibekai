@@ -260,20 +260,18 @@ export function ChapterCompletionForm({
       {/* Review Section */}
       <div className="space-y-2">
         <label className="text-sm font-medium text-[#e6edf3]">
-          수련 후기 <span className="text-[#8b949e] font-normal">(선택)</span>
+          수련 후기
         </label>
         <Textarea
           value={review}
           onChange={(e) => setReview(e.target.value)}
-          placeholder="이번 챕터에서 배운 내용이나 느낀 점을 자유롭게 적어주세요..."
+          placeholder="이번 챕터에서 배운 내용이나 느낀 점을 자유롭게 적어주세요... (입력하지 않으면 기본 완료 메시지가 공유됩니다)"
           className="min-h-[100px] bg-[#161b22] border-0 text-[#e6edf3] placeholder:text-[#6e7681] resize-none shadow-[inset_0_1px_4px_rgba(0,0,0,0.3)] focus:ring-2 focus:ring-[#f0b429]/30"
         />
-        {review.trim() && (
-          <p className="text-xs text-[#8b949e] flex items-center gap-1">
-            <Sparkles className="h-3 w-3 text-[#f0b429]" />
-            후기는 커뮤니티 &apos;학습 후기&apos; 게시판에 자동으로 공유됩니다
-          </p>
-        )}
+        <p className="text-xs text-[#8b949e] flex items-center gap-1">
+          <Sparkles className="h-3 w-3 text-[#f0b429]" />
+          완료 후기는 커뮤니티 &apos;학습 후기&apos; 게시판에 자동으로 공유됩니다
+        </p>
       </div>
 
       {/* Submit Button */}

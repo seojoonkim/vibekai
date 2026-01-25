@@ -28,7 +28,7 @@ export function Footer() {
           </p>
         </div>
         <Link
-          href="https://github.com"
+          href="https://github.com/vibedojo-by-hashed/VibecodingCurriculum"
           target="_blank"
           rel="noopener noreferrer"
           className="text-[#8b949e] hover:text-[#c9d1d9] transition-colors"

@@ -6,6 +6,7 @@ import { BeltProgressCard } from "@/components/gamification/belt-badge";
 import { Icons } from "@/components/icons";
 import { CURRICULUM_DATA, getAllChapters } from "@/lib/curriculum-data";
 import { CharacterDisplay } from "@/components/dashboard/character-display";
+import { ActivityHeatmap } from "@/components/dashboard/activity-heatmap";
 
 export default async function DashboardPage() {
   const supabase = await createClient();
@@ -34,6 +35,29 @@ export default async function DashboardPage() {
       .eq("user_id", user.id)
       .eq("status", "completed");
     completedChaptersCount = count || 0;
+  }
+
+  // Fetch activity data for heatmap (last 120 days)
+  let activityData: { date: string; count: number }[] = [];
+  if (user) {
+    const startDate = new Date();
+    startDate.setDate(startDate.getDate() - 120);
+
+    const { data: xpLogs } = await supabase
+      .from("xp_logs")
+      .select("created_at")
+      .eq("user_id", user.id)
+      .gte("created_at", startDate.toISOString())
+      .order("created_at", { ascending: true });
+
+    if (xpLogs) {
+      const countByDate = new Map<string, number>();
+      xpLogs.forEach((log) => {
+        const date = log.created_at.split("T")[0];
+        countByDate.set(date, (countByDate.get(date) || 0) + 1);
+      });
+      activityData = Array.from(countByDate.entries()).map(([date, count]) => ({ date, count }));
+    }
   }
 
   const userStats = {
@@ -110,9 +134,9 @@ export default async function DashboardPage() {
           </div>
 
           {/* 1:2 Layout - Character : XP Progress */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {/* Character Card - 1 portion */}
-            <div className="relative bg-[#1c2128] backdrop-blur-sm p-5 rounded-lg shadow-[0_4px_12px_rgba(0,0,0,0.35)] hover:shadow-[0_8px_24px_rgba(218,165,32,0.15)] transition-all duration-300 group">
+            <div className="relative bg-[#161b22] border border-[#30363d] p-5 rounded-xl shadow-sm hover:border-[#f0b429]/30 hover:shadow-[0_0_20px_rgba(240,180,41,0.08)] transition-all duration-300 group">
               <CharacterDisplay
                 initialCharacterId={userStats.characterId}
                 displayName={userStats.displayName}
@@ -122,8 +146,13 @@ export default async function DashboardPage() {
 
             {/* XP & Belt Progress - 2 portions */}
             <div className="md:col-span-2">
-              <BeltProgressCard xp={userStats.totalXp} className="h-full hover:shadow-[0_8px_24px_rgba(218,165,32,0.15)] transition-all duration-300" />
+              <BeltProgressCard xp={userStats.totalXp} className="h-full" />
             </div>
+          </div>
+
+          {/* Activity Heatmap - GitHub Style */}
+          <div className="mt-5 bg-[#161b22] border border-[#30363d] p-5 rounded-xl shadow-sm">
+            <ActivityHeatmap activities={activityData} />
           </div>
         </div>
       </div>
@@ -183,13 +212,13 @@ export default async function DashboardPage() {
                 href={`/curriculum?part=${part.id}`}
                 className="block group"
               >
-                <div className={`relative h-full transition-all duration-300 backdrop-blur-sm p-4 sm:p-6 rounded-lg ${
+                <div className={`relative h-full transition-all duration-300 backdrop-blur-sm p-4 sm:p-6 rounded-xl border ${
                   isActive
-                    ? 'bg-[#1c2128] shadow-[0_4px_12px_rgba(0,0,0,0.35)]'
+                    ? 'bg-[#161b22] border-[#30363d] shadow-sm'
                     : isCompleted
-                      ? 'bg-[#1c2128]/80 shadow-[0_4px_12px_rgba(0,0,0,0.3)]'
-                      : 'bg-[#1c2128]/50 shadow-[0_4px_12px_rgba(0,0,0,0.25)] opacity-70'
-                } hover:shadow-[0_8px_24px_rgba(218,165,32,0.15)] hover:-translate-y-1`}>
+                      ? 'bg-[#161b22]/80 border-[#30363d]/80 shadow-sm'
+                      : 'bg-[#161b22]/50 border-[#30363d]/50 shadow-sm opacity-70'
+                } hover:border-[#f0b429]/40 hover:shadow-[0_0_24px_rgba(240,180,41,0.1)] hover:-translate-y-0.5`}>
 
                   {/* Part Number Badge */}
                   <div className={`absolute -top-2 sm:-top-2.5 -left-1.5 sm:-left-2 px-2.5 sm:px-3.5 py-1 sm:py-1.5 text-xs sm:text-sm font-bold uppercase tracking-wider rounded-md font-mono shadow-[0_2px_6px_rgba(0,0,0,0.3)] ${
@@ -249,7 +278,7 @@ export default async function DashboardPage() {
         </div>
 
         {/* Key Visual Banner */}
-        <div className="relative overflow-hidden rounded-lg shadow-[0_4px_16px_rgba(0,0,0,0.4)] group hover:shadow-[0_8px_24px_rgba(218,165,32,0.15)] transition-all duration-500">
+        <div className="relative overflow-hidden rounded-xl border border-[#30363d] shadow-sm group hover:border-[#f0b429]/30 hover:shadow-[0_0_24px_rgba(240,180,41,0.1)] transition-all duration-500">
           <div className="relative h-44 sm:h-56 md:h-64 bg-[#0d1117]">
             <Image
               src="/images/bg.jpg"

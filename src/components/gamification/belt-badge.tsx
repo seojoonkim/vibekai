@@ -111,7 +111,7 @@ export function BeltProgressCard({ xp, className }: BeltProgressCardProps) {
 
   return (
     <div className={cn(
-      "relative bg-[#1c2128] backdrop-blur-sm p-6 sm:p-7 rounded-lg shadow-[0_4px_12px_rgba(0,0,0,0.35)]",
+      "relative bg-[#161b22] backdrop-blur-sm p-6 sm:p-7 rounded-xl border border-[#30363d] shadow-sm hover:border-[#f0b429]/30 hover:shadow-[0_0_20px_rgba(240,180,41,0.08)] transition-all duration-300",
       className
     )}>
       {/* Header with XP */}

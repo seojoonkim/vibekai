@@ -144,6 +144,8 @@
     "hasAccount": "이미 수련생이신가요?",
     "continueWithGithub": "GitHub로 입장",
     "continueWithGoogle": "Google로 입장",
+    "signupWithGithub": "GitHub로 입문",
+    "signupWithGoogle": "Google로 입문",
     "orContinueWith": "또는",
     "termsAgreement": "입문하시면 도장 규칙과 개인정보 처리방침에 동의하게 됩니다."
   },

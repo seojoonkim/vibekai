@@ -70,7 +70,7 @@ export default async function LandingPage() {
       {/* Hero Section - GitHub Dark Style */}
       <section className="relative overflow-hidden">
         {/* Background layers */}
-        <div className="relative w-full overflow-hidden aspect-[4/3.8] sm:aspect-[4/3.5] md:aspect-[16/10] lg:aspect-[16/9.5] xl:aspect-[16/8.1]">
+        <div className="relative w-full overflow-hidden aspect-[4/5] sm:aspect-[4/3.5] md:aspect-[16/10] lg:aspect-[16/9.5] xl:aspect-[16/8.1]">
           <video
             src="/images/bg.mp4"
             autoPlay

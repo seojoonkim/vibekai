@@ -381,28 +381,28 @@ export default function ChapterDetailPage() {
       amount: chapter.xp_reward,
     });
 
-    // 3. If there's a review, post to community
+    // 3. Post completion to community (with review or default message)
     let postId: string | null = null;
-    if (data.review.trim()) {
-      const { data: postData, error: postError } = await supabase
-        .from("posts")
-        .insert({
-          author_id: user.id,
-          type: "review",
-          title: `학습 완료 - ${markdownTitle || chapter.title_ko}`,
-          content: data.review.trim(),
-          chapter_id: chapter.id,
-          difficulty_rating: data.difficultyRating,
-          satisfaction_rating: data.satisfactionRating,
-        })
-        .select("id")
-        .single();
+    const reviewContent = data.review.trim() || `${markdownTitle || chapter.title_ko} 챕터를 완료했습니다! 🎉`;
 
-      if (postError) {
-        console.error("Failed to create review post:", postError.message, postError.code, postError.details, postError.hint);
-      } else if (postData) {
-        postId = postData.id;
-      }
+    const { data: postData, error: postError } = await supabase
+      .from("posts")
+      .insert({
+        author_id: user.id,
+        type: "review",
+        title: `[학습 후기] ${markdownTitle || chapter.title_ko}`,
+        content: reviewContent,
+        chapter_id: chapter.id,
+        difficulty_rating: data.difficultyRating,
+        satisfaction_rating: data.satisfactionRating,
+      })
+      .select("id")
+      .single();
+
+    if (postError) {
+      console.error("Failed to create review post:", postError.message, postError.code, postError.details, postError.hint);
+    } else if (postData) {
+      postId = postData.id;
     }
 
     // 4. Save chapter review (ratings)

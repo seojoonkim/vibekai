@@ -144,6 +144,8 @@
     "hasAccount": "Already have an account?",
     "continueWithGithub": "Continue with GitHub",
     "continueWithGoogle": "Continue with Google",
+    "signupWithGithub": "Sign up with GitHub",
+    "signupWithGoogle": "Sign up with Google",
     "orContinueWith": "or",
     "termsAgreement": "By continuing, you agree to our Terms of Service and Privacy Policy."
   },
