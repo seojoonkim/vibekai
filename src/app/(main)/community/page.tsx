@@ -357,12 +357,12 @@ function PostCard({
   const hasComments = comments.length > 0 || currentUserId;
 
   return (
-    <article className="bg-[#161b22] rounded-xl border border-[#30363d]/60 shadow-[0_1px_3px_rgba(0,0,0,0.12),0_1px_2px_rgba(0,0,0,0.08)] overflow-hidden hover:border-[#30363d] transition-all duration-200 group">
+    <article className="bg-[#151a21] rounded-xl border border-[#21262d]/60 shadow-[0_2px_8px_rgba(0,0,0,0.15)] overflow-hidden hover:border-[#30363d]/80 transition-all duration-200 group">
       {/* Header */}
       <div className="px-5 pt-5 pb-3 flex items-start gap-3">
-        <Avatar className="h-10 w-10 ring-2 ring-[#21262d]">
+        <Avatar className="h-10 w-10 ring-2 ring-[#1c2128]">
           <AvatarImage src={post.profiles.avatar_url || undefined} />
-          <AvatarFallback className="bg-[#21262d] text-[#c9d1d9] text-sm font-mono font-medium">
+          <AvatarFallback className="bg-[#1c2128] text-[#c9d1d9] text-sm font-mono font-medium">
             {post.profiles.username.slice(0, 2).toUpperCase()}
           </AvatarFallback>
         </Avatar>
@@ -390,11 +390,11 @@ function PostCard({
         {isOwner && (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <button className="p-1.5 hover:bg-[#21262d] rounded-lg transition-colors opacity-0 group-hover:opacity-100">
+              <button className="p-1.5 hover:bg-[#1c2128] rounded-lg transition-colors opacity-0 group-hover:opacity-100">
                 <MoreHorizontal className="h-4 w-4 text-[#8b949e]" />
               </button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-36 bg-[#161b22] border-[#30363d] shadow-xl">
+            <DropdownMenuContent align="end" className="w-36 bg-[#1c2128] border-[#30363d]/60 shadow-xl">
               <DropdownMenuItem onClick={() => onEdit(post)} className="text-[#c9d1d9] focus:bg-[#21262d] focus:text-[#c9d1d9] cursor-pointer">
                 <Pencil className="h-4 w-4 mr-2" />
                 수정하기
@@ -421,7 +421,7 @@ function PostCard({
 
         {/* Review ratings */}
         {post.type === "review" && (post.difficulty_rating || post.satisfaction_rating) && (
-          <div className="flex items-center gap-6 mt-4 py-3 px-4 bg-[#0d1117]/50 rounded-lg border border-[#21262d]">
+          <div className="flex items-center gap-6 mt-4 py-3 px-4 bg-[#0a0c10]/60 rounded-lg border border-[#21262d]/50">
             {post.satisfaction_rating && (
               <div className="flex items-center gap-2">
                 <span className="text-xs text-[#8b949e]">만족도</span>
@@ -456,7 +456,7 @@ function PostCard({
             )}
             {post.github_repo && (
               <a href={post.github_repo} target="_blank" rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#21262d] text-[#c9d1d9] rounded-lg text-xs font-medium hover:bg-[#30363d] border border-[#30363d] transition-colors">
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#1c2128] text-[#c9d1d9] rounded-lg text-xs font-medium hover:bg-[#242b33] border border-[#30363d]/60 transition-colors">
                 <Github className="h-3.5 w-3.5" />GitHub
               </a>
             )}
@@ -465,12 +465,12 @@ function PostCard({
       </div>
 
       {/* Actions */}
-      <div className="px-5 py-2.5 flex items-center border-t border-[#21262d]/50">
+      <div className="px-5 py-2.5 flex items-center border-t border-[#1c2128]">
         <div className="flex gap-1">
           <button
             onClick={handleLike}
             disabled={!currentUserId}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[#21262d] ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[#1c2128] ${
               liked ? "text-[#f85149]" : "text-[#8b949e] hover:text-[#c9d1d9]"
             }`}
           >
@@ -480,7 +480,7 @@ function PostCard({
           </button>
           <button
             onClick={handleCommentClick}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-[#8b949e] hover:text-[#c9d1d9] hover:bg-[#21262d] transition-all"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-[#8b949e] hover:text-[#c9d1d9] hover:bg-[#1c2128] transition-all"
           >
             <MessageSquare className="h-4 w-4" />
             <span>댓글</span>
@@ -490,7 +490,7 @@ function PostCard({
         <div className="ml-auto">
           <button
             onClick={handleBookmark}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all hover:bg-[#21262d] ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all hover:bg-[#1c2128] ${
               saved ? "text-[#f0b429]" : "text-[#8b949e] hover:text-[#c9d1d9]"
             }`}
           >
@@ -501,21 +501,21 @@ function PostCard({
 
       {/* Comments Section - Unified with card */}
       {hasComments && (
-        <div className="bg-[#0d1117]/30">
+        <div className="bg-[#0a0c10]/40">
           {parentComments.length > 0 && (
             <div className="px-5 py-4 space-y-4">
               {parentComments.map((comment) => (
                 <div key={comment.id} className="space-y-3">
                   {/* Parent comment */}
                   <div className="flex gap-3">
-                    <Avatar className="h-8 w-8 shrink-0 ring-1 ring-[#21262d]">
+                    <Avatar className="h-8 w-8 shrink-0 ring-1 ring-[#1c2128]">
                       <AvatarImage src={comment.profiles.avatar_url || undefined} />
-                      <AvatarFallback className="bg-[#21262d] text-[#8b949e] text-[10px] font-mono">
+                      <AvatarFallback className="bg-[#1c2128] text-[#8b949e] text-[10px] font-mono">
                         {comment.profiles.username.slice(0, 2).toUpperCase()}
                       </AvatarFallback>
                     </Avatar>
                     <div className="flex-1 min-w-0">
-                      <div className="inline-block bg-[#21262d]/60 rounded-2xl rounded-tl-sm px-4 py-2.5">
+                      <div className="inline-block bg-[#1c2128]/80 rounded-2xl rounded-tl-sm px-4 py-2.5">
                         <span className="font-medium text-[#e6edf3] text-xs">
                           {comment.profiles.display_name || comment.profiles.username}
                         </span>
@@ -534,14 +534,14 @@ function PostCard({
                   {/* Replies */}
                   {getReplies(comment.id).map((reply) => (
                     <div key={reply.id} className="flex gap-3 ml-11">
-                      <Avatar className="h-7 w-7 shrink-0 ring-1 ring-[#21262d]">
+                      <Avatar className="h-7 w-7 shrink-0 ring-1 ring-[#1c2128]">
                         <AvatarImage src={reply.profiles.avatar_url || undefined} />
-                        <AvatarFallback className="bg-[#21262d] text-[#8b949e] text-[9px] font-mono">
+                        <AvatarFallback className="bg-[#1c2128] text-[#8b949e] text-[9px] font-mono">
                           {reply.profiles.username.slice(0, 2).toUpperCase()}
                         </AvatarFallback>
                       </Avatar>
                       <div className="flex-1 min-w-0">
-                        <div className="inline-block bg-[#21262d]/40 rounded-2xl rounded-tl-sm px-3.5 py-2">
+                        <div className="inline-block bg-[#1c2128]/60 rounded-2xl rounded-tl-sm px-3.5 py-2">
                           <span className="font-medium text-[#e6edf3] text-[11px]">
                             {reply.profiles.display_name || reply.profiles.username}
                           </span>
@@ -572,7 +572,7 @@ function PostCard({
                           onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); handleSubmitComment(comment.id); } }}
                           placeholder="답글 달기..."
                           autoFocus
-                          className="w-full bg-[#21262d]/60 rounded-full px-4 py-2 pr-10 text-xs text-[#e6edf3] placeholder:text-[#6e7681] outline-none focus:ring-2 focus:ring-[#79c0ff]/30 transition-all"
+                          className="w-full bg-[#1c2128] rounded-full px-4 py-2 pr-10 text-xs text-[#e6edf3] placeholder:text-[#6e7681] outline-none border border-[#30363d]/50 focus:border-[#79c0ff]/40 transition-all"
                         />
                         {replyContent.trim() && (
                           <button
@@ -593,7 +593,7 @@ function PostCard({
 
           {/* Comment Input */}
           {currentUserId && (
-            <div className="px-5 py-4 flex gap-3 border-t border-[#21262d]/30">
+            <div className="px-5 py-4 flex gap-3 border-t border-[#1c2128]">
               <Avatar className="h-8 w-8 shrink-0 ring-2 ring-[#f0b429]/20">
                 <AvatarImage src={currentUserAvatar || undefined} />
                 <AvatarFallback className="bg-[#f0b429]/10 text-[#f0b429] text-xs font-bold">U</AvatarFallback>
@@ -606,7 +606,7 @@ function PostCard({
                   onChange={(e) => setNewComment(e.target.value)}
                   onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); handleSubmitComment(null); } }}
                   placeholder="댓글 달기..."
-                  className="w-full bg-[#21262d]/60 rounded-full px-4 py-2.5 pr-12 text-sm text-[#e6edf3] placeholder:text-[#6e7681] outline-none focus:ring-2 focus:ring-[#79c0ff]/30 transition-all"
+                  className="w-full bg-[#1c2128] rounded-full px-4 py-2.5 pr-12 text-sm text-[#e6edf3] placeholder:text-[#6e7681] outline-none border border-[#30363d]/50 focus:border-[#79c0ff]/40 transition-all"
                 />
                 {newComment.trim() && (
                   <button
@@ -799,7 +799,7 @@ function QuestionCard({
   const hasReplies = localReplies.length > 0 || currentUserId;
 
   return (
-    <article className="bg-[#161b22] rounded-xl border border-[#30363d]/60 shadow-[0_1px_3px_rgba(0,0,0,0.12),0_1px_2px_rgba(0,0,0,0.08)] overflow-hidden hover:border-[#30363d] transition-all duration-200 group">
+    <article className="bg-[#151a21] rounded-xl border border-[#21262d]/60 shadow-[0_2px_8px_rgba(0,0,0,0.15)] overflow-hidden hover:border-[#30363d]/80 transition-all duration-200 group">
       {/* Header */}
       <div className="px-5 pt-5 pb-3 flex items-start gap-3">
         <Avatar className="h-10 w-10 ring-2 ring-[#f0b429]/20">
@@ -831,11 +831,11 @@ function QuestionCard({
         {isOwner && (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <button className="p-1.5 hover:bg-[#21262d] rounded-lg transition-colors opacity-0 group-hover:opacity-100">
+              <button className="p-1.5 hover:bg-[#1c2128] rounded-lg transition-colors opacity-0 group-hover:opacity-100">
                 <MoreHorizontal className="h-4 w-4 text-[#8b949e]" />
               </button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-36 bg-[#161b22] border-[#30363d] shadow-xl">
+            <DropdownMenuContent align="end" className="w-36 bg-[#1c2128] border-[#30363d]/60 shadow-xl">
               <DropdownMenuItem onClick={() => onDelete(question.id)} className="text-[#f85149] focus:bg-[#f85149]/10 focus:text-[#f85149] cursor-pointer">
                 <Trash2 className="h-4 w-4 mr-2" />
                 삭제하기
@@ -849,7 +849,7 @@ function QuestionCard({
       <div className="px-5 pb-3">
         <Link
           href={`/curriculum/${question.chapter_id}`}
-          className="inline-flex items-center gap-2 px-3 py-2 bg-[#0d1117]/50 border border-[#21262d] rounded-lg hover:border-[#f0b429]/40 hover:bg-[#f0b429]/5 transition-colors group/link"
+          className="inline-flex items-center gap-2 px-3 py-2 bg-[#0a0c10]/60 border border-[#21262d]/50 rounded-lg hover:border-[#f0b429]/40 hover:bg-[#f0b429]/5 transition-colors group/link"
         >
           <Code2 className="h-3.5 w-3.5 text-[#f0b429]" />
           <span className="text-xs text-[#f0b429]">Chapter {question.chapter_id}</span>
@@ -861,7 +861,7 @@ function QuestionCard({
       {/* Content */}
       <div className="px-5 pb-4">
         {question.selected_text && (
-          <div className="mb-3 px-4 py-2.5 bg-[#0d1117]/50 border-l-2 border-[#f0b429] rounded-r-lg">
+          <div className="mb-3 px-4 py-2.5 bg-[#0a0c10]/50 border-l-2 border-[#f0b429] rounded-r-lg">
             <p className="text-xs text-[#8b949e] italic">&ldquo;{question.selected_text}&rdquo;</p>
           </div>
         )}
@@ -871,11 +871,11 @@ function QuestionCard({
       </div>
 
       {/* Actions */}
-      <div className="px-5 py-2.5 flex items-center border-t border-[#21262d]/50">
+      <div className="px-5 py-2.5 flex items-center border-t border-[#1c2128]">
         <div className="flex gap-1">
           <button
             onClick={handleLike}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all hover:bg-[#21262d] ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all hover:bg-[#1c2128] ${
               liked ? "text-[#f85149]" : "text-[#8b949e] hover:text-[#c9d1d9]"
             }`}
           >
@@ -885,7 +885,7 @@ function QuestionCard({
           </button>
           <button
             onClick={handleReplyClick}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-[#8b949e] hover:text-[#c9d1d9] hover:bg-[#21262d] transition-all"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-[#8b949e] hover:text-[#c9d1d9] hover:bg-[#1c2128] transition-all"
           >
             <MessageSquare className="h-4 w-4" />
             <span>댓글</span>
@@ -893,7 +893,7 @@ function QuestionCard({
           </button>
         </div>
         <div className="ml-auto">
-          <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-[#8b949e] hover:text-[#c9d1d9] hover:bg-[#21262d] transition-all">
+          <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-[#8b949e] hover:text-[#c9d1d9] hover:bg-[#1c2128] transition-all">
             <Bookmark className="h-4 w-4" />
           </button>
         </div>
@@ -901,7 +901,7 @@ function QuestionCard({
 
       {/* Comments Section - Unified with card */}
       {hasReplies && (
-        <div className="bg-[#0d1117]/30">
+        <div className="bg-[#0a0c10]/40">
           {localReplies.length > 0 && (
             <div className="px-5 py-4 space-y-4">
               {displayedReplies.map((reply) => (
@@ -909,9 +909,9 @@ function QuestionCard({
                   key={reply.id}
                   className={`flex gap-3 ${reply.is_accepted ? "bg-emerald-500/5 -mx-5 px-5 py-3 border-l-2 border-l-emerald-500" : ""}`}
                 >
-                  <Avatar className="h-8 w-8 shrink-0 ring-1 ring-[#21262d]">
+                  <Avatar className="h-8 w-8 shrink-0 ring-1 ring-[#1c2128]">
                     <AvatarImage src={reply.profiles.avatar_url || undefined} />
-                    <AvatarFallback className="bg-[#21262d] text-[#8b949e] text-[10px] font-mono">
+                    <AvatarFallback className="bg-[#1c2128] text-[#8b949e] text-[10px] font-mono">
                       {reply.profiles.username.slice(0, 2).toUpperCase()}
                     </AvatarFallback>
                   </Avatar>
@@ -922,7 +922,7 @@ function QuestionCard({
                         <span className="text-[11px] font-medium text-emerald-400">채택된 답변</span>
                       </div>
                     )}
-                    <div className={`inline-block rounded-2xl rounded-tl-sm px-4 py-2.5 ${reply.is_accepted ? "bg-emerald-500/10" : "bg-[#21262d]/60"}`}>
+                    <div className={`inline-block rounded-2xl rounded-tl-sm px-4 py-2.5 ${reply.is_accepted ? "bg-emerald-500/10" : "bg-[#1c2128]/80"}`}>
                       <span className="font-medium text-[#e6edf3] text-xs">
                         {reply.profiles.display_name || reply.profiles.username}
                       </span>
@@ -972,7 +972,7 @@ function QuestionCard({
 
           {/* Comment Input */}
           {currentUserId && (
-            <div className="px-5 py-4 flex gap-3 border-t border-[#21262d]/30">
+            <div className="px-5 py-4 flex gap-3 border-t border-[#1c2128]">
               <Avatar className="h-8 w-8 shrink-0 ring-2 ring-[#f0b429]/20">
                 <AvatarImage src={currentUserAvatar || undefined} />
                 <AvatarFallback className="bg-[#f0b429]/10 text-[#f0b429] text-xs font-bold">U</AvatarFallback>
@@ -985,7 +985,7 @@ function QuestionCard({
                   onChange={(e) => setReplyContent(e.target.value)}
                   onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); handleSubmitReply(); } }}
                   placeholder="댓글 달기..."
-                  className="w-full bg-[#21262d]/60 rounded-full px-4 py-2.5 pr-12 text-sm text-[#e6edf3] placeholder:text-[#6e7681] outline-none focus:ring-2 focus:ring-[#79c0ff]/30 transition-all"
+                  className="w-full bg-[#1c2128] rounded-full px-4 py-2.5 pr-12 text-sm text-[#e6edf3] placeholder:text-[#6e7681] outline-none border border-[#30363d]/50 focus:border-[#79c0ff]/40 transition-all"
                 />
                 {replyContent.trim() && (
                   <button
@@ -1167,7 +1167,7 @@ function InlinePostComposer({ onPostCreated, userAvatar, userInitials, userProfi
   const config = writableCategoryConfig[selectedType];
 
   return (
-    <div className="bg-[#161b22] rounded-xl border border-[#30363d]/60 shadow-[0_1px_3px_rgba(0,0,0,0.12),0_1px_2px_rgba(0,0,0,0.08)] overflow-hidden transition-all duration-200">
+    <div className="bg-[#151a21] rounded-xl border border-[#21262d]/60 shadow-[0_2px_8px_rgba(0,0,0,0.15)] overflow-hidden transition-all duration-200">
       {/* Collapsed State */}
       {!isExpanded && (
         <div className="p-5">
@@ -1178,7 +1178,7 @@ function InlinePostComposer({ onPostCreated, userAvatar, userInitials, userProfi
             </Avatar>
             <button
               onClick={() => handleExpand()}
-              className="flex-1 h-11 px-4 bg-[#21262d]/60 hover:bg-[#21262d] rounded-full text-left text-[#8b949e] text-sm transition-all hover:text-[#c9d1d9]"
+              className="flex-1 h-11 px-4 bg-[#1c2128] hover:bg-[#242b33] border border-[#30363d]/50 rounded-full text-left text-[#8b949e] text-sm transition-all hover:text-[#c9d1d9]"
             >
               무슨 생각을 하고 계신가요?
             </button>
@@ -1190,7 +1190,7 @@ function InlinePostComposer({ onPostCreated, userAvatar, userInitials, userProfi
       {isExpanded && (
         <div>
           {/* Header */}
-          <div className="px-5 py-4 border-b border-[#21262d]/50 flex items-center justify-between">
+          <div className="px-5 py-4 border-b border-[#1c2128] flex items-center justify-between">
             <div className="flex items-center gap-3">
               <Avatar className="h-10 w-10 ring-2 ring-[#f0b429]/20">
                 <AvatarImage src={userAvatar || undefined} />
@@ -1203,7 +1203,7 @@ function InlinePostComposer({ onPostCreated, userAvatar, userInitials, userProfi
             </div>
             <button
               onClick={() => setIsExpanded(false)}
-              className="p-2 hover:bg-[#21262d] rounded-lg transition-colors text-[#8b949e] hover:text-[#c9d1d9]"
+              className="p-2 hover:bg-[#1c2128] rounded-lg transition-colors text-[#8b949e] hover:text-[#c9d1d9]"
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M18 6L6 18M6 6l12 12" />
@@ -1212,7 +1212,7 @@ function InlinePostComposer({ onPostCreated, userAvatar, userInitials, userProfi
           </div>
 
           {/* Category Selector */}
-          <div className="px-5 py-3 bg-[#0d1117]/30 border-b border-[#21262d]/30">
+          <div className="px-5 py-3 bg-[#0a0c10]/40 border-b border-[#1c2128]">
             <div className="flex gap-2 flex-wrap">
               {(Object.entries(writableCategoryConfig) as [WritablePostType, typeof writableCategoryConfig[WritablePostType]][]).map(([type, cfg]) => {
                 const Icon = cfg.icon;
@@ -1241,12 +1241,12 @@ function InlinePostComposer({ onPostCreated, userAvatar, userInitials, userProfi
               onChange={(e) => setContent(e.target.value)}
               placeholder={config.placeholder.content}
               rows={4}
-              className="text-sm bg-[#21262d]/40 border-0 text-[#e6edf3] rounded-xl resize-none focus:ring-2 focus:ring-[#79c0ff]/30 placeholder:text-[#6e7681]"
+              className="text-sm bg-[#1c2128] border border-[#30363d]/50 text-[#e6edf3] rounded-xl resize-none focus:border-[#79c0ff]/40 placeholder:text-[#6e7681]"
             />
 
             {/* Showcase URLs */}
             {selectedType === "showcase" && (
-              <div className="space-y-2 p-4 bg-[#0d1117]/50 rounded-xl border border-[#21262d]">
+              <div className="space-y-2 p-4 bg-[#0a0c10]/50 rounded-xl border border-[#21262d]/50">
                 <div className="flex items-center gap-2 mb-3">
                   <Rocket className="h-4 w-4 text-[#79c0ff]" />
                   <span className="text-xs font-medium text-[#79c0ff]">프로젝트 링크 (선택)</span>
@@ -1256,14 +1256,14 @@ function InlinePostComposer({ onPostCreated, userAvatar, userInitials, userProfi
                   value={projectUrl}
                   onChange={(e) => setProjectUrl(e.target.value)}
                   placeholder="https://your-project.com"
-                  className="h-10 text-sm bg-[#21262d]/60 border-0 text-[#e6edf3] rounded-lg placeholder:text-[#6e7681]"
+                  className="h-10 text-sm bg-[#1c2128] border border-[#30363d]/50 text-[#e6edf3] rounded-lg placeholder:text-[#6e7681]"
                 />
                 <Input
                   type="url"
                   value={githubRepo}
                   onChange={(e) => setGithubRepo(e.target.value)}
                   placeholder="https://github.com/username/repo"
-                  className="h-10 text-sm bg-[#21262d]/60 border-0 text-[#e6edf3] rounded-lg placeholder:text-[#6e7681]"
+                  className="h-10 text-sm bg-[#1c2128] border border-[#30363d]/50 text-[#e6edf3] rounded-lg placeholder:text-[#6e7681]"
                 />
               </div>
             )}
@@ -1281,10 +1281,10 @@ function InlinePostComposer({ onPostCreated, userAvatar, userInitials, userProfi
           </div>
 
           {/* Submit Area */}
-          <div className="px-5 py-4 border-t border-[#21262d]/30 bg-[#0d1117]/20 flex items-center justify-between gap-3">
+          <div className="px-5 py-4 border-t border-[#1c2128] bg-[#0a0c10]/30 flex items-center justify-between gap-3">
             <button
               onClick={() => setIsExpanded(false)}
-              className="px-4 py-2 text-sm font-medium text-[#8b949e] hover:text-[#c9d1d9] hover:bg-[#21262d] rounded-lg transition-colors"
+              className="px-4 py-2 text-sm font-medium text-[#8b949e] hover:text-[#c9d1d9] hover:bg-[#1c2128] rounded-lg transition-colors"
             >
               취소
             </button>
@@ -1404,11 +1404,11 @@ export default function CommunityPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#0d1117]">
+    <div className="min-h-screen bg-[#0a0c10]">
       {/* Header */}
       <div className="container pt-5">
         <div className="flex items-center gap-3 mb-3 pb-3 shadow-[0_1px_0_rgba(255,255,255,0.03)]">
-          <div className="p-2.5 bg-[#daa520]/10 rounded-lg shadow-[0_2px_6px_rgba(0,0,0,0.25)]">
+          <div className="p-2.5 bg-[#daa520]/15 rounded-lg border border-[#daa520]/20">
             <Terminal className="h-5 w-5 text-[#daa520]" />
           </div>
           <div>
@@ -1427,12 +1427,12 @@ export default function CommunityPage() {
           <aside className="hidden lg:block w-56 shrink-0">
             <div className="sticky top-20 space-y-4">
               {/* Profile Card */}
-              <div className="bg-[#161b22] rounded-xl border border-[#30363d]/60 overflow-hidden">
-                <div className="h-14 bg-gradient-to-r from-[#f0b429]/15 via-[#f0b429]/5 to-transparent relative">
+              <div className="bg-[#151a21] rounded-xl border border-[#21262d]/60 overflow-hidden">
+                <div className="h-14 bg-gradient-to-r from-[#f0b429]/10 via-[#f0b429]/5 to-transparent relative">
                   <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%2020%2020%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cg%20fill%3D%22%23d4a55a%22%20fill-opacity%3D%220.03%22%3E%3Ccircle%20cx%3D%221%22%20cy%3D%221%22%20r%3D%221%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E')]" />
                 </div>
                 <div className="px-4 pb-4 -mt-5">
-                  <Avatar className="h-12 w-12 ring-4 ring-[#161b22]">
+                  <Avatar className="h-12 w-12 ring-4 ring-[#151a21]">
                     <AvatarImage src={currentUserProfile?.avatar_url || undefined} />
                     <AvatarFallback className="bg-[#f0b429]/10 text-[#f0b429] text-lg font-bold">
                       {currentUserProfile?.username?.slice(0, 2).toUpperCase() || "U"}
@@ -1448,7 +1448,7 @@ export default function CommunityPage() {
               </div>
 
               {/* Filters */}
-              <div className="bg-[#161b22] rounded-xl border border-[#30363d]/60 p-2">
+              <div className="bg-[#151a21] rounded-xl border border-[#21262d]/60 p-2">
                 <nav className="space-y-0.5">
                   {categories.map((cat) => {
                     const Icon = cat.icon;
@@ -1461,12 +1461,12 @@ export default function CommunityPage() {
                     return (
                       <button key={cat.key} onClick={() => setActiveFilter(cat.key)}
                         className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-left transition-all ${
-                          isActive ? "bg-[#21262d] text-[#e6edf3]" : "text-[#8b949e] hover:bg-[#21262d]/50 hover:text-[#c9d1d9]"
+                          isActive ? "bg-[#1c2128] text-[#e6edf3] border border-[#30363d]/50" : "text-[#8b949e] hover:bg-[#1c2128]/50 hover:text-[#c9d1d9] border border-transparent"
                         }`}>
                         <Icon className={`h-4 w-4 ${isActive ? "text-[#f0b429]" : ""}`} />
                         <span className="flex-1 text-xs font-medium">{cat.label}</span>
                         <span className={`text-[10px] min-w-[20px] text-center py-0.5 px-1.5 rounded-md ${
-                          isActive ? "bg-[#f0b429]/15 text-[#f0b429]" : "bg-[#21262d] text-[#8b949e]"
+                          isActive ? "bg-[#f0b429]/15 text-[#f0b429] border border-[#f0b429]/20" : "bg-[#0a0c10] text-[#8b949e] border border-[#21262d]/50"
                         }`}>{count}</span>
                       </button>
                     );
@@ -1486,8 +1486,8 @@ export default function CommunityPage() {
                   const isActive = activeFilter === cat.key;
                   return (
                     <button key={cat.key} onClick={() => setActiveFilter(cat.key)}
-                      className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-all ${
-                        isActive ? "bg-[#21262d] text-[#c9d1d9] shadow-[0_0_0_1px_rgba(240,180,41,0.3),0_2px_6px_rgba(0,0,0,0.3)]" : "bg-[#1c2128] text-[#8b949e] shadow-[0_2px_6px_rgba(0,0,0,0.25)]"
+                      className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-all border ${
+                        isActive ? "bg-[#1c2128] text-[#c9d1d9] border-[#f0b429]/30" : "bg-[#151a21] text-[#8b949e] border-[#21262d]/50"
                       }`}>
                       <Icon className="h-3.5 w-3.5" />{cat.label}
                     </button>
@@ -1544,23 +1544,23 @@ export default function CommunityPage() {
           <aside className="hidden xl:block w-52 shrink-0">
             <div className="sticky top-20 space-y-4">
               {/* Community Stats */}
-              <div className="bg-[#161b22] rounded-xl border border-[#30363d]/60 p-4">
+              <div className="bg-[#151a21] rounded-xl border border-[#21262d]/60 p-4">
                 <p className="text-xs font-semibold text-[#e6edf3] mb-3 flex items-center gap-2">
                   <Zap className="h-3.5 w-3.5 text-[#f0b429]" />
                   커뮤니티 현황
                 </p>
                 <div className="space-y-2">
-                  <div className="flex items-center justify-between py-2.5 px-3 bg-[#0d1117]/50 rounded-lg border border-[#21262d]">
+                  <div className="flex items-center justify-between py-2.5 px-3 bg-[#0a0c10]/60 rounded-lg border border-[#21262d]/50">
                     <span className="text-[11px] text-[#8b949e]">게시글</span>
                     <span className="text-sm font-semibold text-[#e6edf3]">{feedItems.length}</span>
                   </div>
-                  <div className="flex items-center justify-between py-2.5 px-3 bg-[#0d1117]/50 rounded-lg border border-[#21262d]">
+                  <div className="flex items-center justify-between py-2.5 px-3 bg-[#0a0c10]/60 rounded-lg border border-[#21262d]/50">
                     <span className="text-[11px] text-[#8b949e]">학습 질문</span>
                     <span className="text-sm font-semibold text-[#f0b429]">
                       {feedItems.filter(i => i.type === "question").length}
                     </span>
                   </div>
-                  <div className="flex items-center justify-between py-2.5 px-3 bg-[#0d1117]/50 rounded-lg border border-[#21262d]">
+                  <div className="flex items-center justify-between py-2.5 px-3 bg-[#0a0c10]/60 rounded-lg border border-[#21262d]/50">
                     <span className="text-[11px] text-[#8b949e]">일반 질문</span>
                     <span className="text-sm font-semibold text-[#e3b341]">
                       {feedItems.filter(i => i.type === "post" && i.data.type === "question").length}
@@ -1570,7 +1570,7 @@ export default function CommunityPage() {
               </div>
 
               {/* Tip Card */}
-              <div className="bg-[#161b22] rounded-xl border border-[#30363d]/60 p-4">
+              <div className="bg-[#151a21] rounded-xl border border-[#21262d]/60 p-4">
                 <p className="text-xs font-semibold text-[#e6edf3] mb-2 flex items-center gap-2">
                   <Lightbulb className="h-3.5 w-3.5 text-[#e3b341]" />
                   오늘의 팁

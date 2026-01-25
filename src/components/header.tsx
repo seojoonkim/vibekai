@@ -155,7 +155,7 @@ export function Header({ isLoggedIn = false }: HeaderProps) {
             </SheetTrigger>
             <SheetContent
               side="right"
-              className="w-[280px] p-0 bg-[#0d1117] backdrop-blur-sm border-0 rounded-none shadow-[-4px_0_16px_rgba(0,0,0,0.4)]"
+              className="w-[280px] p-0 bg-[#0a0c10] backdrop-blur-sm border-l border-[#21262d]/50 rounded-none shadow-[-4px_0_16px_rgba(0,0,0,0.4)]"
             >
               <div className="flex flex-col h-full">
                 <div className="p-4 shadow-[0_1px_0_rgba(255,255,255,0.05)]">

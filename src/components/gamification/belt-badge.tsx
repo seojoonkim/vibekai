@@ -111,13 +111,13 @@ export function BeltProgressCard({ xp, className }: BeltProgressCardProps) {
 
   return (
     <div className={cn(
-      "relative bg-[#161b22] backdrop-blur-sm p-6 sm:p-7 rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.4)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.5)] transition-all duration-300",
+      "relative bg-[#151a21] backdrop-blur-sm p-6 sm:p-7 rounded-xl border border-[#21262d]/50 shadow-[0_4px_12px_rgba(0,0,0,0.3)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.4)] hover:border-[#30363d]/60 transition-all duration-300",
       className
     )}>
       {/* Header with XP */}
       <div className="flex items-center justify-between mb-5 sm:mb-6">
         <div className="flex items-center gap-3 sm:gap-4">
-          <div className="relative p-2.5 bg-[#daa520]/10 rounded-lg shadow-[0_2px_6px_rgba(0,0,0,0.25)]">
+          <div className="relative p-2.5 bg-[#daa520]/15 rounded-lg border border-[#daa520]/20">
             <Zap className="h-6 sm:h-7 w-6 sm:w-7 text-[#daa520] fill-[#daa520]" />
           </div>
           <div>
@@ -157,7 +157,7 @@ export function BeltProgressCard({ xp, className }: BeltProgressCardProps) {
               {xpToNext.toLocaleString()} XP 남음
             </span>
           </div>
-          <div className="relative h-2.5 sm:h-3 bg-[#21262d] overflow-hidden rounded-md shadow-[inset_0_1px_3px_rgba(0,0,0,0.3)]">
+          <div className="relative h-2.5 sm:h-3 bg-[#0a0c10] overflow-hidden rounded-md border border-[#21262d]/50">
             {/* Progress bar */}
             <div
               className="absolute inset-y-0 left-0 transition-all duration-500 rounded-md"
@@ -217,7 +217,7 @@ export function BeltProgressCard({ xp, className }: BeltProgressCardProps) {
                   {belt.nameKo}
                 </span>
                 {/* Tooltip on hover */}
-                <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-[#1c2128] rounded-lg shadow-[0_4px_12px_rgba(0,0,0,0.4)] text-[10px] sm:text-xs whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
+                <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-[#1c2128] border border-[#30363d]/60 rounded-lg shadow-[0_4px_12px_rgba(0,0,0,0.3)] text-[10px] sm:text-xs whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
                   <span style={{ color: belt.color }}>{belt.nameKo} {belt.rank}</span>
                   <span className="text-[#8b949e] ml-1">{belt.minXp.toLocaleString()}+ XP</span>
                 </div>

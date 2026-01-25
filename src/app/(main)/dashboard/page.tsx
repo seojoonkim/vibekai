@@ -82,10 +82,10 @@ export default async function DashboardPage() {
   const nextChapterId = String(userStats.completedChapters + 1).padStart(2, "0");
 
   return (
-    <div className="min-h-screen bg-[#0d1117] relative overflow-hidden">
+    <div className="min-h-screen bg-[#0a0c10] relative overflow-hidden">
       {/* Subtle ambient glow */}
-      <div className="fixed top-20 left-1/4 w-[500px] h-[500px] bg-[#58a6ff]/5 rounded-full blur-[150px] pointer-events-none" />
-      <div className="fixed bottom-20 right-1/4 w-[400px] h-[400px] bg-[#daa520]/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="fixed top-20 left-1/4 w-[500px] h-[500px] bg-[#58a6ff]/[0.03] rounded-full blur-[150px] pointer-events-none" />
+      <div className="fixed bottom-20 right-1/4 w-[400px] h-[400px] bg-[#daa520]/[0.03] rounded-full blur-[120px] pointer-events-none" />
 
       {/* Decorative Kanji */}
       <div className="fixed top-1/3 left-4 text-[10rem] font-serif text-[#daa520]/[0.03] select-none pointer-events-none hidden lg:block">
@@ -130,7 +130,7 @@ export default async function DashboardPage() {
           {/* 1:2 Layout - Character : XP Progress */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {/* Character Card - 1 portion */}
-            <div className="relative bg-[#161b22] p-5 rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.4)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.5)] transition-all duration-300 group">
+            <div className="relative bg-[#151a21] p-5 rounded-xl border border-[#21262d]/50 shadow-[0_4px_12px_rgba(0,0,0,0.3)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.4)] hover:border-[#30363d]/60 transition-all duration-300 group">
               <CharacterDisplay
                 initialCharacterId={userStats.characterId}
                 displayName={userStats.displayName}
@@ -145,7 +145,7 @@ export default async function DashboardPage() {
           </div>
 
           {/* Activity Heatmap - GitHub Style */}
-          <div className="mt-5 bg-[#161b22] p-5 rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.4)]">
+          <div className="mt-5 bg-[#151a21] p-5 rounded-xl border border-[#21262d]/50 shadow-[0_4px_12px_rgba(0,0,0,0.3)]">
             <ActivityHeatmap activities={activityData} />
           </div>
         </div>
@@ -171,7 +171,7 @@ export default async function DashboardPage() {
                 <span className="text-sm sm:text-base text-[#8b949e] font-medium">/{totalChapters}장</span>
                 <span className="text-xs sm:text-sm text-[#6e7681] ml-2 font-mono">({progressPercent}%)</span>
               </div>
-              <div className="bg-[#21262d] h-2.5 sm:h-3 flex-1 max-w-[240px] sm:max-w-[320px] overflow-hidden rounded-full relative shadow-[inset_0_2px_4px_rgba(0,0,0,0.4)]">
+              <div className="bg-[#0a0c10] h-2.5 sm:h-3 flex-1 max-w-[240px] sm:max-w-[320px] overflow-hidden rounded-full relative border border-[#21262d]/50">
                 <div
                   className="bg-gradient-to-r from-[#daa520] via-[#e6b82e] to-[#3fb950] h-full transition-all duration-500 rounded-full"
                   style={{ width: `${progressPercent}%` }}
@@ -206,21 +206,21 @@ export default async function DashboardPage() {
                 href={`/curriculum?part=${part.id}`}
                 className="block group"
               >
-                <div className={`relative h-full transition-all duration-300 backdrop-blur-sm p-4 sm:p-6 rounded-xl ${
+                <div className={`relative h-full transition-all duration-300 backdrop-blur-sm p-4 sm:p-6 rounded-xl border ${
                   isActive
-                    ? 'bg-[#161b22] shadow-[0_4px_12px_rgba(0,0,0,0.4)]'
+                    ? 'bg-[#151a21] border-[#30363d]/60 shadow-[0_4px_12px_rgba(0,0,0,0.3)]'
                     : isCompleted
-                      ? 'bg-[#161b22]/80 shadow-[0_4px_12px_rgba(0,0,0,0.3)]'
-                      : 'bg-[#161b22]/50 shadow-[0_4px_12px_rgba(0,0,0,0.2)] opacity-70'
-                } hover:shadow-[0_8px_24px_rgba(0,0,0,0.5)] hover:-translate-y-0.5`}>
+                      ? 'bg-[#151a21]/80 border-[#21262d]/50 shadow-[0_4px_12px_rgba(0,0,0,0.25)]'
+                      : 'bg-[#151a21]/50 border-[#21262d]/30 shadow-[0_4px_12px_rgba(0,0,0,0.2)] opacity-70'
+                } hover:shadow-[0_8px_24px_rgba(0,0,0,0.4)] hover:border-[#30363d]/80 hover:-translate-y-0.5`}>
 
                   {/* Part Number Badge */}
-                  <div className={`absolute -top-2 sm:-top-2.5 -left-1.5 sm:-left-2 px-2 sm:px-3 py-0.5 sm:py-1 text-[10px] sm:text-xs font-bold uppercase tracking-wider rounded-md font-mono shadow-[0_2px_6px_rgba(0,0,0,0.3)] ${
+                  <div className={`absolute -top-2 sm:-top-2.5 -left-1.5 sm:-left-2 px-2 sm:px-3 py-0.5 sm:py-1 text-[10px] sm:text-xs font-bold uppercase tracking-wider rounded-md font-mono shadow-[0_2px_6px_rgba(0,0,0,0.4)] ${
                     isActive
-                      ? 'bg-[#daa520] text-[#0d1117]'
+                      ? 'bg-[#daa520] text-[#0a0c10]'
                       : isCompleted
-                        ? 'bg-[#3fb950] text-[#0d1117]'
-                        : 'bg-[#1c2128] text-[#8b949e]'
+                        ? 'bg-[#3fb950] text-[#0a0c10]'
+                        : 'bg-[#242b33] text-[#8b949e] border border-[#30363d]/50'
                   }`}>
                     Part {part.id}
                   </div>
@@ -237,13 +237,13 @@ export default async function DashboardPage() {
                         {part.subtitle.ko}
                       </h3>
                       {isCompleted && (
-                        <div className="flex items-center gap-0.5 sm:gap-1 px-1.5 sm:px-2 py-0.5 bg-[#3fb950]/10 rounded-md shadow-[0_1px_3px_rgba(0,0,0,0.2)]">
+                        <div className="flex items-center gap-0.5 sm:gap-1 px-1.5 sm:px-2 py-0.5 bg-[#3fb950]/15 rounded-md border border-[#3fb950]/20">
                           <Icons.check className="h-2.5 sm:h-3 w-2.5 sm:w-3 text-[#3fb950]" />
                           <span className="text-[8px] sm:text-[10px] text-[#3fb950] font-medium uppercase tracking-wider font-mono">완료</span>
                         </div>
                       )}
                       {isActive && (
-                        <div className="flex items-center gap-0.5 sm:gap-1 px-1.5 sm:px-2 py-0.5 bg-[#daa520]/10 rounded-md shadow-[0_1px_3px_rgba(0,0,0,0.2)]">
+                        <div className="flex items-center gap-0.5 sm:gap-1 px-1.5 sm:px-2 py-0.5 bg-[#daa520]/15 rounded-md border border-[#daa520]/20">
                           <span className="text-[8px] sm:text-[10px] text-[#daa520] font-medium uppercase tracking-wider font-mono">진행중</span>
                         </div>
                       )}
@@ -252,7 +252,7 @@ export default async function DashboardPage() {
                       {part.description.ko}
                     </p>
                     <div className="flex items-center gap-2 sm:gap-3">
-                      <div className="flex-1 h-1.5 bg-[#21262d] overflow-hidden rounded-md relative shadow-[inset_0_1px_3px_rgba(0,0,0,0.3)]">
+                      <div className="flex-1 h-1.5 bg-[#0a0c10] overflow-hidden rounded-md relative border border-[#21262d]/50">
                         <div
                           className={`h-full transition-all ${isCompleted ? 'bg-[#3fb950]' : 'bg-gradient-to-r from-[#daa520] to-[#3fb950]'}`}
                           style={{ width: `${partProgress}%` }}
@@ -272,16 +272,16 @@ export default async function DashboardPage() {
         </div>
 
         {/* Key Visual Banner */}
-        <div className="relative overflow-hidden rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.4)] group hover:shadow-[0_8px_24px_rgba(0,0,0,0.5)] transition-all duration-500">
-          <div className="relative h-44 sm:h-56 md:h-64 bg-[#0d1117]">
+        <div className="relative overflow-hidden rounded-xl border border-[#21262d]/50 shadow-[0_4px_12px_rgba(0,0,0,0.3)] group hover:shadow-[0_8px_24px_rgba(0,0,0,0.4)] hover:border-[#30363d]/60 transition-all duration-500">
+          <div className="relative h-44 sm:h-56 md:h-64 bg-[#0a0c10]">
             <Image
               src="/images/bg.jpg"
               alt="VibeDojo Key Visual"
               fill
               className="object-cover object-center opacity-50 group-hover:opacity-60 group-hover:scale-105 transition-all duration-700 saturate-[0.8]"
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#0d1117]/95 via-[#0d1117]/60 to-transparent" />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0d1117]/70 via-transparent to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#0a0c10]/95 via-[#0a0c10]/60 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0a0c10]/70 via-transparent to-transparent" />
 
             {/* Decorative elements */}
             <div className="absolute top-4 right-4 text-6xl sm:text-7xl md:text-8xl font-serif text-[#daa520]/10 select-none group-hover:text-[#daa520]/15 transition-all duration-500">武</div>
@@ -293,7 +293,7 @@ export default async function DashboardPage() {
               <p className="text-[#8b949e] text-xs sm:text-sm md:text-base mb-3 sm:mb-4">
                 AI와 함께 코딩 무술을 익히고 검은띠에 도전하세요
               </p>
-              <Button asChild className="rounded-lg px-4 py-1.5 bg-[#1c2128]/90 border-0 text-[#c9d1d9] text-xs sm:text-sm hover:bg-[#262c36] shadow-[0_2px_8px_rgba(0,0,0,0.35)] hover:shadow-[0_4px_12px_rgba(218,165,32,0.2)] hover:scale-105 transition-all duration-300">
+              <Button asChild className="rounded-lg px-4 py-1.5 bg-[#1c2128]/90 border border-[#30363d]/50 text-[#c9d1d9] text-xs sm:text-sm hover:bg-[#262c36] hover:border-[#484f58]/60 shadow-[0_2px_8px_rgba(0,0,0,0.35)] hover:shadow-[0_4px_12px_rgba(218,165,32,0.2)] hover:scale-105 transition-all duration-300">
                 <Link href="/curriculum">
                   수련 과정 보기
                   <Icons.chevronRight className="ml-1.5 h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform duration-300" />
