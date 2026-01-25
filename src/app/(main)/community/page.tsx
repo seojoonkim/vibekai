@@ -354,11 +354,13 @@ function PostCard({
   const parentComments = comments.filter(c => !c.parent_id);
   const getReplies = (parentId: string) => comments.filter(c => c.parent_id === parentId);
 
+  const hasComments = comments.length > 0 || currentUserId;
+
   return (
-    <article className="bg-[#1c2128] rounded-lg shadow-[0_4px_12px_rgba(0,0,0,0.35)] overflow-hidden hover:shadow-[0_6px_16px_rgba(0,0,0,0.45)] transition-all group">
+    <article className="bg-[#161b22] rounded-xl border border-[#30363d]/60 shadow-[0_1px_3px_rgba(0,0,0,0.12),0_1px_2px_rgba(0,0,0,0.08)] overflow-hidden hover:border-[#30363d] transition-all duration-200 group">
       {/* Header */}
-      <div className="px-4 pt-4 pb-3 flex items-start gap-3">
-        <Avatar className="h-10 w-10 shadow-[0_2px_6px_rgba(0,0,0,0.3)]">
+      <div className="px-5 pt-5 pb-3 flex items-start gap-3">
+        <Avatar className="h-10 w-10 ring-2 ring-[#21262d]">
           <AvatarImage src={post.profiles.avatar_url || undefined} />
           <AvatarFallback className="bg-[#21262d] text-[#c9d1d9] text-sm font-mono font-medium">
             {post.profiles.username.slice(0, 2).toUpperCase()}
@@ -366,20 +368,20 @@ function PostCard({
         </Avatar>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="font-medium text-[#c9d1d9] text-sm hover:text-[#79c0ff] cursor-pointer transition-colors">
+            <span className="font-medium text-[#e6edf3] text-sm hover:text-[#79c0ff] cursor-pointer transition-colors">
               {post.profiles.display_name || post.profiles.username}
             </span>
-            <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-medium border ${config.color} ${config.bgColor} ${config.borderColor}`}>
-              <Icon className="h-3 w-3" />
+            <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium border ${config.color} ${config.bgColor} ${config.borderColor}`}>
+              <Icon className="h-2.5 w-2.5" />
               {config.label}
             </span>
           </div>
-          <div className="flex items-center gap-1.5 text-xs text-[#8b949e] mt-1 font-mono">
+          <div className="flex items-center gap-1.5 text-xs text-[#8b949e] mt-1">
             <span>{formatTimeAgo(post.created_at)}</span>
             {post.chapters && (
               <>
-                <span className="text-[#30363d]">•</span>
-                <span className="text-[#f0b429]">{post.chapters.title_ko}</span>
+                <span className="text-[#30363d]">·</span>
+                <span className="text-[#f0b429]/80">{post.chapters.title_ko}</span>
               </>
             )}
           </div>
@@ -388,7 +390,7 @@ function PostCard({
         {isOwner && (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <button className="p-1.5 hover:bg-[#21262d] rounded-md transition-colors opacity-0 group-hover:opacity-100">
+              <button className="p-1.5 hover:bg-[#21262d] rounded-lg transition-colors opacity-0 group-hover:opacity-100">
                 <MoreHorizontal className="h-4 w-4 text-[#8b949e]" />
               </button>
             </DropdownMenuTrigger>
@@ -407,22 +409,22 @@ function PostCard({
       </div>
 
       {/* Content */}
-      <div className="px-4 pb-3">
+      <div className="px-5 pb-4">
         {post.title && (
-          <h3 className="font-semibold text-[#c9d1d9] text-[15px] leading-snug mb-2">
+          <h3 className="font-semibold text-[#e6edf3] text-[15px] leading-snug mb-2">
             {post.title}
           </h3>
         )}
-        <p className="text-[#8b949e] text-sm leading-relaxed whitespace-pre-wrap">
+        <p className="text-[#9198a1] text-sm leading-relaxed whitespace-pre-wrap">
           {post.content}
         </p>
 
         {/* Review ratings */}
         {post.type === "review" && (post.difficulty_rating || post.satisfaction_rating) && (
-          <div className="flex items-center gap-6 mt-4 py-3 px-3 bg-[#0d1117] rounded-lg shadow-[inset_0_1px_4px_rgba(0,0,0,0.3)]">
+          <div className="flex items-center gap-6 mt-4 py-3 px-4 bg-[#0d1117]/50 rounded-lg border border-[#21262d]">
             {post.satisfaction_rating && (
               <div className="flex items-center gap-2">
-                <span className="text-xs text-[#8b949e] font-mono">만족도</span>
+                <span className="text-xs text-[#8b949e]">만족도</span>
                 <div className="flex gap-0.5">
                   {[1, 2, 3, 4, 5].map((s) => (
                     <Star key={s} className={`h-3.5 w-3.5 ${s <= post.satisfaction_rating! ? "fill-[#f0b429] text-[#f0b429]" : "text-[#30363d]"}`} />
@@ -432,7 +434,7 @@ function PostCard({
             )}
             {post.difficulty_rating && (
               <div className="flex items-center gap-2">
-                <span className="text-xs text-[#8b949e] font-mono">난이도</span>
+                <span className="text-xs text-[#8b949e]">난이도</span>
                 <div className="flex gap-0.5">
                   {[1, 2, 3, 4, 5].map((s) => (
                     <Star key={s} className={`h-3.5 w-3.5 ${s <= post.difficulty_rating! ? "fill-[#bc8cff] text-[#bc8cff]" : "text-[#30363d]"}`} />
@@ -448,13 +450,13 @@ function PostCard({
           <div className="flex items-center gap-2 mt-4">
             {post.project_url && (
               <a href={post.project_url} target="_blank" rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#238636] text-white rounded-md text-xs font-medium hover:bg-[#2ea043] transition-colors">
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#238636] text-white rounded-lg text-xs font-medium hover:bg-[#2ea043] transition-colors">
                 <ExternalLink className="h-3.5 w-3.5" />데모 보기
               </a>
             )}
             {post.github_repo && (
               <a href={post.github_repo} target="_blank" rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#21262d] text-[#c9d1d9] rounded-lg text-xs font-medium hover:bg-[#30363d] shadow-[0_2px_6px_rgba(0,0,0,0.3)] transition-colors">
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#21262d] text-[#c9d1d9] rounded-lg text-xs font-medium hover:bg-[#30363d] border border-[#30363d] transition-colors">
                 <Github className="h-3.5 w-3.5" />GitHub
               </a>
             )}
@@ -462,95 +464,92 @@ function PostCard({
         )}
       </div>
 
-      {/* Actions - Compact */}
-      <div className="px-3 py-1.5 border-t border-[#21262d] flex items-center">
-        {/* Left: Like & Comment */}
-        <div className="flex gap-0.5">
+      {/* Actions */}
+      <div className="px-5 py-2.5 flex items-center border-t border-[#21262d]/50">
+        <div className="flex gap-1">
           <button
             onClick={handleLike}
             disabled={!currentUserId}
-            className={`flex items-center gap-1.5 px-2 py-1 rounded text-[11px] font-medium transition-all disabled:opacity-50 disabled:cursor-not-allowed ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[#21262d] ${
               liked ? "text-[#f85149]" : "text-[#8b949e] hover:text-[#c9d1d9]"
             }`}
           >
-            <Heart className={`h-3.5 w-3.5 ${liked ? "fill-[#f85149]" : ""}`} />
+            <Heart className={`h-4 w-4 ${liked ? "fill-[#f85149]" : ""}`} />
             <span>좋아요</span>
-            {likesCount > 0 && <span className="font-mono">{likesCount}</span>}
+            {likesCount > 0 && <span className="text-[11px] opacity-80">{likesCount}</span>}
           </button>
           <button
             onClick={handleCommentClick}
-            className="flex items-center gap-1.5 px-2 py-1 rounded text-[11px] font-medium text-[#8b949e] hover:text-[#c9d1d9] transition-all"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-[#8b949e] hover:text-[#c9d1d9] hover:bg-[#21262d] transition-all"
           >
-            <MessageSquare className="h-3.5 w-3.5" />
+            <MessageSquare className="h-4 w-4" />
             <span>댓글</span>
-            {comments.length > 0 && <span className="font-mono">{comments.length}</span>}
+            {comments.length > 0 && <span className="text-[11px] opacity-80">{comments.length}</span>}
           </button>
         </div>
-        {/* Right: Bookmark */}
         <div className="ml-auto">
           <button
             onClick={handleBookmark}
-            className={`flex items-center gap-1.5 px-2 py-1 rounded text-[11px] font-medium transition-all ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all hover:bg-[#21262d] ${
               saved ? "text-[#f0b429]" : "text-[#8b949e] hover:text-[#c9d1d9]"
             }`}
           >
-            <Bookmark className={`h-3.5 w-3.5 ${saved ? "fill-[#f0b429]" : ""}`} />
-            <span>저장</span>
+            <Bookmark className={`h-4 w-4 ${saved ? "fill-[#f0b429]" : ""}`} />
           </button>
         </div>
       </div>
 
-      {/* Comments Section */}
-      {(comments.length > 0 || currentUserId) && (
-        <div className="border-t border-[#21262d] bg-[#0d1117]">
+      {/* Comments Section - Unified with card */}
+      {hasComments && (
+        <div className="bg-[#0d1117]/30">
           {parentComments.length > 0 && (
-            <div className="px-4 py-3 space-y-3">
+            <div className="px-5 py-4 space-y-4">
               {parentComments.map((comment) => (
-                <div key={comment.id}>
-                  {/* 부모 댓글 */}
-                  <div className="flex gap-2.5">
-                    <Avatar className="h-7 w-7 shrink-0 shadow-[0_1px_3px_rgba(0,0,0,0.3)]">
+                <div key={comment.id} className="space-y-3">
+                  {/* Parent comment */}
+                  <div className="flex gap-3">
+                    <Avatar className="h-8 w-8 shrink-0 ring-1 ring-[#21262d]">
                       <AvatarImage src={comment.profiles.avatar_url || undefined} />
                       <AvatarFallback className="bg-[#21262d] text-[#8b949e] text-[10px] font-mono">
                         {comment.profiles.username.slice(0, 2).toUpperCase()}
                       </AvatarFallback>
                     </Avatar>
                     <div className="flex-1 min-w-0">
-                      <div className="bg-[#161b22] rounded-lg px-3 py-2 shadow-[0_2px_6px_rgba(0,0,0,0.25)]">
-                        <span className="font-medium text-[#c9d1d9] text-xs">
+                      <div className="inline-block bg-[#21262d]/60 rounded-2xl rounded-tl-sm px-4 py-2.5">
+                        <span className="font-medium text-[#e6edf3] text-xs">
                           {comment.profiles.display_name || comment.profiles.username}
                         </span>
-                        <p className="text-[#8b949e] text-xs leading-relaxed mt-0.5">{comment.content}</p>
+                        <p className="text-[#9198a1] text-sm leading-relaxed mt-0.5">{comment.content}</p>
                       </div>
-                      <div className="flex items-center gap-3 mt-1 px-1 text-[10px] text-[#8b949e] font-mono">
-                        <button className="hover:text-[#f85149] transition-colors">좋아요</button>
-                        <button onClick={() => setReplyingTo(replyingTo === comment.id ? null : comment.id)} className="hover:text-[#79c0ff] transition-colors">답글</button>
+                      <div className="flex items-center gap-4 mt-1.5 pl-2 text-[11px] text-[#8b949e]">
                         <span>{formatTimeAgo(comment.created_at)}</span>
+                        <button className="hover:text-[#f85149] transition-colors font-medium">좋아요</button>
+                        <button onClick={() => setReplyingTo(replyingTo === comment.id ? null : comment.id)} className="hover:text-[#79c0ff] transition-colors font-medium">답글</button>
                         {currentUserId === comment.author_id && (
                           <button onClick={() => handleDeleteComment(comment.id)} className="hover:text-[#f85149] transition-colors">삭제</button>
                         )}
                       </div>
                     </div>
                   </div>
-                  {/* 대댓글 */}
+                  {/* Replies */}
                   {getReplies(comment.id).map((reply) => (
-                    <div key={reply.id} className="flex gap-2.5 ml-9 mt-2">
-                      <Avatar className="h-6 w-6 shrink-0 shadow-[0_1px_3px_rgba(0,0,0,0.3)]">
+                    <div key={reply.id} className="flex gap-3 ml-11">
+                      <Avatar className="h-7 w-7 shrink-0 ring-1 ring-[#21262d]">
                         <AvatarImage src={reply.profiles.avatar_url || undefined} />
                         <AvatarFallback className="bg-[#21262d] text-[#8b949e] text-[9px] font-mono">
                           {reply.profiles.username.slice(0, 2).toUpperCase()}
                         </AvatarFallback>
                       </Avatar>
                       <div className="flex-1 min-w-0">
-                        <div className="bg-[#161b22] rounded-lg px-2.5 py-1.5 shadow-[0_1px_4px_rgba(0,0,0,0.25)]">
-                          <span className="font-medium text-[#c9d1d9] text-[11px]">
+                        <div className="inline-block bg-[#21262d]/40 rounded-2xl rounded-tl-sm px-3.5 py-2">
+                          <span className="font-medium text-[#e6edf3] text-[11px]">
                             {reply.profiles.display_name || reply.profiles.username}
                           </span>
-                          <p className="text-[#8b949e] text-[11px] leading-relaxed mt-0.5">{reply.content}</p>
+                          <p className="text-[#9198a1] text-xs leading-relaxed mt-0.5">{reply.content}</p>
                         </div>
-                        <div className="flex items-center gap-3 mt-1 px-1 text-[10px] text-[#8b949e] font-mono">
-                          <button className="hover:text-[#f85149] transition-colors">좋아요</button>
+                        <div className="flex items-center gap-4 mt-1 pl-2 text-[10px] text-[#8b949e]">
                           <span>{formatTimeAgo(reply.created_at)}</span>
+                          <button className="hover:text-[#f85149] transition-colors font-medium">좋아요</button>
                           {currentUserId === reply.author_id && (
                             <button onClick={() => handleDeleteComment(reply.id)} className="hover:text-[#f85149] transition-colors">삭제</button>
                           )}
@@ -558,12 +557,12 @@ function PostCard({
                       </div>
                     </div>
                   ))}
-                  {/* 대댓글 입력 */}
+                  {/* Reply input */}
                   {replyingTo === comment.id && currentUserId && (
-                    <div className="flex gap-2 ml-9 mt-2">
-                      <Avatar className="h-6 w-6 shrink-0 ring-1 ring-[#f0b429]/30">
+                    <div className="flex gap-2.5 ml-11">
+                      <Avatar className="h-7 w-7 shrink-0 ring-2 ring-[#f0b429]/20">
                         <AvatarImage src={currentUserAvatar || undefined} />
-                        <AvatarFallback className="bg-[#f0b429]/20 text-[#f0b429] text-[9px] font-mono font-bold">U</AvatarFallback>
+                        <AvatarFallback className="bg-[#f0b429]/10 text-[#f0b429] text-[9px] font-bold">U</AvatarFallback>
                       </Avatar>
                       <div className="flex-1 relative">
                         <input
@@ -571,17 +570,17 @@ function PostCard({
                           value={replyContent}
                           onChange={(e) => setReplyContent(e.target.value)}
                           onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); handleSubmitComment(comment.id); } }}
-                          placeholder="답글을 입력하세요..."
+                          placeholder="답글 달기..."
                           autoFocus
-                          className="w-full bg-[#161b22] rounded-lg px-2.5 py-1.5 pr-8 text-[11px] text-[#c9d1d9] placeholder:text-[#6e7681] outline-none shadow-[inset_0_1px_4px_rgba(0,0,0,0.3)] focus:ring-2 focus:ring-[#79c0ff]/30 transition-colors"
+                          className="w-full bg-[#21262d]/60 rounded-full px-4 py-2 pr-10 text-xs text-[#e6edf3] placeholder:text-[#6e7681] outline-none focus:ring-2 focus:ring-[#79c0ff]/30 transition-all"
                         />
                         {replyContent.trim() && (
                           <button
                             onClick={() => handleSubmitComment(comment.id)}
                             disabled={isSubmitting}
-                            className="absolute right-1 top-1/2 -translate-y-1/2 p-1 bg-[#238636] text-white rounded hover:bg-[#2ea043] disabled:opacity-50 transition-colors"
+                            className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 text-[#238636] hover:text-[#2ea043] disabled:opacity-50 transition-colors"
                           >
-                            {isSubmitting ? <Loader2 className="h-2.5 w-2.5 animate-spin" /> : <Send className="h-2.5 w-2.5" />}
+                            {isSubmitting ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Send className="h-3.5 w-3.5" />}
                           </button>
                         )}
                       </div>
@@ -593,33 +592,34 @@ function PostCard({
           )}
 
           {/* Comment Input */}
-          <div className="px-4 py-3 flex gap-2.5 border-t border-[#21262d]">
-            <Avatar className="h-7 w-7 shrink-0 ring-1 ring-[#f0b429]/30">
-              <AvatarImage src={currentUserAvatar || undefined} />
-              <AvatarFallback className="bg-[#f0b429]/20 text-[#f0b429] text-[10px] font-mono font-bold">U</AvatarFallback>
-            </Avatar>
-            <div className="flex-1 relative">
-              <input
-                ref={commentInputRef}
-                type="text"
-                value={newComment}
-                onChange={(e) => setNewComment(e.target.value)}
-                onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); handleSubmitComment(null); } }}
-                placeholder={currentUserId ? "댓글을 입력하세요..." : "로그인이 필요합니다"}
-                disabled={!currentUserId}
-                className="w-full bg-[#161b22] rounded-lg px-3 py-2 pr-10 text-xs text-[#c9d1d9] placeholder:text-[#6e7681] outline-none shadow-[inset_0_1px_4px_rgba(0,0,0,0.3)] focus:ring-2 focus:ring-[#79c0ff]/30 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-              />
-              {newComment.trim() && (
-                <button
-                  onClick={() => handleSubmitComment(null)}
-                  disabled={isSubmitting}
-                  className="absolute right-1.5 top-1/2 -translate-y-1/2 p-1.5 bg-[#238636] text-white rounded hover:bg-[#2ea043] disabled:opacity-50 transition-colors"
-                >
-                  {isSubmitting ? <Loader2 className="h-3 w-3 animate-spin" /> : <Send className="h-3 w-3" />}
-                </button>
-              )}
+          {currentUserId && (
+            <div className="px-5 py-4 flex gap-3 border-t border-[#21262d]/30">
+              <Avatar className="h-8 w-8 shrink-0 ring-2 ring-[#f0b429]/20">
+                <AvatarImage src={currentUserAvatar || undefined} />
+                <AvatarFallback className="bg-[#f0b429]/10 text-[#f0b429] text-xs font-bold">U</AvatarFallback>
+              </Avatar>
+              <div className="flex-1 relative">
+                <input
+                  ref={commentInputRef}
+                  type="text"
+                  value={newComment}
+                  onChange={(e) => setNewComment(e.target.value)}
+                  onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); handleSubmitComment(null); } }}
+                  placeholder="댓글 달기..."
+                  className="w-full bg-[#21262d]/60 rounded-full px-4 py-2.5 pr-12 text-sm text-[#e6edf3] placeholder:text-[#6e7681] outline-none focus:ring-2 focus:ring-[#79c0ff]/30 transition-all"
+                />
+                {newComment.trim() && (
+                  <button
+                    onClick={() => handleSubmitComment(null)}
+                    disabled={isSubmitting}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 p-2 text-[#238636] hover:text-[#2ea043] disabled:opacity-50 transition-colors"
+                  >
+                    {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
+                  </button>
+                )}
+              </div>
             </div>
-          </div>
+          )}
         </div>
       )}
     </article>
@@ -796,33 +796,34 @@ function QuestionCard({
   };
 
   const displayedReplies = showAllReplies ? localReplies : localReplies.slice(0, 2);
+  const hasReplies = localReplies.length > 0 || currentUserId;
 
   return (
-    <article className="bg-[#1c2128] rounded-lg shadow-[0_4px_12px_rgba(0,0,0,0.35)] overflow-hidden hover:shadow-[0_6px_16px_rgba(0,0,0,0.45)] transition-all group">
+    <article className="bg-[#161b22] rounded-xl border border-[#30363d]/60 shadow-[0_1px_3px_rgba(0,0,0,0.12),0_1px_2px_rgba(0,0,0,0.08)] overflow-hidden hover:border-[#30363d] transition-all duration-200 group">
       {/* Header */}
-      <div className="px-4 pt-4 pb-3 flex items-start gap-3">
-        <Avatar className="h-10 w-10 ring-2 ring-[#e3b341]/30">
+      <div className="px-5 pt-5 pb-3 flex items-start gap-3">
+        <Avatar className="h-10 w-10 ring-2 ring-[#f0b429]/20">
           <AvatarImage src={question.profiles.avatar_url || undefined} />
-          <AvatarFallback className="bg-[#e3b341]/20 text-[#e3b341] text-sm font-mono">
+          <AvatarFallback className="bg-[#f0b429]/10 text-[#f0b429] text-sm font-mono">
             {question.profiles.username.slice(0, 2).toUpperCase()}
           </AvatarFallback>
         </Avatar>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="font-medium text-[#c9d1d9] text-sm hover:text-[#79c0ff] cursor-pointer transition-colors">
+            <span className="font-medium text-[#e6edf3] text-sm hover:text-[#79c0ff] cursor-pointer transition-colors">
               {question.profiles.display_name || question.profiles.username}
             </span>
-            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-medium text-[#f0b429] bg-[#f0b429]/10 border border-[#f0b429]/30">
-              <Code2 className="h-3 w-3" />
+            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium text-[#f0b429] bg-[#f0b429]/10 border border-[#f0b429]/30">
+              <Code2 className="h-2.5 w-2.5" />
               학습 질문
             </span>
             {question.is_resolved && (
-              <span className="px-2 py-0.5 rounded-md text-[11px] font-medium text-[#56d364] bg-[#56d364]/10 border border-[#56d364]/30">
+              <span className="px-2 py-0.5 rounded-full text-[10px] font-medium text-[#56d364] bg-[#56d364]/10 border border-[#56d364]/30">
                 ✓ 해결됨
               </span>
             )}
           </div>
-          <div className="flex items-center gap-1.5 text-xs text-[#8b949e] mt-1 font-mono">
+          <div className="flex items-center gap-1.5 text-xs text-[#8b949e] mt-1">
             <span>{formatTimeAgo(question.created_at)}</span>
           </div>
         </div>
@@ -830,7 +831,7 @@ function QuestionCard({
         {isOwner && (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <button className="p-1.5 hover:bg-[#21262d] rounded-md transition-colors opacity-0 group-hover:opacity-100">
+              <button className="p-1.5 hover:bg-[#21262d] rounded-lg transition-colors opacity-0 group-hover:opacity-100">
                 <MoreHorizontal className="h-4 w-4 text-[#8b949e]" />
               </button>
             </DropdownMenuTrigger>
@@ -845,105 +846,98 @@ function QuestionCard({
       </div>
 
       {/* Chapter Info with Link */}
-      <div className="px-4 pb-2">
+      <div className="px-5 pb-3">
         <Link
           href={`/curriculum/${question.chapter_id}`}
-          className="inline-flex items-center gap-2 px-2.5 py-1.5 bg-[#0d1117] border border-[#30363d] rounded-md hover:border-[#f0b429]/50 hover:bg-[#f0b429]/5 transition-colors group/link"
+          className="inline-flex items-center gap-2 px-3 py-2 bg-[#0d1117]/50 border border-[#21262d] rounded-lg hover:border-[#f0b429]/40 hover:bg-[#f0b429]/5 transition-colors group/link"
         >
           <Code2 className="h-3.5 w-3.5 text-[#f0b429]" />
-          <span className="text-xs font-mono text-[#f0b429]">Chapter {question.chapter_id}</span>
+          <span className="text-xs text-[#f0b429]">Chapter {question.chapter_id}</span>
           <span className="text-xs text-[#8b949e] group-hover/link:text-[#c9d1d9] transition-colors">{question.chapters.title_ko}</span>
           <ExternalLink className="h-3 w-3 text-[#6e7681] group-hover/link:text-[#f0b429] transition-colors" />
         </Link>
       </div>
 
       {/* Content */}
-      <div className="px-4 pb-3">
+      <div className="px-5 pb-4">
         {question.selected_text && (
-          <div className="mb-3 px-3 py-2 bg-[#0d1117] border-l-2 border-[#e3b341] rounded-r-md">
-            <p className="text-xs text-[#8b949e] italic font-mono">&ldquo;{question.selected_text}&rdquo;</p>
+          <div className="mb-3 px-4 py-2.5 bg-[#0d1117]/50 border-l-2 border-[#f0b429] rounded-r-lg">
+            <p className="text-xs text-[#8b949e] italic">&ldquo;{question.selected_text}&rdquo;</p>
           </div>
         )}
-        <p className="text-[#c9d1d9] text-sm leading-relaxed">
+        <p className="text-[#e6edf3] text-sm leading-relaxed">
           {question.question}
         </p>
       </div>
 
-      {/* Actions - Compact */}
-      <div className="px-3 py-1.5 border-t border-[#21262d] flex items-center">
-        {/* Left: Like & Reply */}
-        <div className="flex gap-0.5">
+      {/* Actions */}
+      <div className="px-5 py-2.5 flex items-center border-t border-[#21262d]/50">
+        <div className="flex gap-1">
           <button
             onClick={handleLike}
-            className={`flex items-center gap-1.5 px-2 py-1 rounded text-[11px] font-medium transition-all ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all hover:bg-[#21262d] ${
               liked ? "text-[#f85149]" : "text-[#8b949e] hover:text-[#c9d1d9]"
             }`}
           >
-            <Heart className={`h-3.5 w-3.5 ${liked ? "fill-[#f85149]" : ""}`} />
+            <Heart className={`h-4 w-4 ${liked ? "fill-[#f85149]" : ""}`} />
             <span>좋아요</span>
-            {likesCount > 0 && <span className="font-mono">{likesCount}</span>}
+            {likesCount > 0 && <span className="text-[11px] opacity-80">{likesCount}</span>}
           </button>
           <button
             onClick={handleReplyClick}
-            className="flex items-center gap-1.5 px-2 py-1 rounded text-[11px] font-medium text-[#8b949e] hover:text-[#c9d1d9] transition-all"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-[#8b949e] hover:text-[#c9d1d9] hover:bg-[#21262d] transition-all"
           >
-            <MessageSquare className="h-3.5 w-3.5" />
+            <MessageSquare className="h-4 w-4" />
             <span>댓글</span>
-            {localReplies.length > 0 && <span className="font-mono">{localReplies.length}</span>}
+            {localReplies.length > 0 && <span className="text-[11px] opacity-80">{localReplies.length}</span>}
           </button>
         </div>
-        {/* Right: Bookmark */}
         <div className="ml-auto">
-          <button className="flex items-center gap-1.5 px-2 py-1 rounded text-[11px] font-medium text-[#8b949e] hover:text-[#c9d1d9] transition-all">
-            <Bookmark className="h-3.5 w-3.5" />
-            <span>저장</span>
+          <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-[#8b949e] hover:text-[#c9d1d9] hover:bg-[#21262d] transition-all">
+            <Bookmark className="h-4 w-4" />
           </button>
         </div>
       </div>
 
-      {/* Comments Section - Same style as PostCard */}
-      {(localReplies.length > 0 || currentUserId) && (
-        <div className="border-t border-[#21262d] bg-[#0d1117]">
+      {/* Comments Section - Unified with card */}
+      {hasReplies && (
+        <div className="bg-[#0d1117]/30">
           {localReplies.length > 0 && (
-            <div className="px-4 py-3">
+            <div className="px-5 py-4 space-y-4">
               {displayedReplies.map((reply) => (
                 <div
                   key={reply.id}
-                  className={`flex gap-2.5 ${reply.is_accepted ? "bg-emerald-500/5 -mx-4 px-4 py-2 border-l-2 border-l-emerald-500" : ""}`}
+                  className={`flex gap-3 ${reply.is_accepted ? "bg-emerald-500/5 -mx-5 px-5 py-3 border-l-2 border-l-emerald-500" : ""}`}
                 >
-                  <Avatar className="h-7 w-7 shrink-0 ring-1 ring-[#30363d]">
+                  <Avatar className="h-8 w-8 shrink-0 ring-1 ring-[#21262d]">
                     <AvatarImage src={reply.profiles.avatar_url || undefined} />
                     <AvatarFallback className="bg-[#21262d] text-[#8b949e] text-[10px] font-mono">
                       {reply.profiles.username.slice(0, 2).toUpperCase()}
                     </AvatarFallback>
                   </Avatar>
                   <div className="flex-1 min-w-0">
-                    {/* 채택됨 표시 */}
                     {reply.is_accepted && (
-                      <div className="flex items-center gap-1.5 mb-1">
-                        <Award className="h-3 w-3 text-emerald-400" />
-                        <span className="text-[10px] font-medium text-emerald-400">채택된 답변</span>
+                      <div className="flex items-center gap-1.5 mb-1.5">
+                        <Award className="h-3.5 w-3.5 text-emerald-400" />
+                        <span className="text-[11px] font-medium text-emerald-400">채택된 답변</span>
                       </div>
                     )}
-                    <div className={`bg-[#161b22] rounded-md px-3 py-2 border ${reply.is_accepted ? "border-emerald-500/30" : "border-[#30363d]"}`}>
-                      <div className="flex items-center gap-2">
-                        <span className="font-medium text-[#c9d1d9] text-xs">
-                          {reply.profiles.display_name || reply.profiles.username}
-                        </span>
-                      </div>
-                      <p className="text-[#8b949e] text-xs leading-relaxed mt-0.5">{reply.content}</p>
+                    <div className={`inline-block rounded-2xl rounded-tl-sm px-4 py-2.5 ${reply.is_accepted ? "bg-emerald-500/10" : "bg-[#21262d]/60"}`}>
+                      <span className="font-medium text-[#e6edf3] text-xs">
+                        {reply.profiles.display_name || reply.profiles.username}
+                      </span>
+                      <p className="text-[#9198a1] text-sm leading-relaxed mt-0.5">{reply.content}</p>
                     </div>
-                    <div className="flex items-center gap-3 mt-1 px-1 text-[10px] text-[#8b949e] font-mono">
-                      <button className="hover:text-[#f85149] transition-colors">좋아요</button>
+                    <div className="flex items-center gap-4 mt-1.5 pl-2 text-[11px] text-[#8b949e]">
                       <span>{formatTimeAgo(reply.created_at)}</span>
+                      <button className="hover:text-[#f85149] transition-colors font-medium">좋아요</button>
                       {currentUserId === reply.user_id && (
                         <button onClick={() => handleDeleteReply(reply.id)} className="hover:text-[#f85149] transition-colors">삭제</button>
                       )}
-                      {/* 질문자만 채택 버튼 표시 */}
                       {isOwner && (
                         <button
                           onClick={() => handleAcceptReply(reply.id, reply.user_id, reply.is_accepted)}
-                          className={`flex items-center gap-1 transition-colors ${
+                          className={`flex items-center gap-1 transition-colors font-medium ${
                             reply.is_accepted
                               ? "text-emerald-400 hover:text-emerald-300"
                               : "hover:text-emerald-400"
@@ -960,7 +954,7 @@ function QuestionCard({
               {localReplies.length > 2 && !showAllReplies && (
                 <button
                   onClick={() => setShowAllReplies(true)}
-                  className="text-xs text-[#79c0ff] font-medium hover:underline"
+                  className="text-xs text-[#79c0ff] font-medium hover:underline pl-11"
                 >
                   댓글 {localReplies.length - 2}개 더 보기
                 </button>
@@ -968,7 +962,7 @@ function QuestionCard({
               {showAllReplies && localReplies.length > 2 && (
                 <button
                   onClick={() => setShowAllReplies(false)}
-                  className="text-xs text-[#79c0ff] font-medium hover:underline"
+                  className="text-xs text-[#79c0ff] font-medium hover:underline pl-11"
                 >
                   접기
                 </button>
@@ -977,33 +971,34 @@ function QuestionCard({
           )}
 
           {/* Comment Input */}
-          <div className="px-4 py-3 flex gap-2.5 border-t border-[#21262d]">
-            <Avatar className="h-7 w-7 shrink-0 ring-1 ring-[#f0b429]/30">
-              <AvatarImage src={currentUserAvatar || undefined} />
-              <AvatarFallback className="bg-[#f0b429]/20 text-[#f0b429] text-[10px] font-mono font-bold">U</AvatarFallback>
-            </Avatar>
-            <div className="flex-1 relative">
-              <input
-                ref={replyInputRef}
-                type="text"
-                value={replyContent}
-                onChange={(e) => setReplyContent(e.target.value)}
-                onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); handleSubmitReply(); } }}
-                placeholder={currentUserId ? "댓글을 입력하세요..." : "로그인이 필요합니다"}
-                disabled={!currentUserId}
-                className="w-full bg-[#161b22] rounded-lg px-3 py-2 pr-10 text-xs text-[#c9d1d9] placeholder:text-[#6e7681] outline-none shadow-[inset_0_1px_4px_rgba(0,0,0,0.3)] focus:ring-2 focus:ring-[#79c0ff]/30 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-              />
-              {replyContent.trim() && (
-                <button
-                  onClick={handleSubmitReply}
-                  disabled={isSubmittingReply}
-                  className="absolute right-1.5 top-1/2 -translate-y-1/2 p-1.5 bg-[#238636] text-white rounded hover:bg-[#2ea043] disabled:opacity-50 transition-colors"
-                >
-                  {isSubmittingReply ? <Loader2 className="h-3 w-3 animate-spin" /> : <Send className="h-3 w-3" />}
-                </button>
-              )}
+          {currentUserId && (
+            <div className="px-5 py-4 flex gap-3 border-t border-[#21262d]/30">
+              <Avatar className="h-8 w-8 shrink-0 ring-2 ring-[#f0b429]/20">
+                <AvatarImage src={currentUserAvatar || undefined} />
+                <AvatarFallback className="bg-[#f0b429]/10 text-[#f0b429] text-xs font-bold">U</AvatarFallback>
+              </Avatar>
+              <div className="flex-1 relative">
+                <input
+                  ref={replyInputRef}
+                  type="text"
+                  value={replyContent}
+                  onChange={(e) => setReplyContent(e.target.value)}
+                  onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); handleSubmitReply(); } }}
+                  placeholder="댓글 달기..."
+                  className="w-full bg-[#21262d]/60 rounded-full px-4 py-2.5 pr-12 text-sm text-[#e6edf3] placeholder:text-[#6e7681] outline-none focus:ring-2 focus:ring-[#79c0ff]/30 transition-all"
+                />
+                {replyContent.trim() && (
+                  <button
+                    onClick={handleSubmitReply}
+                    disabled={isSubmittingReply}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 p-2 text-[#238636] hover:text-[#2ea043] disabled:opacity-50 transition-colors"
+                  >
+                    {isSubmittingReply ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
+                  </button>
+                )}
+              </div>
             </div>
-          </div>
+          )}
         </div>
       )}
     </article>
@@ -1172,18 +1167,18 @@ function InlinePostComposer({ onPostCreated, userAvatar, userInitials, userProfi
   const config = writableCategoryConfig[selectedType];
 
   return (
-    <div className="bg-[#1c2128] rounded-lg shadow-[0_4px_12px_rgba(0,0,0,0.35)] overflow-hidden transition-all">
+    <div className="bg-[#161b22] rounded-xl border border-[#30363d]/60 shadow-[0_1px_3px_rgba(0,0,0,0.12),0_1px_2px_rgba(0,0,0,0.08)] overflow-hidden transition-all duration-200">
       {/* Collapsed State */}
       {!isExpanded && (
-        <div className="p-4">
+        <div className="p-5">
           <div className="flex items-center gap-3">
-            <Avatar className="h-10 w-10 shadow-[0_2px_6px_rgba(240,180,41,0.2)]">
+            <Avatar className="h-10 w-10 ring-2 ring-[#f0b429]/20">
               <AvatarImage src={userAvatar || undefined} />
-              <AvatarFallback className="bg-[#f0b429]/20 text-[#f0b429] text-sm font-mono font-bold">{userInitials || "U"}</AvatarFallback>
+              <AvatarFallback className="bg-[#f0b429]/10 text-[#f0b429] text-sm font-bold">{userInitials || "U"}</AvatarFallback>
             </Avatar>
             <button
               onClick={() => handleExpand()}
-              className="flex-1 h-10 px-4 bg-[#161b22] hover:bg-[#21262d] rounded-lg text-left text-[#8b949e] text-sm transition-colors shadow-[inset_0_1px_4px_rgba(0,0,0,0.3)] hover:shadow-[inset_0_1px_6px_rgba(0,0,0,0.4)]"
+              className="flex-1 h-11 px-4 bg-[#21262d]/60 hover:bg-[#21262d] rounded-full text-left text-[#8b949e] text-sm transition-all hover:text-[#c9d1d9]"
             >
               무슨 생각을 하고 계신가요?
             </button>
@@ -1195,20 +1190,20 @@ function InlinePostComposer({ onPostCreated, userAvatar, userInitials, userProfi
       {isExpanded && (
         <div>
           {/* Header */}
-          <div className="px-4 py-3 border-b border-[#21262d] flex items-center justify-between">
+          <div className="px-5 py-4 border-b border-[#21262d]/50 flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <Avatar className="h-9 w-9 ring-2 ring-[#f0b429]/30">
+              <Avatar className="h-10 w-10 ring-2 ring-[#f0b429]/20">
                 <AvatarImage src={userAvatar || undefined} />
-                <AvatarFallback className="bg-[#f0b429]/20 text-[#f0b429] text-xs font-mono font-bold">{userInitials || "U"}</AvatarFallback>
+                <AvatarFallback className="bg-[#f0b429]/10 text-[#f0b429] text-xs font-bold">{userInitials || "U"}</AvatarFallback>
               </Avatar>
               <div>
-                <p className="text-sm font-medium text-[#c9d1d9]">새 글 작성</p>
-                <p className="text-xs text-[#8b949e] font-mono">커뮤니티에 공유하세요</p>
+                <p className="text-sm font-medium text-[#e6edf3]">새 글 작성</p>
+                <p className="text-xs text-[#8b949e]">커뮤니티에 공유하세요</p>
               </div>
             </div>
             <button
               onClick={() => setIsExpanded(false)}
-              className="p-1.5 hover:bg-[#21262d] rounded-md transition-colors text-[#8b949e] hover:text-[#c9d1d9]"
+              className="p-2 hover:bg-[#21262d] rounded-lg transition-colors text-[#8b949e] hover:text-[#c9d1d9]"
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M18 6L6 18M6 6l12 12" />
@@ -1217,8 +1212,8 @@ function InlinePostComposer({ onPostCreated, userAvatar, userInitials, userProfi
           </div>
 
           {/* Category Selector */}
-          <div className="px-4 py-3 bg-[#0d1117] border-b border-[#21262d]">
-            <div className="flex gap-2">
+          <div className="px-5 py-3 bg-[#0d1117]/30 border-b border-[#21262d]/30">
+            <div className="flex gap-2 flex-wrap">
               {(Object.entries(writableCategoryConfig) as [WritablePostType, typeof writableCategoryConfig[WritablePostType]][]).map(([type, cfg]) => {
                 const Icon = cfg.icon;
                 const isActive = selectedType === type;
@@ -1226,7 +1221,7 @@ function InlinePostComposer({ onPostCreated, userAvatar, userInitials, userProfi
                   <button
                     key={type}
                     onClick={() => setSelectedType(type)}
-                    className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md border text-xs font-medium transition-all ${
+                    className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border text-xs font-medium transition-all ${
                       isActive ? cfg.activeColor : cfg.color
                     }`}
                   >
@@ -1239,21 +1234,21 @@ function InlinePostComposer({ onPostCreated, userAvatar, userInitials, userProfi
           </div>
 
           {/* Form Fields */}
-          <div className="p-4 space-y-3">
+          <div className="p-5 space-y-4">
             <Textarea
               ref={textareaRef}
               value={content}
               onChange={(e) => setContent(e.target.value)}
               placeholder={config.placeholder.content}
               rows={4}
-              className="text-sm bg-[#161b22] border-0 text-[#c9d1d9] rounded-lg resize-none shadow-[inset_0_1px_4px_rgba(0,0,0,0.3)] focus:ring-2 focus:ring-[#79c0ff]/30 placeholder:text-[#6e7681]"
+              className="text-sm bg-[#21262d]/40 border-0 text-[#e6edf3] rounded-xl resize-none focus:ring-2 focus:ring-[#79c0ff]/30 placeholder:text-[#6e7681]"
             />
 
             {/* Showcase URLs */}
             {selectedType === "showcase" && (
-              <div className="space-y-2 p-3 bg-[#0d1117] rounded-lg shadow-[inset_0_1px_4px_rgba(0,0,0,0.25)]">
-                <div className="flex items-center gap-2 mb-2">
-                  <Rocket className="h-3.5 w-3.5 text-[#79c0ff]" />
+              <div className="space-y-2 p-4 bg-[#0d1117]/50 rounded-xl border border-[#21262d]">
+                <div className="flex items-center gap-2 mb-3">
+                  <Rocket className="h-4 w-4 text-[#79c0ff]" />
                   <span className="text-xs font-medium text-[#79c0ff]">프로젝트 링크 (선택)</span>
                 </div>
                 <Input
@@ -1261,21 +1256,21 @@ function InlinePostComposer({ onPostCreated, userAvatar, userInitials, userProfi
                   value={projectUrl}
                   onChange={(e) => setProjectUrl(e.target.value)}
                   placeholder="https://your-project.com"
-                  className="h-9 text-xs bg-[#161b22] border-0 text-[#c9d1d9] rounded-lg shadow-[0_1px_3px_rgba(0,0,0,0.2)]"
+                  className="h-10 text-sm bg-[#21262d]/60 border-0 text-[#e6edf3] rounded-lg placeholder:text-[#6e7681]"
                 />
                 <Input
                   type="url"
                   value={githubRepo}
                   onChange={(e) => setGithubRepo(e.target.value)}
                   placeholder="https://github.com/username/repo"
-                  className="h-9 text-xs bg-[#161b22] border-0 text-[#c9d1d9] rounded-lg shadow-[0_1px_3px_rgba(0,0,0,0.2)]"
+                  className="h-10 text-sm bg-[#21262d]/60 border-0 text-[#e6edf3] rounded-lg placeholder:text-[#6e7681]"
                 />
               </div>
             )}
 
             {error && (
-              <p className="text-xs text-[#f85149] bg-[#f85149]/10 px-3 py-2 rounded-lg shadow-[0_0_0_1px_rgba(248,81,73,0.3)] flex items-center gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <p className="text-xs text-[#f85149] bg-[#f85149]/10 px-4 py-2.5 rounded-lg border border-[#f85149]/20 flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <circle cx="12" cy="12" r="10" />
                   <line x1="12" y1="8" x2="12" y2="12" />
                   <line x1="12" y1="16" x2="12.01" y2="16" />
@@ -1286,26 +1281,26 @@ function InlinePostComposer({ onPostCreated, userAvatar, userInitials, userProfi
           </div>
 
           {/* Submit Area */}
-          <div className="px-4 py-3 border-t border-[#21262d] bg-[#0d1117] flex items-center justify-between gap-3">
+          <div className="px-5 py-4 border-t border-[#21262d]/30 bg-[#0d1117]/20 flex items-center justify-between gap-3">
             <button
               onClick={() => setIsExpanded(false)}
-              className="px-3 py-1.5 text-xs font-medium text-[#8b949e] hover:text-[#c9d1d9] hover:bg-[#21262d] rounded-md transition-colors"
+              className="px-4 py-2 text-sm font-medium text-[#8b949e] hover:text-[#c9d1d9] hover:bg-[#21262d] rounded-lg transition-colors"
             >
               취소
             </button>
             <Button
               onClick={handleSubmit}
               disabled={isSubmitting || !content.trim()}
-              className="h-8 px-4 bg-[#238636] hover:bg-[#2ea043] text-white font-medium text-xs disabled:opacity-50 transition-colors"
+              className="h-9 px-5 bg-[#238636] hover:bg-[#2ea043] text-white font-medium text-sm rounded-lg disabled:opacity-50 transition-colors"
             >
               {isSubmitting ? (
                 <>
-                  <Loader2 className="h-3.5 w-3.5 mr-1.5 animate-spin" />
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
                   게시 중...
                 </>
               ) : (
                 <>
-                  <Send className="h-3.5 w-3.5 mr-1.5" />
+                  <Send className="h-4 w-4 mr-2" />
                   게시하기
                 </>
               )}
@@ -1432,18 +1427,18 @@ export default function CommunityPage() {
           <aside className="hidden lg:block w-56 shrink-0">
             <div className="sticky top-20 space-y-4">
               {/* Profile Card */}
-              <div className="bg-[#1c2128] rounded-lg shadow-[0_4px_12px_rgba(0,0,0,0.35)] overflow-hidden">
-                <div className="h-14 bg-gradient-to-r from-[#f0b429]/20 via-[#f0b429]/10 to-transparent relative">
-                  <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%2020%2020%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cg%20fill%3D%22%23d4a55a%22%20fill-opacity%3D%220.05%22%3E%3Ccircle%20cx%3D%221%22%20cy%3D%221%22%20r%3D%221%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E')]" />
+              <div className="bg-[#161b22] rounded-xl border border-[#30363d]/60 overflow-hidden">
+                <div className="h-14 bg-gradient-to-r from-[#f0b429]/15 via-[#f0b429]/5 to-transparent relative">
+                  <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%2020%2020%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cg%20fill%3D%22%23d4a55a%22%20fill-opacity%3D%220.03%22%3E%3Ccircle%20cx%3D%221%22%20cy%3D%221%22%20r%3D%221%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E')]" />
                 </div>
                 <div className="px-4 pb-4 -mt-5">
-                  <Avatar className="h-12 w-12 ring-4 ring-[#1c2128] shadow-[0_2px_8px_rgba(240,180,41,0.2)]">
+                  <Avatar className="h-12 w-12 ring-4 ring-[#161b22]">
                     <AvatarImage src={currentUserProfile?.avatar_url || undefined} />
-                    <AvatarFallback className="bg-[#f0b429]/20 text-[#f0b429] text-lg font-mono font-bold">
+                    <AvatarFallback className="bg-[#f0b429]/10 text-[#f0b429] text-lg font-bold">
                       {currentUserProfile?.username?.slice(0, 2).toUpperCase() || "U"}
                     </AvatarFallback>
                   </Avatar>
-                  <p className="font-semibold text-[#c9d1d9] text-sm mt-2">
+                  <p className="font-semibold text-[#e6edf3] text-sm mt-2">
                     {currentUserProfile?.display_name || currentUserProfile?.username || "수련생"}
                   </p>
                   <div className="mt-1">
@@ -1453,7 +1448,7 @@ export default function CommunityPage() {
               </div>
 
               {/* Filters */}
-              <div className="bg-[#1c2128] rounded-lg shadow-[0_4px_12px_rgba(0,0,0,0.35)] p-2">
+              <div className="bg-[#161b22] rounded-xl border border-[#30363d]/60 p-2">
                 <nav className="space-y-0.5">
                   {categories.map((cat) => {
                     const Icon = cat.icon;
@@ -1465,13 +1460,13 @@ export default function CommunityPage() {
                       : feedItems.filter(i => i.type === "post" && i.data.type === cat.key).length;
                     return (
                       <button key={cat.key} onClick={() => setActiveFilter(cat.key)}
-                        className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-md text-left transition-all ${
-                          isActive ? "bg-[#21262d] text-[#c9d1d9]" : "text-[#8b949e] hover:bg-[#21262d]/50 hover:text-[#c9d1d9]"
+                        className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-left transition-all ${
+                          isActive ? "bg-[#21262d] text-[#e6edf3]" : "text-[#8b949e] hover:bg-[#21262d]/50 hover:text-[#c9d1d9]"
                         }`}>
                         <Icon className={`h-4 w-4 ${isActive ? "text-[#f0b429]" : ""}`} />
                         <span className="flex-1 text-xs font-medium">{cat.label}</span>
-                        <span className={`text-[10px] font-mono min-w-[20px] text-center py-0.5 px-1.5 rounded ${
-                          isActive ? "bg-[#f0b429]/20 text-[#f0b429]" : "bg-[#21262d] text-[#8b949e]"
+                        <span className={`text-[10px] min-w-[20px] text-center py-0.5 px-1.5 rounded-md ${
+                          isActive ? "bg-[#f0b429]/15 text-[#f0b429]" : "bg-[#21262d] text-[#8b949e]"
                         }`}>{count}</span>
                       </button>
                     );
@@ -1508,15 +1503,15 @@ export default function CommunityPage() {
                 <Loader2 className="h-6 w-6 animate-spin text-[#f0b429]" />
               </div>
             ) : filteredItems.length === 0 ? (
-              <div className="bg-[#1c2128] rounded-lg shadow-[0_4px_12px_rgba(0,0,0,0.35)] p-12 text-center">
-                <div className="w-16 h-16 mx-auto mb-4 bg-[#21262d] rounded-lg flex items-center justify-center shadow-[0_2px_8px_rgba(0,0,0,0.3)]">
+              <div className="bg-[#161b22] rounded-xl border border-[#30363d]/60 p-12 text-center">
+                <div className="w-16 h-16 mx-auto mb-4 bg-[#21262d] rounded-xl flex items-center justify-center">
                   <MessageSquare className="h-8 w-8 text-[#484f58]" />
                 </div>
-                <p className="text-[#c9d1d9] text-sm font-medium mb-1">아직 게시글이 없어요</p>
-                <p className="text-[#8b949e] text-xs font-mono">위의 입력창에서 첫 번째 이야기를 시작해보세요!</p>
+                <p className="text-[#e6edf3] text-sm font-medium mb-1">아직 게시글이 없어요</p>
+                <p className="text-[#8b949e] text-xs">위의 입력창에서 첫 번째 이야기를 시작해보세요!</p>
               </div>
             ) : (
-              <div className="space-y-3">
+              <div className="space-y-4">
                 {filteredItems.map((item) =>
                   item.type === "post" ? (
                     <PostCard
@@ -1549,25 +1544,25 @@ export default function CommunityPage() {
           <aside className="hidden xl:block w-52 shrink-0">
             <div className="sticky top-20 space-y-4">
               {/* Community Stats */}
-              <div className="bg-[#1c2128] rounded-lg shadow-[0_4px_12px_rgba(0,0,0,0.35)] p-4">
-                <p className="text-xs font-semibold text-[#c9d1d9] mb-3 flex items-center gap-2">
+              <div className="bg-[#161b22] rounded-xl border border-[#30363d]/60 p-4">
+                <p className="text-xs font-semibold text-[#e6edf3] mb-3 flex items-center gap-2">
                   <Zap className="h-3.5 w-3.5 text-[#f0b429]" />
                   커뮤니티 현황
                 </p>
                 <div className="space-y-2">
-                  <div className="flex items-center justify-between py-2 px-2.5 bg-[#0d1117] rounded-lg shadow-[inset_0_1px_3px_rgba(0,0,0,0.25)]">
-                    <span className="text-[10px] text-[#8b949e] font-mono">게시글</span>
-                    <span className="text-sm font-bold text-[#c9d1d9] font-mono">{feedItems.length}</span>
+                  <div className="flex items-center justify-between py-2.5 px-3 bg-[#0d1117]/50 rounded-lg border border-[#21262d]">
+                    <span className="text-[11px] text-[#8b949e]">게시글</span>
+                    <span className="text-sm font-semibold text-[#e6edf3]">{feedItems.length}</span>
                   </div>
-                  <div className="flex items-center justify-between py-2 px-2.5 bg-[#0d1117] rounded-lg shadow-[inset_0_1px_3px_rgba(0,0,0,0.25)]">
-                    <span className="text-[10px] text-[#8b949e] font-mono">학습 질문</span>
-                    <span className="text-sm font-bold text-[#f0b429] font-mono">
+                  <div className="flex items-center justify-between py-2.5 px-3 bg-[#0d1117]/50 rounded-lg border border-[#21262d]">
+                    <span className="text-[11px] text-[#8b949e]">학습 질문</span>
+                    <span className="text-sm font-semibold text-[#f0b429]">
                       {feedItems.filter(i => i.type === "question").length}
                     </span>
                   </div>
-                  <div className="flex items-center justify-between py-2 px-2.5 bg-[#0d1117] rounded-lg shadow-[inset_0_1px_3px_rgba(0,0,0,0.25)]">
-                    <span className="text-[10px] text-[#8b949e] font-mono">일반 질문</span>
-                    <span className="text-sm font-bold text-[#e3b341] font-mono">
+                  <div className="flex items-center justify-between py-2.5 px-3 bg-[#0d1117]/50 rounded-lg border border-[#21262d]">
+                    <span className="text-[11px] text-[#8b949e]">일반 질문</span>
+                    <span className="text-sm font-semibold text-[#e3b341]">
                       {feedItems.filter(i => i.type === "post" && i.data.type === "question").length}
                     </span>
                   </div>
@@ -1575,12 +1570,12 @@ export default function CommunityPage() {
               </div>
 
               {/* Tip Card */}
-              <div className="bg-[#1c2128] rounded-lg shadow-[0_4px_12px_rgba(0,0,0,0.35)] p-4">
-                <p className="text-xs font-semibold text-[#c9d1d9] mb-2 flex items-center gap-2">
+              <div className="bg-[#161b22] rounded-xl border border-[#30363d]/60 p-4">
+                <p className="text-xs font-semibold text-[#e6edf3] mb-2 flex items-center gap-2">
                   <Lightbulb className="h-3.5 w-3.5 text-[#e3b341]" />
                   오늘의 팁
                 </p>
-                <p className="text-[11px] text-[#8b949e] leading-relaxed">
+                <p className="text-xs text-[#8b949e] leading-relaxed">
                   학습 중 궁금한 부분의 텍스트를 선택하면 바로 질문할 수 있어요!
                 </p>
               </div>

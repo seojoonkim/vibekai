@@ -64,15 +64,15 @@ export function Header({ isLoggedIn = false }: HeaderProps) {
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  "relative flex items-center px-3 lg:px-4 py-1.5 text-sm lg:text-[15px] font-medium transition-all outline-none focus:outline-none focus-visible:outline-none rounded-md",
+                  "relative flex items-center px-3 lg:px-4 py-1.5 text-sm lg:text-[15px] font-medium transition-all outline-none focus:outline-none focus-visible:outline-none",
                   isActive
-                    ? "text-[#c9d1d9] bg-[#21262d]"
-                    : "text-[#8b949e] hover:text-[#c9d1d9] hover:bg-[#21262d]/50"
+                    ? "text-[#f0b429]"
+                    : "text-[#8b949e] hover:text-[#c9d1d9]"
                 )}
               >
-                {/* Active indicator */}
+                {/* Active indicator - underline */}
                 {isActive && (
-                  <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[calc(100%-16px)] h-[2px] bg-[#f0b429]" />
+                  <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[calc(100%-12px)] h-[2px] bg-[#f0b429] rounded-full" />
                 )}
                 <span className="relative">{item.label}</span>
               </Link>
