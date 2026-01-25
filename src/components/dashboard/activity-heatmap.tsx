@@ -258,7 +258,7 @@ export function ActivityHeatmap({ activities, className }: ActivityHeatmapProps)
         {/* Legend */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mt-3 text-[10px] text-[#8b949e]">
           <span className="text-[#6e7681]">
-            💡 수련 = 수강 완료, 글쓰기, 답글 (좋아요 제외)
+            💡 수련 = 로그인, 수강 완료, 글쓰기, 답글 (좋아요 제외)
           </span>
           <div className="flex items-center gap-1 shrink-0">
             <span>적음</span>

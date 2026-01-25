@@ -38,6 +38,30 @@ export async function GET(request: NextRequest) {
         refresh_token: data.session.refresh_token,
       });
 
+      // Record daily login activity (only once per day)
+      const userId = data.session.user.id;
+      const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+
+      // Check if already logged activity today
+      const { data: existingLog } = await supabase
+        .from("xp_logs")
+        .select("id")
+        .eq("user_id", userId)
+        .eq("action", "daily_login")
+        .gte("created_at", `${today}T00:00:00`)
+        .lt("created_at", `${today}T23:59:59`)
+        .maybeSingle();
+
+      if (!existingLog) {
+        // Record login activity
+        await supabase.from("xp_logs").insert({
+          user_id: userId,
+          action: "daily_login",
+          xp_amount: 0,
+          description: "일일 로그인",
+        });
+      }
+
       console.log("Auth callback success, cookies:", response.cookies.getAll().map(c => c.name));
       return response;
     }

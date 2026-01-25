@@ -5,6 +5,7 @@ export const XP_REWARDS = {
   COMMENT_WRITTEN: 3,
   ANSWER_ACCEPTED: 10,
   RECEIVED_LIKE: 3,
+  DAILY_LOGIN: 0, // No XP but counts as activity
 } as const;
 
 export interface Level {
