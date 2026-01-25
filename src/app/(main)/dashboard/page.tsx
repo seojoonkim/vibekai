@@ -53,7 +53,13 @@ export default async function DashboardPage() {
     if (xpLogs) {
       const countByDate = new Map<string, number>();
       xpLogs.forEach((log) => {
-        const date = log.created_at.split("T")[0];
+        // Convert UTC to KST (UTC+9) for proper date grouping
+        const utcDate = new Date(log.created_at);
+        const kstDate = new Date(utcDate.getTime() + 9 * 60 * 60 * 1000);
+        const year = kstDate.getUTCFullYear();
+        const month = String(kstDate.getUTCMonth() + 1).padStart(2, '0');
+        const day = String(kstDate.getUTCDate()).padStart(2, '0');
+        const date = `${year}-${month}-${day}`;
         countByDate.set(date, (countByDate.get(date) || 0) + 1);
       });
       activityData = Array.from(countByDate.entries()).map(([date, count]) => ({ date, count }));
