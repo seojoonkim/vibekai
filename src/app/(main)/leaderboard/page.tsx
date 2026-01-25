@@ -48,7 +48,7 @@ export default async function LeaderboardPage() {
       {/* Header */}
       <div className="container pt-5">
         <div className="flex items-center gap-3 mb-3 pb-3 shadow-[0_1px_0_rgba(255,255,255,0.03)]">
-          <div className="p-2.5 bg-[#daa520]/10 rounded-lg shadow-[0_2px_6px_rgba(0,0,0,0.25)]">
+          <div className="p-2.5 bg-[#daa520]/10 rounded-md shadow-[0_2px_6px_rgba(0,0,0,0.25)]">
             <TrendingUp className="h-5 w-5 text-[#daa520]" />
           </div>
           <div>
@@ -66,7 +66,7 @@ export default async function LeaderboardPage() {
         />
 
         {/* Bottom section - XP 획득 방법 상세 */}
-        <div className="bg-[#1c2128] backdrop-blur-sm p-6 rounded-lg shadow-[0_4px_12px_rgba(0,0,0,0.35)] mt-8">
+        <div className="bg-[#1c2128] backdrop-blur-sm p-6 rounded-md shadow-[0_4px_12px_rgba(0,0,0,0.35)] mt-8">
           <div className="flex items-center gap-2 mb-5">
             <Target className="h-5 w-5 text-[#f0b429]" />
             <h3 className="font-semibold text-base text-[#c9d1d9]">XP 획득 방법</h3>
@@ -74,8 +74,8 @@ export default async function LeaderboardPage() {
 
           <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-3">
             {/* 챕터 완료 */}
-            <div className="flex flex-col items-center gap-1.5 sm:gap-2 p-3 sm:p-4 bg-[#0d1117] rounded-lg shadow-[0_2px_8px_rgba(0,0,0,0.3)] hover:shadow-[0_4px_12px_rgba(240,180,41,0.1)] transition-all">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center bg-[#79c0ff]/10 rounded-lg shadow-[0_2px_4px_rgba(0,0,0,0.2)]">
+            <div className="flex flex-col items-center gap-1.5 sm:gap-2 p-3 sm:p-4 bg-[#0d1117] rounded-md shadow-[0_2px_8px_rgba(0,0,0,0.3)] hover:shadow-[0_4px_12px_rgba(240,180,41,0.1)] transition-all">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center bg-[#79c0ff]/10 rounded-md shadow-[0_2px_4px_rgba(0,0,0,0.2)]">
                 <BookOpen className="h-4 w-4 sm:h-5 sm:w-5 text-[#79c0ff]" />
               </div>
               <div className="text-center">
@@ -85,8 +85,8 @@ export default async function LeaderboardPage() {
             </div>
 
             {/* 프로젝트 공유 */}
-            <div className="flex flex-col items-center gap-1.5 sm:gap-2 p-3 sm:p-4 bg-[#0d1117] rounded-lg shadow-[0_2px_8px_rgba(0,0,0,0.3)] hover:shadow-[0_4px_12px_rgba(240,180,41,0.1)] transition-all">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center bg-[#a371f7]/10 border border-[#a371f7]/30 rounded-lg">
+            <div className="flex flex-col items-center gap-1.5 sm:gap-2 p-3 sm:p-4 bg-[#0d1117] rounded-md shadow-[0_2px_8px_rgba(0,0,0,0.3)] hover:shadow-[0_4px_12px_rgba(240,180,41,0.1)] transition-all">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center bg-[#a371f7]/10 border border-[#a371f7]/30 rounded-md">
                 <Rocket className="h-4 w-4 sm:h-5 sm:w-5 text-[#a371f7]" />
               </div>
               <div className="text-center">
@@ -96,8 +96,8 @@ export default async function LeaderboardPage() {
             </div>
 
             {/* 답변 채택 */}
-            <div className="flex flex-col items-center gap-1.5 sm:gap-2 p-3 sm:p-4 bg-[#0d1117] rounded-lg shadow-[0_2px_8px_rgba(0,0,0,0.3)] hover:shadow-[0_4px_12px_rgba(240,180,41,0.1)] transition-all">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center bg-[#56d364]/10 border border-[#56d364]/30 rounded-lg">
+            <div className="flex flex-col items-center gap-1.5 sm:gap-2 p-3 sm:p-4 bg-[#0d1117] rounded-md shadow-[0_2px_8px_rgba(0,0,0,0.3)] hover:shadow-[0_4px_12px_rgba(240,180,41,0.1)] transition-all">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center bg-[#56d364]/10 border border-[#56d364]/30 rounded-md">
                 <Award className="h-4 w-4 sm:h-5 sm:w-5 text-[#56d364]" />
               </div>
               <div className="text-center">
@@ -107,8 +107,8 @@ export default async function LeaderboardPage() {
             </div>
 
             {/* 글 작성 */}
-            <div className="flex flex-col items-center gap-1.5 sm:gap-2 p-3 sm:p-4 bg-[#0d1117] rounded-lg shadow-[0_2px_8px_rgba(0,0,0,0.3)] hover:shadow-[0_4px_12px_rgba(240,180,41,0.1)] transition-all col-span-1 sm:col-span-1">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center bg-[#f0b429]/10 border border-[#f0b429]/30 rounded-lg">
+            <div className="flex flex-col items-center gap-1.5 sm:gap-2 p-3 sm:p-4 bg-[#0d1117] rounded-md shadow-[0_2px_8px_rgba(0,0,0,0.3)] hover:shadow-[0_4px_12px_rgba(240,180,41,0.1)] transition-all col-span-1 sm:col-span-1">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center bg-[#f0b429]/10 border border-[#f0b429]/30 rounded-md">
                 <PenLine className="h-4 w-4 sm:h-5 sm:w-5 text-[#f0b429]" />
               </div>
               <div className="text-center">
@@ -118,8 +118,8 @@ export default async function LeaderboardPage() {
             </div>
 
             {/* 좋아요 획득 */}
-            <div className="flex flex-col items-center gap-1.5 sm:gap-2 p-3 sm:p-4 bg-[#0d1117] rounded-lg shadow-[0_2px_8px_rgba(0,0,0,0.3)] hover:shadow-[0_4px_12px_rgba(240,180,41,0.1)] transition-all col-span-1 sm:col-span-1">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center bg-[#f85149]/10 border border-[#f85149]/30 rounded-lg">
+            <div className="flex flex-col items-center gap-1.5 sm:gap-2 p-3 sm:p-4 bg-[#0d1117] rounded-md shadow-[0_2px_8px_rgba(0,0,0,0.3)] hover:shadow-[0_4px_12px_rgba(240,180,41,0.1)] transition-all col-span-1 sm:col-span-1">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center bg-[#f85149]/10 border border-[#f85149]/30 rounded-md">
                 <Heart className="h-4 w-4 sm:h-5 sm:w-5 text-[#f85149]" />
               </div>
               <div className="text-center">

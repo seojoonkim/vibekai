@@ -217,7 +217,7 @@ function LeaderboardRow({ user, rank }: { user: LeaderboardUser; rank: number })
 
 export function LeaderboardTabs({ sortedByXP }: LeaderboardTabsProps) {
   return (
-    <div className="bg-[#1c2128] rounded-lg overflow-hidden shadow-[0_4px_12px_rgba(0,0,0,0.35)]">
+    <div className="bg-[#1c2128] rounded-md overflow-hidden shadow-[0_4px_12px_rgba(0,0,0,0.35)]">
       <table className="w-full">
         <thead>
           <tr className="border-b border-[#21262d] bg-[#0d1117]">

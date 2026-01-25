@@ -86,7 +86,7 @@ export default function CoursesPage() {
           </p>
 
           {/* Stats */}
-          <div className="inline-flex items-center gap-4 sm:gap-6 px-5 sm:px-6 py-3 sm:py-4 bg-[#1c2128] rounded-lg shadow-[0_4px_12px_rgba(0,0,0,0.35)] mb-8">
+          <div className="inline-flex items-center gap-4 sm:gap-6 px-5 sm:px-6 py-3 sm:py-4 bg-[#1c2128] rounded-md shadow-[0_4px_12px_rgba(0,0,0,0.35)] mb-8">
             <div className="text-center">
               <div className="text-xl sm:text-2xl font-black text-[#daa520]">{totalParts}</div>
               <div className="text-[10px] sm:text-xs text-[#8b949e] font-mono">과정</div>
@@ -135,7 +135,7 @@ export default function CoursesPage() {
               return (
                 <div
                   key={part.id}
-                  className="rounded-lg bg-[#1c2128] overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.4)] transition-all duration-300 hover:shadow-[0_8px_24px_rgba(218,165,32,0.15)]"
+                  className="rounded-md bg-[#1c2128] overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.4)] transition-all duration-300 hover:shadow-[0_8px_24px_rgba(218,165,32,0.15)]"
                 >
                   {/* Part Header with Image */}
                   <div className="relative aspect-[5/1] overflow-hidden group">

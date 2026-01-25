@@ -93,7 +93,7 @@ export default async function CurriculumPage() {
       {/* Header */}
       <div className="container pt-5">
         <div className="flex items-center gap-3 mb-3 pb-3 shadow-[0_1px_0_rgba(255,255,255,0.03)]">
-          <div className="p-2.5 bg-[#daa520]/10 rounded-lg shadow-[0_2px_6px_rgba(0,0,0,0.25)]">
+          <div className="p-2.5 bg-[#daa520]/10 rounded-md shadow-[0_2px_6px_rgba(0,0,0,0.25)]">
             <Icons.brain className="h-5 w-5 text-[#daa520]" />
           </div>
           <div>
@@ -108,7 +108,7 @@ export default async function CurriculumPage() {
       <div className="container relative py-3 sm:py-4">
         <Tabs defaultValue="all" className="space-y-4">
           {/* Mobile: horizontal scrollable, Desktop: wrapped */}
-          <TabsList className="bg-[#1c2128] backdrop-blur-sm rounded-lg p-1.5 sm:p-2 h-auto shadow-[0_4px_12px_rgba(0,0,0,0.35)] flex gap-1.5 sm:gap-2 overflow-x-auto sm:flex-wrap scrollbar-hide">
+          <TabsList className="bg-[#1c2128] backdrop-blur-sm rounded-md p-1.5 sm:p-2 h-auto shadow-[0_4px_12px_rgba(0,0,0,0.35)] flex gap-1.5 sm:gap-2 overflow-x-auto sm:flex-wrap scrollbar-hide">
             <TabsTrigger
               value="all"
               className="rounded-md h-8 sm:h-9 px-3 sm:px-4 text-xs sm:text-sm data-[state=active]:bg-[#f0b429] data-[state=active]:text-[#0d1117] text-[#8b949e] hover:text-[#c9d1d9] transition-all border-0 shrink-0"
@@ -136,7 +136,7 @@ export default async function CurriculumPage() {
               return (
                 <div key={part.id} className="space-y-3 sm:space-y-4">
                   {/* Part Header with Image */}
-                  <div className="relative rounded-lg overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.4)] group hover:shadow-[0_8px_24px_rgba(0,0,0,0.5)] transition-all duration-500">
+                  <div className="relative rounded-md overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.4)] group hover:shadow-[0_8px_24px_rgba(0,0,0,0.5)] transition-all duration-500">
                     {/* Background Image */}
                     <div className="relative aspect-[3/1] sm:aspect-[5/1] overflow-hidden">
                       <Image
@@ -207,7 +207,7 @@ export default async function CurriculumPage() {
                       const isNotStarted = status === "not_started";
 
                       const ChapterContent = (
-                        <div className={`relative transition-all duration-300 overflow-hidden flex group rounded-lg ${
+                        <div className={`relative transition-all duration-300 overflow-hidden flex group rounded-md ${
                           isActive
                             ? 'bg-[#1c2128] shadow-[0_4px_16px_rgba(240,180,41,0.2),0_4px_16px_rgba(0,0,0,0.4)]'
                             : isCompleted
@@ -326,7 +326,7 @@ export default async function CurriculumPage() {
               <TabsContent key={part.id} value={String(part.id)} className="mt-4">
                 <div className="space-y-3 sm:space-y-4">
                   {/* Part Header with Image */}
-                  <div className="relative rounded-lg overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.4)] group hover:shadow-[0_8px_24px_rgba(0,0,0,0.5)] transition-all duration-500">
+                  <div className="relative rounded-md overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.4)] group hover:shadow-[0_8px_24px_rgba(0,0,0,0.5)] transition-all duration-500">
                     {/* Background Image */}
                     <div className="relative aspect-[3/1] sm:aspect-[5/1] overflow-hidden">
                       <Image
@@ -397,7 +397,7 @@ export default async function CurriculumPage() {
                       const isNotStarted = status === "not_started";
 
                       const ChapterContent = (
-                        <div className={`relative transition-all duration-300 overflow-hidden flex group rounded-lg ${
+                        <div className={`relative transition-all duration-300 overflow-hidden flex group rounded-md ${
                           isActive
                             ? 'bg-[#1c2128] shadow-[0_4px_16px_rgba(240,180,41,0.2),0_4px_16px_rgba(0,0,0,0.4)]'
                             : isCompleted

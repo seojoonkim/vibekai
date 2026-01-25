@@ -357,7 +357,7 @@ function PostCard({
   const hasComments = comments.length > 0 || currentUserId;
 
   return (
-    <article className="bg-[#151a21] rounded-xl border border-[#21262d]/60 shadow-[0_2px_8px_rgba(0,0,0,0.15)] overflow-hidden hover:border-[#30363d]/80 transition-all duration-200 group">
+    <article className="bg-[#151a21] rounded-md  shadow-[0_2px_8px_rgba(0,0,0,0.15)] overflow-hidden  transition-all duration-200 group">
       {/* Header */}
       <div className="px-5 pt-5 pb-3 flex items-start gap-3">
         <Avatar className="h-10 w-10 ring-2 ring-[#1c2128]">
@@ -390,11 +390,11 @@ function PostCard({
         {isOwner && (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <button className="p-1.5 hover:bg-[#1c2128] rounded-lg transition-colors opacity-0 group-hover:opacity-100">
+              <button className="p-1.5 hover:bg-[#1c2128] rounded-md transition-colors opacity-0 group-hover:opacity-100">
                 <MoreHorizontal className="h-4 w-4 text-[#8b949e]" />
               </button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-36 bg-[#1c2128] border-[#30363d]/60 shadow-xl">
+            <DropdownMenuContent align="end" className="w-36 bg-[#1c2128] border-0 shadow-xl">
               <DropdownMenuItem onClick={() => onEdit(post)} className="text-[#c9d1d9] focus:bg-[#21262d] focus:text-[#c9d1d9] cursor-pointer">
                 <Pencil className="h-4 w-4 mr-2" />
                 수정하기
@@ -421,7 +421,7 @@ function PostCard({
 
         {/* Review ratings */}
         {post.type === "review" && (post.difficulty_rating || post.satisfaction_rating) && (
-          <div className="flex items-center gap-6 mt-4 py-3 px-4 bg-[#0a0c10]/60 rounded-lg border border-[#21262d]/50">
+          <div className="flex items-center gap-6 mt-4 py-3 px-4 bg-[#0a0c10]/60 rounded-md border border-[#21262d]/50">
             {post.satisfaction_rating && (
               <div className="flex items-center gap-2">
                 <span className="text-xs text-[#8b949e]">만족도</span>
@@ -450,13 +450,13 @@ function PostCard({
           <div className="flex items-center gap-2 mt-4">
             {post.project_url && (
               <a href={post.project_url} target="_blank" rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#238636] text-white rounded-lg text-xs font-medium hover:bg-[#2ea043] transition-colors">
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#238636] text-white rounded-md text-xs font-medium hover:bg-[#2ea043] transition-colors">
                 <ExternalLink className="h-3.5 w-3.5" />데모 보기
               </a>
             )}
             {post.github_repo && (
               <a href={post.github_repo} target="_blank" rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#1c2128] text-[#c9d1d9] rounded-lg text-xs font-medium hover:bg-[#242b33] border border-[#30363d]/60 transition-colors">
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#1c2128] text-[#c9d1d9] rounded-md text-xs font-medium hover:bg-[#242b33] border border-0 transition-colors">
                 <Github className="h-3.5 w-3.5" />GitHub
               </a>
             )}
@@ -470,7 +470,7 @@ function PostCard({
           <button
             onClick={handleLike}
             disabled={!currentUserId}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[#1c2128] ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-all disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[#1c2128] ${
               liked ? "text-[#f85149]" : "text-[#8b949e] hover:text-[#c9d1d9]"
             }`}
           >
@@ -480,7 +480,7 @@ function PostCard({
           </button>
           <button
             onClick={handleCommentClick}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-[#8b949e] hover:text-[#c9d1d9] hover:bg-[#1c2128] transition-all"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium text-[#8b949e] hover:text-[#c9d1d9] hover:bg-[#1c2128] transition-all"
           >
             <MessageSquare className="h-4 w-4" />
             <span>댓글</span>
@@ -490,7 +490,7 @@ function PostCard({
         <div className="ml-auto">
           <button
             onClick={handleBookmark}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all hover:bg-[#1c2128] ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-all hover:bg-[#1c2128] ${
               saved ? "text-[#f0b429]" : "text-[#8b949e] hover:text-[#c9d1d9]"
             }`}
           >
@@ -799,7 +799,7 @@ function QuestionCard({
   const hasReplies = localReplies.length > 0 || currentUserId;
 
   return (
-    <article className="bg-[#151a21] rounded-xl border border-[#21262d]/60 shadow-[0_2px_8px_rgba(0,0,0,0.15)] overflow-hidden hover:border-[#30363d]/80 transition-all duration-200 group">
+    <article className="bg-[#151a21] rounded-md  shadow-[0_2px_8px_rgba(0,0,0,0.15)] overflow-hidden  transition-all duration-200 group">
       {/* Header */}
       <div className="px-5 pt-5 pb-3 flex items-start gap-3">
         <Avatar className="h-10 w-10 ring-2 ring-[#f0b429]/20">
@@ -831,11 +831,11 @@ function QuestionCard({
         {isOwner && (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <button className="p-1.5 hover:bg-[#1c2128] rounded-lg transition-colors opacity-0 group-hover:opacity-100">
+              <button className="p-1.5 hover:bg-[#1c2128] rounded-md transition-colors opacity-0 group-hover:opacity-100">
                 <MoreHorizontal className="h-4 w-4 text-[#8b949e]" />
               </button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-36 bg-[#1c2128] border-[#30363d]/60 shadow-xl">
+            <DropdownMenuContent align="end" className="w-36 bg-[#1c2128] border-0 shadow-xl">
               <DropdownMenuItem onClick={() => onDelete(question.id)} className="text-[#f85149] focus:bg-[#f85149]/10 focus:text-[#f85149] cursor-pointer">
                 <Trash2 className="h-4 w-4 mr-2" />
                 삭제하기
@@ -849,7 +849,7 @@ function QuestionCard({
       <div className="px-5 pb-3">
         <Link
           href={`/curriculum/${question.chapter_id}`}
-          className="inline-flex items-center gap-2 px-3 py-2 bg-[#0a0c10]/60 border border-[#21262d]/50 rounded-lg hover:border-[#f0b429]/40 hover:bg-[#f0b429]/5 transition-colors group/link"
+          className="inline-flex items-center gap-2 px-3 py-2 bg-[#0a0c10]/60 border border-[#21262d]/50 rounded-md hover:border-[#f0b429]/40 hover:bg-[#f0b429]/5 transition-colors group/link"
         >
           <Code2 className="h-3.5 w-3.5 text-[#f0b429]" />
           <span className="text-xs text-[#f0b429]">Chapter {question.chapter_id}</span>
@@ -875,7 +875,7 @@ function QuestionCard({
         <div className="flex gap-1">
           <button
             onClick={handleLike}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all hover:bg-[#1c2128] ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-all hover:bg-[#1c2128] ${
               liked ? "text-[#f85149]" : "text-[#8b949e] hover:text-[#c9d1d9]"
             }`}
           >
@@ -885,7 +885,7 @@ function QuestionCard({
           </button>
           <button
             onClick={handleReplyClick}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-[#8b949e] hover:text-[#c9d1d9] hover:bg-[#1c2128] transition-all"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium text-[#8b949e] hover:text-[#c9d1d9] hover:bg-[#1c2128] transition-all"
           >
             <MessageSquare className="h-4 w-4" />
             <span>댓글</span>
@@ -893,7 +893,7 @@ function QuestionCard({
           </button>
         </div>
         <div className="ml-auto">
-          <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-[#8b949e] hover:text-[#c9d1d9] hover:bg-[#1c2128] transition-all">
+          <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium text-[#8b949e] hover:text-[#c9d1d9] hover:bg-[#1c2128] transition-all">
             <Bookmark className="h-4 w-4" />
           </button>
         </div>
@@ -1054,24 +1054,24 @@ function EditPostModal({
 
   return (
     <Dialog open={open} onOpenChange={handleClose}>
-      <DialogContent className="max-w-lg p-0 bg-[#1c2128] border-0 rounded-lg shadow-[0_8px_32px_rgba(0,0,0,0.6)] overflow-hidden">
+      <DialogContent className="max-w-lg p-0 bg-[#1c2128] border-0 rounded-md shadow-[0_8px_32px_rgba(0,0,0,0.6)] overflow-hidden">
         <DialogHeader className="px-4 py-3 shadow-[0_1px_0_rgba(255,255,255,0.05)]">
           <DialogTitle className="text-base font-semibold text-[#c9d1d9]">게시물 수정</DialogTitle>
         </DialogHeader>
         <div className="p-4 space-y-4">
           <Input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="제목을 입력하세요 (선택사항)"
-            className="h-10 text-sm bg-[#161b22] border-0 text-[#c9d1d9] rounded-lg shadow-[inset_0_1px_4px_rgba(0,0,0,0.3)] focus:ring-2 focus:ring-[#79c0ff]/30 placeholder:text-[#6e7681]" />
+            className="h-10 text-sm bg-[#161b22] border-0 text-[#c9d1d9] rounded-md shadow-[inset_0_1px_4px_rgba(0,0,0,0.3)] focus:ring-2 focus:ring-[#79c0ff]/30 placeholder:text-[#6e7681]" />
           <Textarea value={content} onChange={(e) => setContent(e.target.value)} placeholder="내용을 입력하세요" rows={4}
-            className="text-sm bg-[#161b22] border-0 text-[#c9d1d9] rounded-lg resize-none shadow-[inset_0_1px_4px_rgba(0,0,0,0.3)] focus:ring-2 focus:ring-[#79c0ff]/30 placeholder:text-[#6e7681]" />
+            className="text-sm bg-[#161b22] border-0 text-[#c9d1d9] rounded-md resize-none shadow-[inset_0_1px_4px_rgba(0,0,0,0.3)] focus:ring-2 focus:ring-[#79c0ff]/30 placeholder:text-[#6e7681]" />
           {post.type === "showcase" && (
-            <div className="space-y-2 p-3 bg-[#0d1117] rounded-lg shadow-[inset_0_1px_4px_rgba(0,0,0,0.25)]">
+            <div className="space-y-2 p-3 bg-[#0d1117] rounded-md shadow-[inset_0_1px_4px_rgba(0,0,0,0.25)]">
               <Input type="url" value={projectUrl} onChange={(e) => setProjectUrl(e.target.value)} placeholder="프로젝트 데모 URL (선택)"
-                className="h-9 text-xs bg-[#161b22] border-0 text-[#c9d1d9] rounded-lg shadow-[0_1px_3px_rgba(0,0,0,0.2)]" />
+                className="h-9 text-xs bg-[#161b22] border-0 text-[#c9d1d9] rounded-md shadow-[0_1px_3px_rgba(0,0,0,0.2)]" />
               <Input type="url" value={githubRepo} onChange={(e) => setGithubRepo(e.target.value)} placeholder="GitHub 저장소 URL (선택)"
-                className="h-9 text-xs bg-[#161b22] border-0 text-[#c9d1d9] rounded-lg shadow-[0_1px_3px_rgba(0,0,0,0.2)]" />
+                className="h-9 text-xs bg-[#161b22] border-0 text-[#c9d1d9] rounded-md shadow-[0_1px_3px_rgba(0,0,0,0.2)]" />
             </div>
           )}
-          {error && <p className="text-xs text-[#f85149] bg-[#f85149]/10 px-3 py-2 rounded-lg shadow-[0_0_0_1px_rgba(248,81,73,0.3)]">{error}</p>}
+          {error && <p className="text-xs text-[#f85149] bg-[#f85149]/10 px-3 py-2 rounded-md shadow-[0_0_0_1px_rgba(248,81,73,0.3)]">{error}</p>}
         </div>
         <div className="px-4 py-3 shadow-[0_-1px_0_rgba(255,255,255,0.05)] bg-[#0d1117] flex justify-end gap-2">
           <Button variant="ghost" onClick={handleClose} className="h-9 px-4 text-[#c9d1d9] hover:bg-[#21262d]">취소</Button>
@@ -1167,7 +1167,7 @@ function InlinePostComposer({ onPostCreated, userAvatar, userInitials, userProfi
   const config = writableCategoryConfig[selectedType];
 
   return (
-    <div className="bg-[#151a21] rounded-xl border border-[#21262d]/60 shadow-[0_2px_8px_rgba(0,0,0,0.15)] overflow-hidden transition-all duration-200">
+    <div className="bg-[#151a21] rounded-md  shadow-[0_2px_8px_rgba(0,0,0,0.15)] overflow-hidden transition-all duration-200">
       {/* Collapsed State */}
       {!isExpanded && (
         <div className="p-5">
@@ -1203,7 +1203,7 @@ function InlinePostComposer({ onPostCreated, userAvatar, userInitials, userProfi
             </div>
             <button
               onClick={() => setIsExpanded(false)}
-              className="p-2 hover:bg-[#1c2128] rounded-lg transition-colors text-[#8b949e] hover:text-[#c9d1d9]"
+              className="p-2 hover:bg-[#1c2128] rounded-md transition-colors text-[#8b949e] hover:text-[#c9d1d9]"
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M18 6L6 18M6 6l12 12" />
@@ -1241,12 +1241,12 @@ function InlinePostComposer({ onPostCreated, userAvatar, userInitials, userProfi
               onChange={(e) => setContent(e.target.value)}
               placeholder={config.placeholder.content}
               rows={4}
-              className="text-sm bg-[#1c2128] border border-[#30363d]/50 text-[#e6edf3] rounded-xl resize-none focus:border-[#79c0ff]/40 placeholder:text-[#6e7681]"
+              className="text-sm bg-[#1c2128] border border-[#30363d]/50 text-[#e6edf3] rounded-md resize-none focus:border-[#79c0ff]/40 placeholder:text-[#6e7681]"
             />
 
             {/* Showcase URLs */}
             {selectedType === "showcase" && (
-              <div className="space-y-2 p-4 bg-[#0a0c10]/50 rounded-xl border border-[#21262d]/50">
+              <div className="space-y-2 p-4 bg-[#0a0c10]/50 rounded-md border border-[#21262d]/50">
                 <div className="flex items-center gap-2 mb-3">
                   <Rocket className="h-4 w-4 text-[#79c0ff]" />
                   <span className="text-xs font-medium text-[#79c0ff]">프로젝트 링크 (선택)</span>
@@ -1256,20 +1256,20 @@ function InlinePostComposer({ onPostCreated, userAvatar, userInitials, userProfi
                   value={projectUrl}
                   onChange={(e) => setProjectUrl(e.target.value)}
                   placeholder="https://your-project.com"
-                  className="h-10 text-sm bg-[#1c2128] border border-[#30363d]/50 text-[#e6edf3] rounded-lg placeholder:text-[#6e7681]"
+                  className="h-10 text-sm bg-[#1c2128] border border-[#30363d]/50 text-[#e6edf3] rounded-md placeholder:text-[#6e7681]"
                 />
                 <Input
                   type="url"
                   value={githubRepo}
                   onChange={(e) => setGithubRepo(e.target.value)}
                   placeholder="https://github.com/username/repo"
-                  className="h-10 text-sm bg-[#1c2128] border border-[#30363d]/50 text-[#e6edf3] rounded-lg placeholder:text-[#6e7681]"
+                  className="h-10 text-sm bg-[#1c2128] border border-[#30363d]/50 text-[#e6edf3] rounded-md placeholder:text-[#6e7681]"
                 />
               </div>
             )}
 
             {error && (
-              <p className="text-xs text-[#f85149] bg-[#f85149]/10 px-4 py-2.5 rounded-lg border border-[#f85149]/20 flex items-center gap-2">
+              <p className="text-xs text-[#f85149] bg-[#f85149]/10 px-4 py-2.5 rounded-md border border-[#f85149]/20 flex items-center gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <circle cx="12" cy="12" r="10" />
                   <line x1="12" y1="8" x2="12" y2="12" />
@@ -1284,14 +1284,14 @@ function InlinePostComposer({ onPostCreated, userAvatar, userInitials, userProfi
           <div className="px-5 py-4 border-t border-[#1c2128] bg-[#0a0c10]/30 flex items-center justify-between gap-3">
             <button
               onClick={() => setIsExpanded(false)}
-              className="px-4 py-2 text-sm font-medium text-[#8b949e] hover:text-[#c9d1d9] hover:bg-[#1c2128] rounded-lg transition-colors"
+              className="px-4 py-2 text-sm font-medium text-[#8b949e] hover:text-[#c9d1d9] hover:bg-[#1c2128] rounded-md transition-colors"
             >
               취소
             </button>
             <Button
               onClick={handleSubmit}
               disabled={isSubmitting || !content.trim()}
-              className="h-9 px-5 bg-[#238636] hover:bg-[#2ea043] text-white font-medium text-sm rounded-lg disabled:opacity-50 transition-colors"
+              className="h-9 px-5 bg-[#238636] hover:bg-[#2ea043] text-white font-medium text-sm rounded-md disabled:opacity-50 transition-colors"
             >
               {isSubmitting ? (
                 <>
@@ -1408,7 +1408,7 @@ export default function CommunityPage() {
       {/* Header */}
       <div className="container pt-5">
         <div className="flex items-center gap-3 mb-3 pb-3 shadow-[0_1px_0_rgba(255,255,255,0.03)]">
-          <div className="p-2.5 bg-[#daa520]/15 rounded-lg border border-[#daa520]/20">
+          <div className="p-2.5 bg-[#daa520]/15 rounded-md border border-[#daa520]/20">
             <Terminal className="h-5 w-5 text-[#daa520]" />
           </div>
           <div>
@@ -1427,7 +1427,7 @@ export default function CommunityPage() {
           <aside className="hidden lg:block w-56 shrink-0">
             <div className="sticky top-20 space-y-4">
               {/* Profile Card */}
-              <div className="bg-[#151a21] rounded-xl border border-[#21262d]/60 overflow-hidden">
+              <div className="bg-[#151a21] rounded-md  overflow-hidden">
                 <div className="h-14 bg-gradient-to-r from-[#f0b429]/10 via-[#f0b429]/5 to-transparent relative">
                   <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%2020%2020%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cg%20fill%3D%22%23d4a55a%22%20fill-opacity%3D%220.03%22%3E%3Ccircle%20cx%3D%221%22%20cy%3D%221%22%20r%3D%221%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E')]" />
                 </div>
@@ -1448,7 +1448,7 @@ export default function CommunityPage() {
               </div>
 
               {/* Filters */}
-              <div className="bg-[#151a21] rounded-xl border border-[#21262d]/60 p-2">
+              <div className="bg-[#151a21] rounded-md  p-2">
                 <nav className="space-y-0.5">
                   {categories.map((cat) => {
                     const Icon = cat.icon;
@@ -1460,7 +1460,7 @@ export default function CommunityPage() {
                       : feedItems.filter(i => i.type === "post" && i.data.type === cat.key).length;
                     return (
                       <button key={cat.key} onClick={() => setActiveFilter(cat.key)}
-                        className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-left transition-all ${
+                        className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-md text-left transition-all ${
                           isActive ? "bg-[#1c2128] text-[#e6edf3] border border-[#30363d]/50" : "text-[#8b949e] hover:bg-[#1c2128]/50 hover:text-[#c9d1d9] border border-transparent"
                         }`}>
                         <Icon className={`h-4 w-4 ${isActive ? "text-[#f0b429]" : ""}`} />
@@ -1486,7 +1486,7 @@ export default function CommunityPage() {
                   const isActive = activeFilter === cat.key;
                   return (
                     <button key={cat.key} onClick={() => setActiveFilter(cat.key)}
-                      className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-all border ${
+                      className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium whitespace-nowrap transition-all border ${
                         isActive ? "bg-[#1c2128] text-[#c9d1d9] border-[#f0b429]/30" : "bg-[#151a21] text-[#8b949e] border-[#21262d]/50"
                       }`}>
                       <Icon className="h-3.5 w-3.5" />{cat.label}
@@ -1503,8 +1503,8 @@ export default function CommunityPage() {
                 <Loader2 className="h-6 w-6 animate-spin text-[#f0b429]" />
               </div>
             ) : filteredItems.length === 0 ? (
-              <div className="bg-[#161b22] rounded-xl border border-[#30363d]/60 p-12 text-center">
-                <div className="w-16 h-16 mx-auto mb-4 bg-[#21262d] rounded-xl flex items-center justify-center">
+              <div className="bg-[#161b22] rounded-md border border-0 p-12 text-center">
+                <div className="w-16 h-16 mx-auto mb-4 bg-[#21262d] rounded-md flex items-center justify-center">
                   <MessageSquare className="h-8 w-8 text-[#484f58]" />
                 </div>
                 <p className="text-[#e6edf3] text-sm font-medium mb-1">아직 게시글이 없어요</p>
@@ -1544,23 +1544,23 @@ export default function CommunityPage() {
           <aside className="hidden xl:block w-52 shrink-0">
             <div className="sticky top-20 space-y-4">
               {/* Community Stats */}
-              <div className="bg-[#151a21] rounded-xl border border-[#21262d]/60 p-4">
+              <div className="bg-[#151a21] rounded-md  p-4">
                 <p className="text-xs font-semibold text-[#e6edf3] mb-3 flex items-center gap-2">
                   <Zap className="h-3.5 w-3.5 text-[#f0b429]" />
                   커뮤니티 현황
                 </p>
                 <div className="space-y-2">
-                  <div className="flex items-center justify-between py-2.5 px-3 bg-[#0a0c10]/60 rounded-lg border border-[#21262d]/50">
+                  <div className="flex items-center justify-between py-2.5 px-3 bg-[#0a0c10]/60 rounded-md border border-[#21262d]/50">
                     <span className="text-[11px] text-[#8b949e]">게시글</span>
                     <span className="text-sm font-semibold text-[#e6edf3]">{feedItems.length}</span>
                   </div>
-                  <div className="flex items-center justify-between py-2.5 px-3 bg-[#0a0c10]/60 rounded-lg border border-[#21262d]/50">
+                  <div className="flex items-center justify-between py-2.5 px-3 bg-[#0a0c10]/60 rounded-md border border-[#21262d]/50">
                     <span className="text-[11px] text-[#8b949e]">학습 질문</span>
                     <span className="text-sm font-semibold text-[#f0b429]">
                       {feedItems.filter(i => i.type === "question").length}
                     </span>
                   </div>
-                  <div className="flex items-center justify-between py-2.5 px-3 bg-[#0a0c10]/60 rounded-lg border border-[#21262d]/50">
+                  <div className="flex items-center justify-between py-2.5 px-3 bg-[#0a0c10]/60 rounded-md border border-[#21262d]/50">
                     <span className="text-[11px] text-[#8b949e]">일반 질문</span>
                     <span className="text-sm font-semibold text-[#e3b341]">
                       {feedItems.filter(i => i.type === "post" && i.data.type === "question").length}
@@ -1570,7 +1570,7 @@ export default function CommunityPage() {
               </div>
 
               {/* Tip Card */}
-              <div className="bg-[#151a21] rounded-xl border border-[#21262d]/60 p-4">
+              <div className="bg-[#151a21] rounded-md  p-4">
                 <p className="text-xs font-semibold text-[#e6edf3] mb-2 flex items-center gap-2">
                   <Lightbulb className="h-3.5 w-3.5 text-[#e3b341]" />
                   오늘의 팁

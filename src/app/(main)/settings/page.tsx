@@ -234,7 +234,7 @@ export default function SettingsPage() {
             variant="ghost"
             size="icon"
             asChild
-            className="rounded-lg text-[#8b949e] hover:text-[#c9d1d9] bg-[#1c2128] hover:bg-[#262c36] border-0 shadow-[0_2px_6px_rgba(0,0,0,0.3)]"
+            className="rounded-md text-[#8b949e] hover:text-[#c9d1d9] bg-[#1c2128] hover:bg-[#262c36] border-0 shadow-[0_2px_6px_rgba(0,0,0,0.3)]"
           >
             <Link href="/dashboard">
               <Icons.chevronLeft className="h-5 w-5" />
@@ -246,7 +246,7 @@ export default function SettingsPage() {
         {/* Message */}
         {message && (
           <div
-            className={`mb-6 p-4 rounded-lg text-sm shadow-[0_2px_8px_rgba(0,0,0,0.3)] ${
+            className={`mb-6 p-4 rounded-md text-sm shadow-[0_2px_8px_rgba(0,0,0,0.3)] ${
               message.type === "success"
                 ? "bg-[#56d364]/10 text-[#56d364]"
                 : "bg-[#f85149]/10 text-[#f85149]"

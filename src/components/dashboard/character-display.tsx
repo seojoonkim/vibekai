@@ -43,7 +43,7 @@ export function CharacterDisplay({ initialCharacterId, displayName, totalXp }: C
       <CharacterSelectModal currentCharacterId={characterId} currentXp={totalXp} onSelect={handleSelect}>
         <button className="group relative mb-5">
           {/* Outer glow effect */}
-          <div className="absolute -inset-2 bg-[#daa520]/10 rounded-xl blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          <div className="absolute -inset-2 bg-[#daa520]/10 rounded-md blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
           {/* Traditional frame */}
           <div className="relative">

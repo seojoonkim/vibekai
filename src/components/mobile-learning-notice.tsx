@@ -53,7 +53,7 @@ export function MobileLearningNotice({ chapterTitle }: MobileLearningNoticeProps
           </p>
 
           {chapterTitle && (
-            <div className="bg-[#1c2128] rounded-lg px-4 py-3 mb-6 shadow-[0_4px_12px_rgba(0,0,0,0.35)]">
+            <div className="bg-[#1c2128] rounded-md px-4 py-3 mb-6 shadow-[0_4px_12px_rgba(0,0,0,0.35)]">
               <p className="text-xs text-[#6e7681] mb-1 font-mono uppercase tracking-wider">현재 챕터</p>
               <p className="text-sm text-[#c9d1d9] font-medium truncate">{chapterTitle}</p>
             </div>
@@ -62,7 +62,7 @@ export function MobileLearningNotice({ chapterTitle }: MobileLearningNoticeProps
           <div className="flex flex-col gap-3">
             <Button
               asChild
-              className="w-full h-12 rounded-lg bg-[#daa520] hover:bg-[#e6b82e] text-[#0d1117] font-bold text-base shadow-[0_4px_12px_rgba(218,165,32,0.3)] transition-all"
+              className="w-full h-12 rounded-md bg-[#daa520] hover:bg-[#e6b82e] text-[#0d1117] font-bold text-base shadow-[0_4px_12px_rgba(218,165,32,0.3)] transition-all"
             >
               <Link href="/curriculum">
                 <ArrowLeft className="w-4 h-4 mr-2" />
@@ -73,7 +73,7 @@ export function MobileLearningNotice({ chapterTitle }: MobileLearningNoticeProps
             <Button
               asChild
               variant="outline"
-              className="w-full h-12 rounded-lg bg-[#1c2128] border-0 text-[#c9d1d9] hover:bg-[#21262d] hover:text-[#e6edf3] font-medium text-base shadow-[0_2px_8px_rgba(0,0,0,0.3)] transition-all"
+              className="w-full h-12 rounded-md bg-[#1c2128] border-0 text-[#c9d1d9] hover:bg-[#21262d] hover:text-[#e6edf3] font-medium text-base shadow-[0_2px_8px_rgba(0,0,0,0.3)] transition-all"
             >
               <Link href="/dashboard">
                 <Icons.code className="w-4 h-4 mr-2" />

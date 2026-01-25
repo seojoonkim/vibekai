@@ -98,7 +98,7 @@ export default async function DashboardPage() {
       {/* Header */}
       <div className="container pt-5">
         <div className="flex items-center gap-3 mb-3 pb-3 shadow-[0_1px_0_rgba(255,255,255,0.03)]">
-          <div className="p-2.5 bg-[#daa520]/10 rounded-lg shadow-[0_2px_6px_rgba(0,0,0,0.25)]">
+          <div className="p-2.5 bg-[#daa520]/10 rounded-md shadow-[0_2px_6px_rgba(0,0,0,0.25)]">
             <Icons.code className="h-5 w-5 text-[#daa520]" />
           </div>
           <div>
@@ -130,7 +130,7 @@ export default async function DashboardPage() {
           {/* 1:2 Layout - Character : XP Progress */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {/* Character Card - 1 portion */}
-            <div className="relative bg-[#151a21] p-5 rounded-xl border border-[#21262d]/50 shadow-[0_4px_12px_rgba(0,0,0,0.3)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.4)] hover:border-[#30363d]/60 transition-all duration-300 group">
+            <div className="relative bg-[#151a21] p-5 rounded-md  shadow-[0_4px_12px_rgba(0,0,0,0.3)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.4)]  transition-all duration-300 group">
               <CharacterDisplay
                 initialCharacterId={userStats.characterId}
                 displayName={userStats.displayName}
@@ -145,7 +145,7 @@ export default async function DashboardPage() {
           </div>
 
           {/* Activity Heatmap - GitHub Style */}
-          <div className="mt-5 bg-[#151a21] p-5 rounded-xl border border-[#21262d]/50 shadow-[0_4px_12px_rgba(0,0,0,0.3)]">
+          <div className="mt-5 bg-[#151a21] p-5 rounded-md  shadow-[0_4px_12px_rgba(0,0,0,0.3)]">
             <ActivityHeatmap activities={activityData} />
           </div>
         </div>
@@ -171,7 +171,7 @@ export default async function DashboardPage() {
                 <span className="text-sm sm:text-base text-[#8b949e] font-medium">/{totalChapters}장</span>
                 <span className="text-xs sm:text-sm text-[#6e7681] ml-2 font-mono">({progressPercent}%)</span>
               </div>
-              <div className="bg-[#0a0c10] h-2.5 sm:h-3 flex-1 max-w-[240px] sm:max-w-[320px] overflow-hidden rounded-full relative border border-[#21262d]/50">
+              <div className="bg-[#0a0c10] h-2.5 sm:h-3 flex-1 max-w-[240px] sm:max-w-[320px] overflow-hidden rounded-full relative ">
                 <div
                   className="bg-gradient-to-r from-[#daa520] via-[#e6b82e] to-[#3fb950] h-full transition-all duration-500 rounded-full"
                   style={{ width: `${progressPercent}%` }}
@@ -179,7 +179,7 @@ export default async function DashboardPage() {
               </div>
             </div>
           </div>
-          <Button asChild size="default" className="rounded-lg h-9 sm:h-10 px-4 sm:px-6 text-xs sm:text-sm font-bold bg-[#daa520] hover:bg-[#e6b82e] text-[#0d1117] border-0 transition-all duration-300 w-full sm:w-auto shadow-[0_2px_8px_rgba(218,165,32,0.3)] hover:shadow-[0_4px_16px_rgba(218,165,32,0.4)]">
+          <Button asChild size="default" className="rounded-md h-9 sm:h-10 px-4 sm:px-6 text-xs sm:text-sm font-bold bg-[#daa520] hover:bg-[#e6b82e] text-[#0d1117] border-0 transition-all duration-300 w-full sm:w-auto shadow-[0_2px_8px_rgba(218,165,32,0.3)] hover:shadow-[0_4px_16px_rgba(218,165,32,0.4)]">
             <Link href={`/curriculum/${nextChapterId}`}>
               수련하기
               <Icons.swords className="ml-2 h-4 w-4" />
@@ -206,7 +206,7 @@ export default async function DashboardPage() {
                 href={`/curriculum?part=${part.id}`}
                 className="block group"
               >
-                <div className={`relative h-full transition-all duration-300 backdrop-blur-sm p-4 sm:p-6 rounded-xl border ${
+                <div className={`relative h-full transition-all duration-300 backdrop-blur-sm p-4 sm:p-6 rounded-md border ${
                   isActive
                     ? 'bg-[#151a21] border-[#30363d]/60 shadow-[0_4px_12px_rgba(0,0,0,0.3)]'
                     : isCompleted
@@ -252,7 +252,7 @@ export default async function DashboardPage() {
                       {part.description.ko}
                     </p>
                     <div className="flex items-center gap-2 sm:gap-3">
-                      <div className="flex-1 h-1.5 bg-[#0a0c10] overflow-hidden rounded-md relative border border-[#21262d]/50">
+                      <div className="flex-1 h-1.5 bg-[#0a0c10] overflow-hidden rounded-md relative ">
                         <div
                           className={`h-full transition-all ${isCompleted ? 'bg-[#3fb950]' : 'bg-gradient-to-r from-[#daa520] to-[#3fb950]'}`}
                           style={{ width: `${partProgress}%` }}
@@ -272,7 +272,7 @@ export default async function DashboardPage() {
         </div>
 
         {/* Key Visual Banner */}
-        <div className="relative overflow-hidden rounded-xl border border-[#21262d]/50 shadow-[0_4px_12px_rgba(0,0,0,0.3)] group hover:shadow-[0_8px_24px_rgba(0,0,0,0.4)] hover:border-[#30363d]/60 transition-all duration-500">
+        <div className="relative overflow-hidden rounded-md  shadow-[0_4px_12px_rgba(0,0,0,0.3)] group hover:shadow-[0_8px_24px_rgba(0,0,0,0.4)]  transition-all duration-500">
           <div className="relative h-44 sm:h-56 md:h-64 bg-[#0a0c10]">
             <Image
               src="/images/bg.jpg"
@@ -293,7 +293,7 @@ export default async function DashboardPage() {
               <p className="text-[#8b949e] text-xs sm:text-sm md:text-base mb-3 sm:mb-4">
                 AI와 함께 코딩 무술을 익히고 검은띠에 도전하세요
               </p>
-              <Button asChild className="rounded-lg px-4 py-1.5 bg-[#1c2128]/90 border border-[#30363d]/50 text-[#c9d1d9] text-xs sm:text-sm hover:bg-[#262c36] hover:border-[#484f58]/60 shadow-[0_2px_8px_rgba(0,0,0,0.35)] hover:shadow-[0_4px_12px_rgba(218,165,32,0.2)] hover:scale-105 transition-all duration-300">
+              <Button asChild className="rounded-md px-4 py-1.5 bg-[#1c2128]/90 border border-[#30363d]/50 text-[#c9d1d9] text-xs sm:text-sm hover:bg-[#262c36] hover:border-[#484f58]/60 shadow-[0_2px_8px_rgba(0,0,0,0.35)] hover:shadow-[0_4px_12px_rgba(218,165,32,0.2)] hover:scale-105 transition-all duration-300">
                 <Link href="/curriculum">
                   수련 과정 보기
                   <Icons.chevronRight className="ml-1.5 h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform duration-300" />

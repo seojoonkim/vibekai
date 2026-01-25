@@ -47,7 +47,7 @@ export function CharacterAvatar({ characterId, size = "md", beltColor, className
   return (
     <div className={cn("relative", className)}>
       <div
-        className="rounded-xl overflow-hidden ring-2 ring-slate-700 shadow-lg"
+        className="rounded-md overflow-hidden ring-2 ring-slate-700 shadow-lg"
         style={{
           width: pixelSize,
           height: pixelSize,
@@ -86,7 +86,7 @@ export function CharacterCard({ character, selected, onClick, disabled, showName
       onClick={onClick}
       disabled={disabled}
       className={cn(
-        "flex flex-col items-center gap-0.5 p-1 rounded-lg transition-all duration-200",
+        "flex flex-col items-center gap-0.5 p-1 rounded-md transition-all duration-200",
         "hover:bg-slate-800/70 focus:outline-none focus:ring-2 focus:ring-violet-500",
         selected && "bg-violet-500/20 ring-2 ring-violet-500",
         disabled && "opacity-50 cursor-not-allowed"
@@ -94,7 +94,7 @@ export function CharacterCard({ character, selected, onClick, disabled, showName
     >
       <div className="relative">
         <div
-          className="w-10 h-10 rounded-lg overflow-hidden bg-slate-800 ring-1 ring-slate-700"
+          className="w-10 h-10 rounded-md overflow-hidden bg-slate-800 ring-1 ring-slate-700"
           style={{
             backgroundImage: `url(${spriteSheet})`,
             backgroundSize: "400% 200%",
@@ -134,7 +134,7 @@ export function CharacterPreview({ character, size = 48, beltColor, className }:
   return (
     <div className={cn("relative", className)}>
       <div
-        className="rounded-xl overflow-hidden bg-slate-800/50 ring-1 ring-slate-700/50 shadow-lg transition-transform hover:scale-105"
+        className="rounded-md overflow-hidden bg-slate-800/50 ring-1 ring-slate-700/50 shadow-lg transition-transform hover:scale-105"
         style={{
           width: size,
           height: size,

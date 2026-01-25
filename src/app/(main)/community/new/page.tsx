@@ -152,7 +152,7 @@ export default function NewPostPage() {
         {/* Header */}
         <div className="flex items-center gap-4 mb-8">
           <Link href="/community">
-            <Button variant="ghost" size="icon" className="rounded-lg text-[#8b949e] hover:text-[#c9d1d9] hover:bg-[#21262d]">
+            <Button variant="ghost" size="icon" className="rounded-md text-[#8b949e] hover:text-[#c9d1d9] hover:bg-[#21262d]">
               <ArrowLeft className="h-5 w-5" />
             </Button>
           </Link>
@@ -175,7 +175,7 @@ export default function NewPostPage() {
                 <button
                   key={type}
                   onClick={() => setSelectedType(type)}
-                  className={`flex items-center gap-2 px-4 py-3 rounded-lg border transition-all ${
+                  className={`flex items-center gap-2 px-4 py-3 rounded-md border transition-all ${
                     isSelected
                       ? "bg-[#f0b429]/20 border-[#f0b429] text-[#f0b429]"
                       : "bg-[#1c2128] border-[#30363d] text-[#8b949e] hover:border-[#f0b429]/50 hover:text-[#c9d1d9]"
@@ -195,7 +195,7 @@ export default function NewPostPage() {
         </div>
 
         {/* Form */}
-        <div className="space-y-5 bg-[#1c2128] rounded-lg p-6 border border-[#30363d] shadow-[0_4px_12px_rgba(0,0,0,0.35)]">
+        <div className="space-y-5 bg-[#1c2128] rounded-md p-6 border border-[#30363d] shadow-[0_4px_12px_rgba(0,0,0,0.35)]">
           <div>
             <Label htmlFor="title" className="text-sm font-medium text-[#c9d1d9] mb-2 block">
               제목
@@ -205,7 +205,7 @@ export default function NewPostPage() {
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder={config?.placeholder.title || "제목을 입력해주세요"}
-              className="h-11 rounded-lg bg-[#161b22] border-[#30363d] text-[#c9d1d9] placeholder:text-[#6e7681] focus:border-[#f0b429] focus:ring-[#f0b429]/20"
+              className="h-11 rounded-md bg-[#161b22] border-[#30363d] text-[#c9d1d9] placeholder:text-[#6e7681] focus:border-[#f0b429] focus:ring-[#f0b429]/20"
             />
           </div>
 
@@ -219,7 +219,7 @@ export default function NewPostPage() {
               onChange={(e) => setContent(e.target.value)}
               placeholder={config?.placeholder.content || "내용을 입력해주세요"}
               rows={8}
-              className="rounded-lg bg-[#161b22] border-[#30363d] text-[#c9d1d9] placeholder:text-[#6e7681] focus:border-[#f0b429] focus:ring-[#f0b429]/20 resize-none"
+              className="rounded-md bg-[#161b22] border-[#30363d] text-[#c9d1d9] placeholder:text-[#6e7681] focus:border-[#f0b429] focus:ring-[#f0b429]/20 resize-none"
             />
           </div>
 
@@ -237,7 +237,7 @@ export default function NewPostPage() {
                   value={projectUrl}
                   onChange={(e) => setProjectUrl(e.target.value)}
                   placeholder="https://your-project.vercel.app"
-                  className="h-11 rounded-lg bg-[#161b22] border-[#30363d] text-[#c9d1d9] placeholder:text-[#6e7681] focus:border-[#f0b429] focus:ring-[#f0b429]/20"
+                  className="h-11 rounded-md bg-[#161b22] border-[#30363d] text-[#c9d1d9] placeholder:text-[#6e7681] focus:border-[#f0b429] focus:ring-[#f0b429]/20"
                 />
               </div>
               <div>
@@ -251,28 +251,28 @@ export default function NewPostPage() {
                   value={githubRepo}
                   onChange={(e) => setGithubRepo(e.target.value)}
                   placeholder="https://github.com/username/repo"
-                  className="h-11 rounded-lg bg-[#161b22] border-[#30363d] text-[#c9d1d9] placeholder:text-[#6e7681] focus:border-[#f0b429] focus:ring-[#f0b429]/20"
+                  className="h-11 rounded-md bg-[#161b22] border-[#30363d] text-[#c9d1d9] placeholder:text-[#6e7681] focus:border-[#f0b429] focus:ring-[#f0b429]/20"
                 />
               </div>
             </>
           )}
 
           {error && (
-            <p className="text-sm text-[#f85149] bg-[#f85149]/10 px-4 py-2 rounded-lg">
+            <p className="text-sm text-[#f85149] bg-[#f85149]/10 px-4 py-2 rounded-md">
               {error}
             </p>
           )}
 
           <div className="flex justify-end gap-3 pt-2">
             <Link href="/community">
-              <Button variant="outline" className="rounded-lg border-[#30363d] text-[#8b949e] hover:bg-[#21262d] hover:text-[#c9d1d9] bg-transparent">
+              <Button variant="outline" className="rounded-md border-[#30363d] text-[#8b949e] hover:bg-[#21262d] hover:text-[#c9d1d9] bg-transparent">
                 취소
               </Button>
             </Link>
             <Button
               onClick={handleSubmit}
               disabled={isSubmitting || !selectedType || !title.trim() || !content.trim()}
-              className="rounded-lg bg-[#f0b429] hover:bg-[#f7c948] text-[#0d1117] font-semibold disabled:opacity-50"
+              className="rounded-md bg-[#f0b429] hover:bg-[#f7c948] text-[#0d1117] font-semibold disabled:opacity-50"
             >
               {isSubmitting ? (
                 <>

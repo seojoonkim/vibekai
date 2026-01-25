@@ -195,7 +195,7 @@ export function CompletionCelebrationModal({
               showContent ? "opacity-100 scale-100" : "opacity-0 scale-90"
             )}
           >
-            <div className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-[#f0b429]/20 to-[#c49a4b]/10 border border-[#f0b429]/40 rounded-lg">
+            <div className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-[#f0b429]/20 to-[#c49a4b]/10 border border-[#f0b429]/40 rounded-md">
               <Zap className="h-6 w-6 text-[#f0b429] animate-pulse" />
               <span className="text-3xl font-bold text-[#f0b429]">
                 +{xpCounter}
@@ -211,7 +211,7 @@ export function CompletionCelebrationModal({
               showContent ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
             )}
           >
-            <div className="bg-[#0d0906]/50 rounded-lg p-4 text-center border border-[#2a1f15]">
+            <div className="bg-[#0d0906]/50 rounded-md p-4 text-center border border-[#2a1f15]">
               <p className="text-xs text-[#8b7355] mb-2">난이도</p>
               <div className="flex justify-center gap-0.5">
                 {[1, 2, 3, 4, 5].map((star) => (
@@ -227,7 +227,7 @@ export function CompletionCelebrationModal({
                 ))}
               </div>
             </div>
-            <div className="bg-[#0d0906]/50 rounded-lg p-4 text-center border border-[#2a1f15]">
+            <div className="bg-[#0d0906]/50 rounded-md p-4 text-center border border-[#2a1f15]">
               <p className="text-xs text-[#8b7355] mb-2">만족도</p>
               <div className="flex justify-center gap-0.5">
                 {[1, 2, 3, 4, 5].map((star) => (
@@ -249,7 +249,7 @@ export function CompletionCelebrationModal({
           {hasReview && (
             <div
               className={cn(
-                "mb-6 p-3 bg-emerald-500/10 border border-emerald-500/30 rounded-lg text-center transition-all duration-700 delay-500",
+                "mb-6 p-3 bg-emerald-500/10 border border-emerald-500/30 rounded-md text-center transition-all duration-700 delay-500",
                 showContent ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
               )}
             >
@@ -269,7 +269,7 @@ export function CompletionCelebrationModal({
           >
             <Button
               onClick={handleGoToCurriculum}
-              className="w-full h-12 text-base font-bold rounded-lg bg-gradient-to-r from-[#f0b429] to-[#c49a4b] hover:from-[#f7c948] hover:to-[#f0b429] text-[#1a120b] shadow-[0_4px_20px_rgba(212,165,90,0.4)] transition-all"
+              className="w-full h-12 text-base font-bold rounded-md bg-gradient-to-r from-[#f0b429] to-[#c49a4b] hover:from-[#f7c948] hover:to-[#f0b429] text-[#1a120b] shadow-[0_4px_20px_rgba(212,165,90,0.4)] transition-all"
             >
               수련 과정으로 돌아가기
               <ArrowRight className="h-5 w-5 ml-2" />

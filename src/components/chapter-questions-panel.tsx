@@ -367,7 +367,7 @@ export function ChapterQuestionsPanel({
 
       {/* 새 질문 작성 (텍스트 선택 시) */}
       {externalSelectedText && currentUser && (
-        <div className="bg-[#161b22] border border-violet-500/50 rounded-lg p-3 space-y-3">
+        <div className="bg-[#161b22] border border-violet-500/50 rounded-md p-3 space-y-3">
           <div className="flex items-start justify-between gap-2">
             <div className="flex-1 min-w-0">
               <p className="text-xs text-violet-400 mb-1">선택된 텍스트</p>
@@ -409,14 +409,14 @@ export function ChapterQuestionsPanel({
 
       {/* 로그인 안내 */}
       {!currentUser && externalSelectedText && (
-        <div className="bg-[#161b22] border border-[#3d444d] rounded-lg p-3 text-center">
+        <div className="bg-[#161b22] border border-[#3d444d] rounded-md p-3 text-center">
           <p className="text-sm text-[#9198a1]">질문을 남기려면 로그인이 필요합니다.</p>
         </div>
       )}
 
       {/* 안내 메시지 - 헤더가 있을 때만 표시 (헤더 숨길 때는 위에서 처리) */}
       {!hideHeader && !externalSelectedText && questions.length === 0 && (
-        <div className="bg-[#161b22] border border-[#3d444d] rounded-lg p-4 text-center">
+        <div className="bg-[#161b22] border border-[#3d444d] rounded-md p-4 text-center">
           <MessageSquare className="h-8 w-8 text-[#3d444d] mx-auto mb-2" />
           <p className="text-sm text-[#9198a1] mb-1">아직 질문이 없습니다</p>
           <p className="text-xs text-[#6e7681]">
@@ -440,7 +440,7 @@ export function ChapterQuestionsPanel({
                 if (el) questionRefs.current.set(q.id, el);
                 else questionRefs.current.delete(q.id);
               }}
-              className="rounded-lg overflow-hidden transition-all duration-700 ease-out"
+              className="rounded-md overflow-hidden transition-all duration-700 ease-out"
               style={{
                 backgroundColor: isHighlighted ? "rgba(139, 92, 246, 0.15)" : "#161b22",
               }}

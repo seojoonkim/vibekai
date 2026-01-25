@@ -96,7 +96,7 @@ export default async function LandingPage() {
         </div>
 
         <div className="absolute inset-0 flex items-center">
-          <div className="mx-auto max-w-5xl w-full px-5 sm:px-16 md:px-20 lg:px-28 xl:px-32">
+          <div className="mx-auto max-w-5xl w-full px-6 sm:px-14 md:px-18 lg:px-26 xl:px-30">
             <div className="max-w-lg lg:max-w-xl relative z-10">
               {/* Badge */}
               <div className="inline-flex items-center gap-1.5 px-3 sm:px-4 py-1.5 sm:py-2 bg-[#1c2128] text-[#daa520] text-xs sm:text-sm font-medium mb-4 sm:mb-3 lg:mb-4 backdrop-blur-sm rounded-md shadow-[0_2px_8px_rgba(0,0,0,0.3)] animate-float-up opacity-0 stagger-1" style={{ animationFillMode: 'forwards' }}>
@@ -225,7 +225,7 @@ export default async function LandingPage() {
             {whyVibeCodingImages.map((image, i) => (
               <div
                 key={i}
-                className="bg-[#1c2128] rounded-lg overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(218,165,32,0.15)] shadow-[0_4px_12px_rgba(0,0,0,0.35)] flex group"
+                className="bg-[#1c2128] rounded-md overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(218,165,32,0.15)] shadow-[0_4px_12px_rgba(0,0,0,0.35)] flex group"
               >
                 <div className="relative w-24 sm:w-36 aspect-square flex-shrink-0 overflow-hidden">
                   <Image
@@ -277,7 +277,7 @@ export default async function LandingPage() {
             {projectKeys.map((key, index) => (
               <div
                 key={key}
-                className="bg-[#0d1117] p-4 sm:p-5 rounded-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(218,165,32,0.15)] shadow-[0_4px_12px_rgba(0,0,0,0.35)] group relative overflow-hidden"
+                className="bg-[#0d1117] p-4 sm:p-5 rounded-md transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(218,165,32,0.15)] shadow-[0_4px_12px_rgba(0,0,0,0.35)] group relative overflow-hidden"
               >
                 <div className="flex items-center justify-between mb-2 sm:mb-3">
                   <span className="text-[11px] sm:text-[13px] font-mono font-medium px-1.5 py-0.5 bg-[#1c2128] text-[#a8b2bd] rounded-md shadow-[0_1px_3px_rgba(0,0,0,0.2)]">
@@ -320,7 +320,7 @@ export default async function LandingPage() {
             {features.map((feature, i) => (
               <div
                 key={i}
-                className="bg-[#1c2128] rounded-lg overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(218,165,32,0.15)] shadow-[0_4px_12px_rgba(0,0,0,0.35)] group"
+                className="bg-[#1c2128] rounded-md overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(218,165,32,0.15)] shadow-[0_4px_12px_rgba(0,0,0,0.35)] group"
               >
                 <div className="relative w-full aspect-[2/1] overflow-hidden">
                   <Image
@@ -362,7 +362,7 @@ export default async function LandingPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-8 gap-1 sm:gap-2 max-w-xl mx-auto p-5 bg-[#0d1117] backdrop-blur-sm rounded-lg shadow-[0_4px_16px_rgba(0,0,0,0.4)]">
+          <div className="grid grid-cols-8 gap-1 sm:gap-2 max-w-xl mx-auto p-5 bg-[#0d1117] backdrop-blur-sm rounded-md shadow-[0_4px_16px_rgba(0,0,0,0.4)]">
             {CHARACTERS.map((character) => (
               <CharacterPreview
                 key={character.id}

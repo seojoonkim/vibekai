@@ -283,7 +283,7 @@ export function QuestionHighlightOverlay({
           onMouseLeave={handleTooltipMouseLeave}
         >
           <div
-            className="bg-[#161b22] border border-[#3d444d] rounded-lg shadow-xl max-w-xs w-72 overflow-hidden cursor-pointer hover:border-violet-500/50 transition-colors"
+            className="bg-[#161b22] border border-[#3d444d] rounded-md shadow-xl max-w-xs w-72 overflow-hidden cursor-pointer hover:border-violet-500/50 transition-colors"
             onClick={() => handleClick(tooltip.question!.id)}
           >
             {/* 질문 내용 */}

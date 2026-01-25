@@ -120,7 +120,7 @@ export function ChapterCompletionForm({
   // 이미 완료된 챕터인 경우 읽기 전용 모드
   if (isAlreadyCompleted && savedReviewData) {
     return (
-      <div className="bg-gradient-to-b from-[#1c2128] to-[#161b22] rounded-xl p-6 sm:p-8 space-y-6 shadow-[0_4px_16px_rgba(86,211,100,0.12),0_4px_12px_rgba(0,0,0,0.35)]">
+      <div className="bg-gradient-to-b from-[#1c2128] to-[#161b22] rounded-md p-6 sm:p-8 space-y-6 shadow-[0_4px_16px_rgba(86,211,100,0.12),0_4px_12px_rgba(0,0,0,0.35)]">
         {/* Header - Completed */}
         <div className="text-center space-y-3">
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-[#56d364]/20 to-[#3fb950]/10 shadow-[0_4px_12px_rgba(86,211,100,0.2)] mb-2">
@@ -132,7 +132,7 @@ export function ChapterCompletionForm({
           <p className="text-sm text-[#8b949e]">
             이 챕터를 성공적으로 완료했습니다
           </p>
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#56d364]/15 shadow-[0_2px_6px_rgba(86,211,100,0.2)]">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-[#56d364]/15 shadow-[0_2px_6px_rgba(86,211,100,0.2)]">
             <Zap className="h-4 w-4 text-[#56d364]" />
             <span className="text-sm font-semibold text-[#56d364]">
               +{xpReward} XP 획득 완료
@@ -162,7 +162,7 @@ export function ChapterCompletionForm({
             <label className="text-sm font-medium text-[#e6edf3]">
               수련 후기
             </label>
-            <div className="p-4 bg-[#0d1117] rounded-lg text-sm text-[#c9d1d9] whitespace-pre-wrap shadow-[inset_0_1px_4px_rgba(0,0,0,0.3)]">
+            <div className="p-4 bg-[#0d1117] rounded-md text-sm text-[#c9d1d9] whitespace-pre-wrap shadow-[inset_0_1px_4px_rgba(0,0,0,0.3)]">
               {savedReviewData.review}
             </div>
             <p className="text-xs text-[#8b949e] flex items-center gap-1">
@@ -175,7 +175,7 @@ export function ChapterCompletionForm({
         {/* Back to Curriculum Button */}
         <Button
           onClick={() => router.push("/curriculum")}
-          className="w-full h-14 text-lg font-bold rounded-lg bg-gradient-to-r from-[#f0b429] to-[#c49a4b] hover:from-[#f7c948] hover:to-[#f0b429] text-[#1a120b] shadow-[0_4px_20px_rgba(240,180,41,0.4)] transition-all"
+          className="w-full h-14 text-lg font-bold rounded-md bg-gradient-to-r from-[#f0b429] to-[#c49a4b] hover:from-[#f7c948] hover:to-[#f0b429] text-[#1a120b] shadow-[0_4px_20px_rgba(240,180,41,0.4)] transition-all"
         >
           수련 과정으로 돌아가기
           <ArrowRight className="h-5 w-5 ml-2" />
@@ -187,7 +187,7 @@ export function ChapterCompletionForm({
   // 완료되었지만 저장된 리뷰 데이터가 없는 경우 (로딩 중이거나 에러)
   if (isAlreadyCompleted && !savedReviewData) {
     return (
-      <div className="bg-gradient-to-b from-[#1c2128] to-[#161b22] rounded-xl p-6 sm:p-8 space-y-6 shadow-[0_4px_16px_rgba(86,211,100,0.12),0_4px_12px_rgba(0,0,0,0.35)]">
+      <div className="bg-gradient-to-b from-[#1c2128] to-[#161b22] rounded-md p-6 sm:p-8 space-y-6 shadow-[0_4px_16px_rgba(86,211,100,0.12),0_4px_12px_rgba(0,0,0,0.35)]">
         {/* Header - Completed */}
         <div className="text-center space-y-3">
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-[#56d364]/20 to-[#3fb950]/10 shadow-[0_4px_12px_rgba(86,211,100,0.2)] mb-2">
@@ -199,7 +199,7 @@ export function ChapterCompletionForm({
           <p className="text-sm text-[#8b949e]">
             이 챕터를 성공적으로 완료했습니다
           </p>
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#56d364]/15 shadow-[0_2px_6px_rgba(86,211,100,0.2)]">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-[#56d364]/15 shadow-[0_2px_6px_rgba(86,211,100,0.2)]">
             <Zap className="h-4 w-4 text-[#56d364]" />
             <span className="text-sm font-semibold text-[#56d364]">
               +{xpReward} XP 획득 완료
@@ -210,7 +210,7 @@ export function ChapterCompletionForm({
         {/* Back to Curriculum Button */}
         <Button
           onClick={() => router.push("/curriculum")}
-          className="w-full h-14 text-lg font-bold rounded-lg bg-gradient-to-r from-[#f0b429] to-[#c49a4b] hover:from-[#f7c948] hover:to-[#f0b429] text-[#1a120b] shadow-[0_4px_20px_rgba(240,180,41,0.4)] transition-all"
+          className="w-full h-14 text-lg font-bold rounded-md bg-gradient-to-r from-[#f0b429] to-[#c49a4b] hover:from-[#f7c948] hover:to-[#f0b429] text-[#1a120b] shadow-[0_4px_20px_rgba(240,180,41,0.4)] transition-all"
         >
           수련 과정으로 돌아가기
           <ArrowRight className="h-5 w-5 ml-2" />
@@ -221,7 +221,7 @@ export function ChapterCompletionForm({
 
   // 아직 완료하지 않은 챕터 - 입력 폼 표시
   return (
-    <div className="bg-gradient-to-b from-[#1c2128] to-[#161b22] rounded-xl p-6 sm:p-8 space-y-6 shadow-[0_4px_16px_rgba(240,180,41,0.12),0_4px_12px_rgba(0,0,0,0.35)]">
+    <div className="bg-gradient-to-b from-[#1c2128] to-[#161b22] rounded-md p-6 sm:p-8 space-y-6 shadow-[0_4px_16px_rgba(240,180,41,0.12),0_4px_12px_rgba(0,0,0,0.35)]">
       {/* Header - Celebration */}
       <div className="text-center space-y-3">
         <div className="inline-flex items-center justify-center w-16 h-16 rounded-full mb-2 bg-gradient-to-br from-[#f0b429]/20 to-[#c49a4b]/10 shadow-[0_4px_12px_rgba(240,180,41,0.2)]">
@@ -233,7 +233,7 @@ export function ChapterCompletionForm({
         <p className="text-sm text-[#8b949e]">
           이번 챕터에 대한 의견을 남겨주세요
         </p>
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#f0b429]/15 shadow-[0_2px_6px_rgba(240,180,41,0.2)]">
+        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-[#f0b429]/15 shadow-[0_2px_6px_rgba(240,180,41,0.2)]">
           <Zap className="h-4 w-4 text-[#f0b429]" />
           <span className="text-sm font-semibold text-[#f0b429]">
             +{xpReward} XP 획득 예정
@@ -279,7 +279,7 @@ export function ChapterCompletionForm({
         onClick={handleSubmit}
         disabled={!canSubmit || isSubmitting}
         className={cn(
-          "w-full h-12 text-base font-bold rounded-lg transition-all",
+          "w-full h-12 text-base font-bold rounded-md transition-all",
           canSubmit
             ? "bg-gradient-to-r from-[#f0b429] to-[#c49a4b] hover:from-[#f7c948] hover:to-[#f0b429] text-[#1a120b] shadow-[0_4px_20px_rgba(240,180,41,0.4)]"
             : "bg-[#21262d] text-[#6e7681] cursor-not-allowed"
@@ -328,7 +328,7 @@ export function ChapterCompletionForm({
             </p>
 
             {/* Progress */}
-            <div className="bg-[#0d1117] rounded-lg p-4 mb-6 shadow-[inset_0_1px_4px_rgba(0,0,0,0.3)]">
+            <div className="bg-[#0d1117] rounded-md p-4 mb-6 shadow-[inset_0_1px_4px_rgba(0,0,0,0.3)]">
               <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center gap-2">
                   <CheckSquare className="h-4 w-4 text-[#f0b429]" />
@@ -349,7 +349,7 @@ export function ChapterCompletionForm({
             {/* Button */}
             <Button
               onClick={() => setShowChecklistWarning(false)}
-              className="w-full h-12 text-base font-bold rounded-lg bg-gradient-to-r from-[#f0b429] to-[#c49a4b] hover:from-[#f7c948] hover:to-[#f0b429] text-[#1a120b] shadow-[0_4px_20px_rgba(240,180,41,0.4)]"
+              className="w-full h-12 text-base font-bold rounded-md bg-gradient-to-r from-[#f0b429] to-[#c49a4b] hover:from-[#f7c948] hover:to-[#f0b429] text-[#1a120b] shadow-[0_4px_20px_rgba(240,180,41,0.4)]"
             >
               확인했습니다
             </Button>

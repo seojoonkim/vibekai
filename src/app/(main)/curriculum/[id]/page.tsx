@@ -712,7 +712,7 @@ export default function ChapterDetailPage() {
           <div className="flex-1 min-w-0 transition-all duration-300">
             <ChecklistProvider chapterId={chapterId}>
               {/* Content */}
-              <Card className="mb-5 bg-[#1c2128] border-0 rounded-lg shadow-[0_4px_12px_rgba(0,0,0,0.35)] overflow-hidden py-0 gap-0">
+              <Card className="mb-5 bg-[#1c2128] border-0 rounded-md shadow-[0_4px_12px_rgba(0,0,0,0.35)] overflow-hidden py-0 gap-0">
                 <CardContent className="p-4 sm:p-5 md:p-6 curriculum-content">
                   {contentLoading ? (
                     <div className="flex flex-col items-center justify-center py-16">
@@ -791,7 +791,7 @@ export default function ChapterDetailPage() {
             <div className="lg:hidden mt-4">
               <Button
                 variant="outline"
-                className="w-full rounded-lg h-11 bg-[#1c2128] border-0 shadow-[0_4px_12px_rgba(0,0,0,0.35)] hover:bg-[#21262d] hover:shadow-[0_6px_16px_rgba(0,0,0,0.45)] text-[#c9d1d9]"
+                className="w-full rounded-md h-11 bg-[#1c2128] border-0 shadow-[0_4px_12px_rgba(0,0,0,0.35)] hover:bg-[#21262d] hover:shadow-[0_6px_16px_rgba(0,0,0,0.45)] text-[#c9d1d9]"
                 onClick={() => setShowQuestionsPanel(!showQuestionsPanel)}
               >
                 <MessageSquare className="h-4 w-4 mr-2 text-[#8b949e]" />
@@ -813,7 +813,7 @@ export default function ChapterDetailPage() {
           {/* Questions Panel - Collapsible */}
           <div className="hidden lg:block w-[300px] shrink-0">
             <div className="sticky top-32 max-h-[calc(100vh-9rem)] flex flex-col">
-              <div className={`bg-[#1c2128] border-0 shadow-[0_4px_12px_rgba(0,0,0,0.35)] overflow-hidden flex flex-col transition-all duration-300 rounded-lg`}>
+              <div className={`bg-[#1c2128] border-0 shadow-[0_4px_12px_rgba(0,0,0,0.35)] overflow-hidden flex flex-col transition-all duration-300 rounded-md`}>
                 {/* Toggle Bar - Top */}
                 <button
                   onClick={() => setShowQuestionsPanel(!showQuestionsPanel)}
@@ -859,7 +859,7 @@ export default function ChapterDetailPage() {
         {/* Mobile Questions Panel (Expandable) */}
         {showQuestionsPanel && (
           <div className="lg:hidden mt-4 max-w-7xl mx-auto">
-            <Card className="bg-[#1c2128] border-0 rounded-lg shadow-[0_4px_12px_rgba(0,0,0,0.35)] overflow-hidden py-0">
+            <Card className="bg-[#1c2128] border-0 rounded-md shadow-[0_4px_12px_rgba(0,0,0,0.35)] overflow-hidden py-0">
               <CardContent className="p-4">
                 <ChapterQuestionsPanel
                   chapterId={chapterId}

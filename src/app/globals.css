@@ -47,7 +47,7 @@
 }
 
 :root {
-  --radius: 0.625rem;
+  --radius: 0.375rem;
   /* Traditional Japanese Dojo - Warm Wood & Tatami Palette */
   /* Inspired by: 다다미, 나무 기둥, 쇼지, 황금빛 자연광 */
   --background: #f7f2ea;

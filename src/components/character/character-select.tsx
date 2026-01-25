@@ -54,7 +54,7 @@ export function CharacterSelect({ onSelect, selectedId, beltColor }: CharacterSe
 
       {/* Selected character info */}
       {selected && (
-        <div className="bg-slate-800/50 rounded-xl p-3 border border-slate-700/50">
+        <div className="bg-slate-800/50 rounded-md p-3 border border-slate-700/50">
           <div className="flex items-center gap-3">
             <CharacterPreview character={selected} size={48} beltColor={beltColor} />
             <div className="flex-1">
@@ -101,7 +101,7 @@ export function CharacterSelectModal({ currentCharacterId, currentXp, onSelect, 
             {currentCharacter && (
               <CharacterPreview character={currentCharacter} size={80} beltColor={belt.color} />
             )}
-            <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity rounded-xl flex items-center justify-center">
+            <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity rounded-md flex items-center justify-center">
               <Pencil className="h-5 w-5 text-white" />
             </div>
           </button>

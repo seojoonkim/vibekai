@@ -72,7 +72,7 @@ export default function SignupPage() {
           <div className="absolute top-1/4 left-0 w-64 h-64 bg-[#3fb950]/5 rounded-full blur-[100px]" />
 
           <div className="w-full max-w-[400px] relative z-10">
-            <div className="bg-[#161b22] rounded-2xl border border-[#30363d] shadow-[0_16px_48px_rgba(0,0,0,0.3)] overflow-hidden">
+            <div className="bg-[#161b22] rounded-md shadow-[0_16px_48px_rgba(0,0,0,0.3)] overflow-hidden">
               <div className="p-8">
                 <div className="mb-8">
                   <Link href="/" className="inline-flex items-center gap-2.5 mb-6 group">
@@ -93,7 +93,7 @@ export default function SignupPage() {
                 <div className="space-y-3 mb-6">
                   <Button
                     variant="outline"
-                    className="w-full h-12 text-[15px] font-medium rounded-xl bg-[#21262d] border-[#30363d] text-[#e6edf3] hover:bg-[#30363d] hover:border-[#8b949e] transition-all duration-200"
+                    className="w-full h-12 text-[15px] font-medium rounded-md bg-[#21262d] border-0 text-[#e6edf3] hover:bg-[#30363d] transition-all duration-200"
                     onClick={() => handleOAuthLogin("github")}
                     disabled={isLoading}
                   >
@@ -102,7 +102,7 @@ export default function SignupPage() {
                   </Button>
                   <Button
                     variant="outline"
-                    className="w-full h-12 text-[15px] font-medium rounded-xl bg-[#21262d] border-[#30363d] text-[#e6edf3] hover:bg-[#30363d] hover:border-[#8b949e] transition-all duration-200"
+                    className="w-full h-12 text-[15px] font-medium rounded-md bg-[#21262d] border-0 text-[#e6edf3] hover:bg-[#30363d] transition-all duration-200"
                     onClick={() => handleOAuthLogin("google")}
                     disabled={isLoading}
                   >
@@ -128,7 +128,7 @@ export default function SignupPage() {
                 </p>
               </div>
 
-              <div className="px-8 py-4 bg-[#0d1117]/50 border-t border-[#21262d]">
+              <div className="px-8 py-4 bg-[#0d1117]/50">
                 <p className="text-center text-[14px] text-[#8b949e]">
                   이미 입문하셨나요?{" "}
                   <Link
@@ -178,7 +178,7 @@ export default function SignupPage() {
         {/* Bottom: Form Section */}
         <div className="flex-1 flex items-start justify-center px-4 py-6 sm:px-6 sm:py-8">
           <div className="w-full max-w-[400px]">
-            <div className="bg-[#161b22] rounded-2xl border border-[#30363d] shadow-[0_16px_48px_rgba(0,0,0,0.3)] overflow-hidden">
+            <div className="bg-[#161b22] rounded-md shadow-[0_16px_48px_rgba(0,0,0,0.3)] overflow-hidden">
               <div className="p-5 sm:p-6">
                 <div className="mb-6">
                   <Link href="/" className="inline-flex items-center gap-2 mb-4 group">
@@ -199,7 +199,7 @@ export default function SignupPage() {
                 <div className="space-y-2.5 mb-5">
                   <Button
                     variant="outline"
-                    className="w-full h-11 text-[14px] font-medium rounded-xl bg-[#21262d] border-[#30363d] text-[#e6edf3] hover:bg-[#30363d] hover:border-[#8b949e] transition-all duration-200"
+                    className="w-full h-11 text-[14px] font-medium rounded-md bg-[#21262d] border-0 text-[#e6edf3] hover:bg-[#30363d] transition-all duration-200"
                     onClick={() => handleOAuthLogin("github")}
                     disabled={isLoading}
                   >
@@ -208,7 +208,7 @@ export default function SignupPage() {
                   </Button>
                   <Button
                     variant="outline"
-                    className="w-full h-11 text-[14px] font-medium rounded-xl bg-[#21262d] border-[#30363d] text-[#e6edf3] hover:bg-[#30363d] hover:border-[#8b949e] transition-all duration-200"
+                    className="w-full h-11 text-[14px] font-medium rounded-md bg-[#21262d] border-0 text-[#e6edf3] hover:bg-[#30363d] transition-all duration-200"
                     onClick={() => handleOAuthLogin("google")}
                     disabled={isLoading}
                   >
@@ -234,7 +234,7 @@ export default function SignupPage() {
                 </p>
               </div>
 
-              <div className="px-5 sm:px-6 py-3.5 bg-[#0d1117]/50 border-t border-[#21262d]">
+              <div className="px-5 sm:px-6 py-3.5 bg-[#0d1117]/50">
                 <p className="text-center text-[13px] text-[#8b949e]">
                   이미 입문하셨나요?{" "}
                   <Link

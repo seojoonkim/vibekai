@@ -98,7 +98,7 @@ export function Header({ isLoggedIn = false }: HeaderProps) {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent
                   align="end"
-                  className="w-48 bg-[#1c2128] backdrop-blur-sm border-0 outline-none rounded-lg shadow-[0_4px_16px_rgba(0,0,0,0.4)]"
+                  className="w-48 bg-[#1c2128] backdrop-blur-sm border-0 outline-none rounded-md shadow-[0_4px_16px_rgba(0,0,0,0.4)]"
                 >
                   <DropdownMenuItem asChild>
                     <Link
@@ -155,7 +155,7 @@ export function Header({ isLoggedIn = false }: HeaderProps) {
             </SheetTrigger>
             <SheetContent
               side="right"
-              className="w-[280px] p-0 bg-[#0a0c10] backdrop-blur-sm border-l border-[#21262d]/50 rounded-none shadow-[-4px_0_16px_rgba(0,0,0,0.4)]"
+              className="w-[280px] p-0 bg-[#0a0c10] backdrop-blur-sm  rounded-none shadow-[-4px_0_16px_rgba(0,0,0,0.4)]"
             >
               <div className="flex flex-col h-full">
                 <div className="p-4 shadow-[0_1px_0_rgba(255,255,255,0.05)]">
@@ -179,7 +179,7 @@ export function Header({ isLoggedIn = false }: HeaderProps) {
                         href={item.href}
                         onClick={() => setIsOpen(false)}
                         className={cn(
-                          "relative flex items-center px-4 py-3 text-base font-medium transition-all rounded-lg",
+                          "relative flex items-center px-4 py-3 text-base font-medium transition-all rounded-md",
                           isActive
                             ? "text-[#c9d1d9] bg-[#1c2128] shadow-[0_2px_6px_rgba(0,0,0,0.3)]"
                             : "text-[#8b949e] hover:text-[#c9d1d9] hover:bg-[#1c2128]/50"
@@ -200,7 +200,7 @@ export function Header({ isLoggedIn = false }: HeaderProps) {
                       asChild
                       variant="outline"
                       size="default"
-                      className="w-full rounded-lg h-10 text-sm border-0 text-[#c9d1d9] hover:text-[#e6edf3] bg-[#1c2128] hover:bg-[#262c36] shadow-[0_2px_6px_rgba(0,0,0,0.3)] transition-all"
+                      className="w-full rounded-md h-10 text-sm border-0 text-[#c9d1d9] hover:text-[#e6edf3] bg-[#1c2128] hover:bg-[#262c36] shadow-[0_2px_6px_rgba(0,0,0,0.3)] transition-all"
                     >
                       <Link href="/login" onClick={() => setIsOpen(false)}>
                         로그인
@@ -209,7 +209,7 @@ export function Header({ isLoggedIn = false }: HeaderProps) {
                     <Button
                       asChild
                       size="default"
-                      className="w-full rounded-lg h-10 text-sm font-semibold bg-[#f0b429] hover:bg-[#f7c948] text-[#0d1117] border-0 shadow-[0_2px_6px_rgba(0,0,0,0.3)]"
+                      className="w-full rounded-md h-10 text-sm font-semibold bg-[#f0b429] hover:bg-[#f7c948] text-[#0d1117] border-0 shadow-[0_2px_6px_rgba(0,0,0,0.3)]"
                     >
                       <Link href="/signup" onClick={() => setIsOpen(false)}>
                         입문하기
@@ -227,7 +227,7 @@ export function Header({ isLoggedIn = false }: HeaderProps) {
                         setIsOpen(false);
                       }}
                       disabled={isLoggingOut}
-                      className="w-full rounded-lg h-10 text-sm border-0 text-[#f85149] hover:text-[#f85149] bg-[#f85149]/10 hover:bg-[#f85149]/20 shadow-[0_2px_6px_rgba(0,0,0,0.3)] transition-all"
+                      className="w-full rounded-md h-10 text-sm border-0 text-[#f85149] hover:text-[#f85149] bg-[#f85149]/10 hover:bg-[#f85149]/20 shadow-[0_2px_6px_rgba(0,0,0,0.3)] transition-all"
                     >
                       {isLoggingOut ? "로그아웃 중..." : "로그아웃"}
                     </Button>
