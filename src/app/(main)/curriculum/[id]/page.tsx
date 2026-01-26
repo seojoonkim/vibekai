@@ -9,6 +9,7 @@ import rehypeRaw from "rehype-raw";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import {
   ArrowLeft,
   ArrowRight,
@@ -23,6 +24,7 @@ import {
 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { getPartById } from "@/lib/curriculum-data";
+import { Icons } from "@/components/icons";
 import { ChapterQuestionsPanel, TextSelection, Question } from "@/components/chapter-questions-panel";
 import { TextSelectionTooltip } from "@/components/text-selection-tooltip";
 import { QuestionHighlightOverlay } from "@/components/question-highlight-overlay";
@@ -186,6 +188,9 @@ export default function ChapterDetailPage() {
   // Saved review data for completed chapters
   const [savedReviewData, setSavedReviewData] = useState<SavedReviewData | null>(null);
 
+  // Login modal state
+  const [showLoginModal, setShowLoginModal] = useState(false);
+
   const chapterId = params.id as string;
 
   useEffect(() => {
@@ -211,9 +216,9 @@ export default function ChapterDetailPage() {
       } = await supabase.auth.getUser();
 
       if (!user) {
-        // Redirect to login if not authenticated
+        // Show login modal instead of redirecting
         setLoading(false);
-        router.push("/login?redirect=/curriculum/" + chapterId);
+        setShowLoginModal(true);
         return;
       }
 
@@ -900,6 +905,45 @@ export default function ChapterDetailPage() {
           nextChapterId={nextChapter?.id}
         />
       )}
+
+      {/* Login Required Modal */}
+      <Dialog open={showLoginModal} onOpenChange={setShowLoginModal}>
+        <DialogContent className="max-w-md bg-[#1c2128] border-0 rounded-md shadow-[0_8px_32px_rgba(0,0,0,0.6)]">
+          <DialogHeader>
+            <DialogTitle className="text-xl font-bold text-[#c9d1d9] text-center">
+              도장 입문이 필요합니다
+            </DialogTitle>
+          </DialogHeader>
+          <div className="py-6 text-center space-y-4">
+            <div className="mx-auto w-16 h-16 rounded-full bg-[#f0b429]/10 flex items-center justify-center mb-4">
+              <Icons.lock className="h-8 w-8 text-[#f0b429]" />
+            </div>
+            <p className="text-[#8b949e] text-sm">
+              챕터 학습을 시작하려면 VibeDojo에<br />
+              로그인하거나 입문해주세요
+            </p>
+          </div>
+          <div className="flex gap-3">
+            <Button
+              asChild
+              variant="outline"
+              className="flex-1 rounded-md h-10 text-sm border-0 text-[#c9d1d9] hover:text-[#e6edf3] bg-[#21262d] hover:bg-[#262c36]"
+            >
+              <Link href={`/login?redirect=/curriculum/${chapterId}`}>
+                로그인
+              </Link>
+            </Button>
+            <Button
+              asChild
+              className="flex-1 rounded-md h-10 text-sm font-semibold bg-[#f0b429] hover:bg-[#f7c948] text-[#0d1117] border-0"
+            >
+              <Link href={`/signup?redirect=/curriculum/${chapterId}`}>
+                입문하기
+              </Link>
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
