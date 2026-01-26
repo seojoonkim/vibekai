@@ -41,26 +41,28 @@ export async function GET(request: NextRequest) {
       // Record daily login activity (only once per day in KST)
       const userId = data.session.user.id;
       const now = new Date();
-      const kstDate = new Date(now.getTime() + 9 * 60 * 60 * 1000);
-      const todayKST = kstDate.toISOString().split('T')[0]; // YYYY-MM-DD in KST
+      const kstNow = new Date(now.getTime() + 9 * 60 * 60 * 1000);
+      const todayKST = kstNow.toISOString().split('T')[0]; // YYYY-MM-DD in KST
 
-      // Check if already logged activity today (KST)
-      const { data: existingLog } = await supabase
+      // Check if already logged activity today (KST) - check last 2 days
+      const twoDaysAgo = new Date(now.getTime() - 2 * 24 * 60 * 60 * 1000);
+      const { data: recentLogs } = await supabase
         .from("xp_logs")
         .select("id, created_at")
         .eq("user_id", userId)
         .eq("action", "daily_login")
-        .order("created_at", { ascending: false })
-        .limit(1)
-        .maybeSingle();
+        .gte("created_at", twoDaysAgo.toISOString())
+        .order("created_at", { ascending: false });
 
       let shouldRecordLogin = true;
-      if (existingLog) {
-        // Convert last login to KST and check if it's today
-        const lastLoginUTC = new Date(existingLog.created_at);
-        const lastLoginKST = new Date(lastLoginUTC.getTime() + 9 * 60 * 60 * 1000);
-        const lastLoginDateKST = lastLoginKST.toISOString().split('T')[0];
-        shouldRecordLogin = lastLoginDateKST !== todayKST;
+      if (recentLogs && recentLogs.length > 0) {
+        // Check if any log is from today (KST)
+        shouldRecordLogin = !recentLogs.some(log => {
+          const logUTC = new Date(log.created_at);
+          const logKST = new Date(logUTC.getTime() + 9 * 60 * 60 * 1000);
+          const logDateKST = logKST.toISOString().split('T')[0];
+          return logDateKST === todayKST;
+        });
       }
 
       if (shouldRecordLogin) {

@@ -46,7 +46,13 @@ export function ActivityHeatmap({ activities, className }: ActivityHeatmapProps)
 
   const { weeks, activityMap, totalActivities, totalDays, currentStreak } = useMemo(() => {
     const now = new Date();
-    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    // Get today in KST to match the server-side date format
+    const kstNow = new Date(now.getTime() + 9 * 60 * 60 * 1000);
+    const todayStr = kstNow.toISOString().split('T')[0];
+    // Parse back for date calculations
+    const [y, m, d] = todayStr.split('-').map(Number);
+    const today = new Date(y, m - 1, d);
+
     const activityMap = new Map<string, number>();
 
     // Build activity map
@@ -56,8 +62,8 @@ export function ActivityHeatmap({ activities, className }: ActivityHeatmapProps)
 
     // Calculate current streak
     let currentStreak = 0;
-    const todayStr = formatDate(today);
-    const hasActivityToday = activityMap.has(todayStr) && activityMap.get(todayStr)! > 0;
+    const todayStrForStreak = formatDate(today);
+    const hasActivityToday = activityMap.has(todayStrForStreak) && activityMap.get(todayStrForStreak)! > 0;
 
     if (hasActivityToday) {
       for (let i = 0; i < 365; i++) {
@@ -157,8 +163,10 @@ export function ActivityHeatmap({ activities, className }: ActivityHeatmapProps)
     return labels;
   }, [displayWeeks]);
 
+  // Get today in KST to match server-side dates
   const now = new Date();
-  const todayStr = formatDate(new Date(now.getFullYear(), now.getMonth(), now.getDate()));
+  const kstNow = new Date(now.getTime() + 9 * 60 * 60 * 1000);
+  const todayStr = kstNow.toISOString().split('T')[0];
 
   return (
     <div ref={containerRef} className={cn("w-full", className)}>

@@ -20,11 +20,8 @@ export default async function DashboardPage() {
 
   // Get today's date in KST for comparison
   const now = new Date();
-  const kstDate = new Date(now.getTime() + 9 * 60 * 60 * 1000);
-  const year = kstDate.getUTCFullYear();
-  const month = String(kstDate.getUTCMonth() + 1).padStart(2, '0');
-  const day = String(kstDate.getUTCDate()).padStart(2, '0');
-  const todayKST = `${year}-${month}-${day}`;
+  const kstNow = new Date(now.getTime() + 9 * 60 * 60 * 1000);
+  const todayKST = kstNow.toISOString().split('T')[0];
 
   // Record daily login activity (only once per day in KST)
   let justRecordedLogin = false;
@@ -45,10 +42,7 @@ export default async function DashboardPage() {
       hasLoggedToday = recentLogs.some(log => {
         const logUTC = new Date(log.created_at);
         const logKST = new Date(logUTC.getTime() + 9 * 60 * 60 * 1000);
-        const logYear = logKST.getUTCFullYear();
-        const logMonth = String(logKST.getUTCMonth() + 1).padStart(2, '0');
-        const logDay = String(logKST.getUTCDate()).padStart(2, '0');
-        const logDateKST = `${logYear}-${logMonth}-${logDay}`;
+        const logDateKST = logKST.toISOString().split('T')[0];
         return logDateKST === todayKST;
       });
     }
@@ -112,11 +106,9 @@ export default async function DashboardPage() {
       xpLogs.forEach((log) => {
         // Convert UTC to KST (UTC+9) for proper date grouping
         const utcDate = new Date(log.created_at);
-        const logKST = new Date(utcDate.getTime() + 9 * 60 * 60 * 1000);
-        const logYear = logKST.getUTCFullYear();
-        const logMonth = String(logKST.getUTCMonth() + 1).padStart(2, '0');
-        const logDay = String(logKST.getUTCDate()).padStart(2, '0');
-        const date = `${logYear}-${logMonth}-${logDay}`;
+        const kstDate = new Date(utcDate.getTime() + 9 * 60 * 60 * 1000);
+        // Use ISO string split for accurate date extraction
+        const date = kstDate.toISOString().split('T')[0];
         countByDate.set(date, (countByDate.get(date) || 0) + 1);
       });
     }
