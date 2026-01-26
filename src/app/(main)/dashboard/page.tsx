@@ -8,6 +8,9 @@ import { CURRICULUM_DATA, getAllChapters } from "@/lib/curriculum-data";
 import { CharacterDisplay } from "@/components/dashboard/character-display";
 import { ActivityHeatmap } from "@/components/dashboard/activity-heatmap";
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export default async function DashboardPage() {
   const supabase = await createClient();
 
@@ -16,6 +19,7 @@ export default async function DashboardPage() {
   } = await supabase.auth.getUser();
 
   // Record daily login activity (only once per day in KST)
+  let recordedLoginToday = false;
   if (user) {
     const now = new Date();
     const kstDate = new Date(now.getTime() + 9 * 60 * 60 * 1000);
@@ -41,12 +45,16 @@ export default async function DashboardPage() {
     }
 
     if (shouldRecordLogin) {
-      await supabase.from("xp_logs").insert({
+      const { error } = await supabase.from("xp_logs").insert({
         user_id: user.id,
         action: "daily_login",
         xp_amount: 0,
         description: "일일 로그인",
       });
+
+      if (!error) {
+        recordedLoginToday = true;
+      }
     }
   }
 
@@ -97,6 +105,21 @@ export default async function DashboardPage() {
         const date = `${year}-${month}-${day}`;
         countByDate.set(date, (countByDate.get(date) || 0) + 1);
       });
+
+      // Ensure today is included if we just recorded login (DB might not be synced yet)
+      if (recordedLoginToday) {
+        const now = new Date();
+        const kstDate = new Date(now.getTime() + 9 * 60 * 60 * 1000);
+        const year = kstDate.getUTCFullYear();
+        const month = String(kstDate.getUTCMonth() + 1).padStart(2, '0');
+        const day = String(kstDate.getUTCDate()).padStart(2, '0');
+        const todayKST = `${year}-${month}-${day}`;
+        // Only add 1 if not already counted (to avoid duplicate from the fetch above)
+        if (!countByDate.has(todayKST)) {
+          countByDate.set(todayKST, 1);
+        }
+      }
+
       activityData = Array.from(countByDate.entries()).map(([date, count]) => ({ date, count }));
     }
   }
