@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
+import { ScrollToTop } from "@/components/scroll-to-top";
 
 export default async function MainLayout({
   children,
@@ -19,6 +20,7 @@ export default async function MainLayout({
 
   return (
     <div className="min-h-screen flex flex-col bg-[#0d1117]">
+      <ScrollToTop />
       <Header isLoggedIn={true} />
       <main className="flex-1">{children}</main>
       <Footer />
