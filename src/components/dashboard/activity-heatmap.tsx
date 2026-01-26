@@ -30,8 +30,8 @@ export function ActivityHeatmap({ activities, className }: ActivityHeatmapProps)
     const updateVisibleWeeks = () => {
       if (containerRef.current) {
         const containerWidth = containerRef.current.offsetWidth;
-        const dayLabelWidth = 20; // Width for day labels (일,월,화...)
-        const cellSize = 11; // Cell width + gap
+        const dayLabelWidth = 24; // Width for day labels (일,월,화...)
+        const cellSize = 13; // Cell width + gap (11px + 2px)
         const availableWidth = containerWidth - dayLabelWidth - 8; // padding
         const maxWeeks = Math.floor(availableWidth / cellSize);
         // Clamp between 12 weeks (minimum) and 53 weeks (full year)
@@ -204,7 +204,7 @@ export function ActivityHeatmap({ activities, className }: ActivityHeatmapProps)
               <div
                 key={i}
                 className="text-[10px] text-[#8b949e] shrink-0"
-                style={{ width: `${span * 11}px` }}
+                style={{ width: `${span * 13}px` }}
               >
                 {span >= 3 ? month : ''}
               </div>
@@ -215,11 +215,11 @@ export function ActivityHeatmap({ activities, className }: ActivityHeatmapProps)
         {/* Grid */}
         <div className="flex">
           {/* Day labels */}
-          <div className="flex flex-col gap-[1px] mr-1 shrink-0" style={{ width: '16px' }}>
+          <div className="flex flex-col gap-[2px] mr-1.5 shrink-0" style={{ width: '20px' }}>
             {days.map((day, i) => (
               <div
                 key={i}
-                className="h-[9px] text-[8px] text-[#8b949e] leading-[9px] text-right"
+                className="h-[11px] text-[9px] text-[#8b949e] leading-[11px] text-right"
               >
                 {day}
               </div>
@@ -227,12 +227,12 @@ export function ActivityHeatmap({ activities, className }: ActivityHeatmapProps)
           </div>
 
           {/* Weeks - flex grow to fill space */}
-          <div className="flex-1 flex gap-[1px]">
+          <div className="flex-1 flex gap-[2px]">
             {displayWeeks.map((week, weekIndex) => (
-              <div key={weekIndex} className="flex-1 flex flex-col gap-[1px]" style={{ maxWidth: '11px' }}>
+              <div key={weekIndex} className="flex-1 flex flex-col gap-[2px]" style={{ maxWidth: '13px' }}>
                 {/* Empty days at start */}
                 {weekIndex === 0 && week[0] && Array(week[0].date.getDay()).fill(null).map((_, i) => (
-                  <div key={`empty-start-${i}`} className="w-full aspect-square max-w-[9px] max-h-[9px]" />
+                  <div key={`empty-start-${i}`} className="w-full aspect-square max-w-[11px] max-h-[11px]" />
                 ))}
 
                 {week.map(({ dateStr, date }, dayIndex) => {
@@ -244,7 +244,7 @@ export function ActivityHeatmap({ activities, className }: ActivityHeatmapProps)
                     <div
                       key={dayIndex}
                       className={cn(
-                        "w-full aspect-square max-w-[9px] max-h-[9px] rounded-[2px]",
+                        "w-full aspect-square max-w-[11px] max-h-[11px] rounded-[2px]",
                         intensityColors[intensity],
                         isToday && "ring-1 ring-[#e6edf3] ring-offset-0",
                         "hover:ring-1 hover:ring-[#8b949e] cursor-pointer transition-all"
@@ -256,7 +256,7 @@ export function ActivityHeatmap({ activities, className }: ActivityHeatmapProps)
 
                 {/* Empty days at end */}
                 {weekIndex === displayWeeks.length - 1 && week.length > 0 && Array(6 - week[week.length - 1].date.getDay()).fill(null).map((_, i) => (
-                  <div key={`empty-end-${i}`} className="w-full aspect-square max-w-[9px] max-h-[9px]" />
+                  <div key={`empty-end-${i}`} className="w-full aspect-square max-w-[11px] max-h-[11px]" />
                 ))}
               </div>
             ))}
@@ -273,7 +273,7 @@ export function ActivityHeatmap({ activities, className }: ActivityHeatmapProps)
             {intensityColors.map((color, i) => (
               <div
                 key={i}
-                className={cn("w-[9px] h-[9px] rounded-[2px]", color)}
+                className={cn("w-[11px] h-[11px] rounded-[2px]", color)}
               />
             ))}
             <span>많음</span>
