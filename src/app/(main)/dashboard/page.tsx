@@ -25,24 +25,16 @@ export default async function DashboardPage() {
 
   // Record daily login activity (only once per day in KST)
   let justRecordedLogin = false;
-  let loginDebugInfo: any = {};
   if (user) {
-    // Check if already logged activity today (KST) - check last 7 days for debugging
-    const sevenDaysAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
-    const { data: recentLogs, error: recentLogsError } = await supabase
+    // Check if already logged activity today (KST) - check last 2 days
+    const twoDaysAgo = new Date(now.getTime() - 2 * 24 * 60 * 60 * 1000);
+    const { data: recentLogs } = await supabase
       .from("xp_logs")
-      .select("id, created_at, action")
+      .select("id, created_at")
       .eq("user_id", user.id)
       .eq("action", "daily_login")
-      .gte("created_at", sevenDaysAgo.toISOString())
+      .gte("created_at", twoDaysAgo.toISOString())
       .order("created_at", { ascending: false });
-
-    loginDebugInfo.recentLogsCount = recentLogs?.length || 0;
-    loginDebugInfo.recentLogsError = recentLogsError?.message;
-    loginDebugInfo.recentLogs = recentLogs?.map(log => ({
-      created_at: log.created_at,
-      kst_date: new Date(new Date(log.created_at).getTime() + 9 * 60 * 60 * 1000).toISOString().split('T')[0]
-    }));
 
     let hasLoggedToday = false;
     if (recentLogs && recentLogs.length > 0) {
@@ -55,26 +47,16 @@ export default async function DashboardPage() {
       });
     }
 
-    loginDebugInfo.hasLoggedToday = hasLoggedToday;
-
     if (!hasLoggedToday) {
-      const { data: insertedLog, error: insertError } = await supabase.from("xp_logs").insert({
+      const { data: insertedLog } = await supabase.from("xp_logs").insert({
         user_id: user.id,
         action: "daily_login",
         amount: 0,
       }).select();
 
-      loginDebugInfo.insertAttempted = true;
-      loginDebugInfo.insertError = insertError?.message;
-      loginDebugInfo.insertSuccess = !!insertedLog;
-      loginDebugInfo.insertedLog = insertedLog;
-
-      if (!insertError && insertedLog) {
+      if (insertedLog) {
         justRecordedLogin = true;
       }
-    } else {
-      loginDebugInfo.insertAttempted = false;
-      loginDebugInfo.reason = "Already logged today";
     }
   }
 
@@ -102,8 +84,6 @@ export default async function DashboardPage() {
 
   // Fetch activity data for heatmap (last 1 year)
   let activityData: { date: string; count: number }[] = [];
-  let debugXpLogsCount = 0;
-  let debugLogs: any[] = [];
   if (user) {
     const startDate = new Date();
     startDate.setDate(startDate.getDate() - 370); // ~1 year + buffer
@@ -111,32 +91,21 @@ export default async function DashboardPage() {
     // Fetch all xp_logs including the one we just inserted
     const { data: xpLogs } = await supabase
       .from("xp_logs")
-      .select("created_at, action")
+      .select("created_at")
       .eq("user_id", user.id)
       .gte("created_at", startDate.toISOString())
       .order("created_at", { ascending: true });
 
-    debugXpLogsCount = xpLogs?.length || 0;
-
     const countByDate = new Map<string, number>();
 
     if (xpLogs && xpLogs.length > 0) {
-      xpLogs.forEach((log, index) => {
+      xpLogs.forEach((log) => {
         // Convert UTC to KST (UTC+9) for proper date grouping
         const utcDate = new Date(log.created_at);
         const kstDate = new Date(utcDate.getTime() + 9 * 60 * 60 * 1000);
         // Use ISO string split for accurate date extraction
         const date = kstDate.toISOString().split('T')[0];
         countByDate.set(date, (countByDate.get(date) || 0) + 1);
-
-        // Debug: log first 3 and last 3 entries
-        if (index < 3 || index >= xpLogs.length - 3) {
-          debugLogs.push({
-            created_at: log.created_at,
-            action: log.action,
-            kst_date: date
-          });
-        }
       });
     }
 
@@ -148,17 +117,6 @@ export default async function DashboardPage() {
 
     activityData = Array.from(countByDate.entries()).map(([date, count]) => ({ date, count }));
   }
-
-  // Pass debug logs to frontend
-  const debugInfo = {
-    todayKST,
-    justRecordedLogin,
-    debugXpLogsCount,
-    activityDataCount: activityData.length,
-    debugLogs: debugXpLogsCount > 0 ? debugLogs : [],
-    allDates: activityData.map(a => a.date).sort(),
-    loginDebug: loginDebugInfo
-  };
 
   const userStats = {
     displayName: profile?.display_name || profile?.username || user?.email?.split("@")[0] || "수련생",
@@ -240,30 +198,6 @@ export default async function DashboardPage() {
 
           {/* Activity Heatmap - GitHub Style */}
           <div className="mt-5 bg-[#151a21] p-5 rounded-md  shadow-[0_4px_12px_rgba(0,0,0,0.3)]">
-            {/* Debug info - remove after testing */}
-            <div className="mb-4 p-3 bg-[#0d1117] rounded text-xs text-[#8b949e] font-mono overflow-auto max-h-80">
-              <div className="font-bold mb-2">🔍 디버그 정보:</div>
-              <div>- Today KST: {debugInfo.todayKST}</div>
-              <div>- Just recorded login: {debugInfo.justRecordedLogin ? 'Yes' : 'No'}</div>
-              <div>- Total xp_logs from DB: {debugInfo.debugXpLogsCount}</div>
-              <div>- Activity data count: {debugInfo.activityDataCount}</div>
-              <div>- All dates with activity: {JSON.stringify(debugInfo.allDates)}</div>
-              <div>- Last 5 activities: {JSON.stringify(activityData.slice(-5))}</div>
-
-              {debugInfo.loginDebug && Object.keys(debugInfo.loginDebug).length > 0 && (
-                <div className="mt-3 p-2 bg-[#1c2128] rounded">
-                  <div className="font-bold text-yellow-400 mb-1">📝 Daily Login 디버그:</div>
-                  <pre className="text-[10px] whitespace-pre-wrap">{JSON.stringify(debugInfo.loginDebug, null, 2)}</pre>
-                </div>
-              )}
-
-              {debugInfo.debugLogs.length > 0 && (
-                <div className="mt-2">
-                  <div className="font-semibold">Sample logs (first 3 & last 3):</div>
-                  <pre className="text-[10px] mt-1">{JSON.stringify(debugInfo.debugLogs, null, 2)}</pre>
-                </div>
-              )}
-            </div>
             <ActivityHeatmap activities={activityData} />
           </div>
         </div>
