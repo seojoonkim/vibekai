@@ -71,7 +71,6 @@ export async function GET(request: NextRequest) {
           user_id: userId,
           action: "daily_login",
           xp_amount: 0,
-          description: "일일 로그인",
         });
       }
 

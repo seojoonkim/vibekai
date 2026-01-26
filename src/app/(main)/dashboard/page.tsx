@@ -62,7 +62,6 @@ export default async function DashboardPage() {
         user_id: user.id,
         action: "daily_login",
         xp_amount: 0,
-        description: "일일 로그인",
       }).select();
 
       loginDebugInfo.insertAttempted = true;
