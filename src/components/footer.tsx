@@ -7,7 +7,7 @@ export function Footer() {
       <div className="container flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4">
         <div className="flex items-center gap-2">
           <Icons.vibedojoSymbol className="w-6 h-6 sm:w-7 sm:h-7" />
-          <span className="font-semibold text-xs sm:text-sm text-[#c9d1d9]">
+          <span className="font-semibold text-xs sm:text-sm text-[#f0f6fc]">
             VibeDojo
           </span>
         </div>

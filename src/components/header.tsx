@@ -53,7 +53,7 @@ export function Header({ isLoggedIn = false }: HeaderProps) {
         {/* Logo - left */}
         <Link href={logoHref} className="flex items-center gap-1.5 group">
           <Icons.vibedojoSymbol className="w-8 h-8 transition-transform duration-300 group-hover:scale-110" />
-          <span className="text-lg text-[#e6edf3] tracking-tighter font-black group-hover:text-[#daa520] transition-colors">
+          <span className="text-lg text-[#f0f6fc] tracking-tighter font-black group-hover:text-[#daa520] transition-colors">
             VibeDojo
           </span>
         </Link>
@@ -169,7 +169,7 @@ export function Header({ isLoggedIn = false }: HeaderProps) {
                     onClick={() => setIsOpen(false)}
                   >
                     <Icons.vibedojoSymbol className="w-8 h-8 transition-transform duration-300 group-hover:scale-110" />
-                    <span className="text-lg text-[#e6edf3] tracking-tighter font-black group-hover:text-[#daa520] transition-colors">
+                    <span className="text-lg text-[#f0f6fc] tracking-tighter font-black group-hover:text-[#daa520] transition-colors">
                       VibeDojo
                     </span>
                   </Link>

@@ -41,7 +41,7 @@ export default async function LandingPage() {
         <div className="container flex h-14 items-center justify-between">
           <Link href="/" className="flex items-center gap-1.5 group">
             <Icons.vibedojoSymbol className="w-8 h-8 transition-transform duration-300 group-hover:scale-110" />
-            <span className="text-lg tracking-tighter font-black text-[#e6edf3] group-hover:text-[#daa520] transition-colors">
+            <span className="text-lg tracking-tighter font-black text-[#f0f6fc] group-hover:text-[#daa520] transition-colors">
               VibeDojo
             </span>
           </Link>
