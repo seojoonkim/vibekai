@@ -26,15 +26,17 @@ export default async function DashboardPage() {
   // Record daily login activity (only once per day in KST)
   let justRecordedLogin = false;
   if (user) {
-    // Check if already logged activity today (KST) - check last 2 days to be safe
-    const twoDaysAgo = new Date(now.getTime() - 2 * 24 * 60 * 60 * 1000);
-    const { data: recentLogs } = await supabase
+    // Check if already logged activity today (KST) - check last 7 days for debugging
+    const sevenDaysAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+    const { data: recentLogs, error: recentLogsError } = await supabase
       .from("xp_logs")
-      .select("id, created_at")
+      .select("id, created_at, action")
       .eq("user_id", user.id)
       .eq("action", "daily_login")
-      .gte("created_at", twoDaysAgo.toISOString())
+      .gte("created_at", sevenDaysAgo.toISOString())
       .order("created_at", { ascending: false });
+
+    console.log('[Dashboard] Recent daily_login logs:', recentLogs, 'Error:', recentLogsError);
 
     let hasLoggedToday = false;
     if (recentLogs && recentLogs.length > 0) {
@@ -47,15 +49,19 @@ export default async function DashboardPage() {
       });
     }
 
+    console.log('[Dashboard] Has logged today:', hasLoggedToday, 'Today KST:', todayKST);
+
     if (!hasLoggedToday) {
-      const { error } = await supabase.from("xp_logs").insert({
+      const { data: insertedLog, error: insertError } = await supabase.from("xp_logs").insert({
         user_id: user.id,
         action: "daily_login",
         xp_amount: 0,
         description: "일일 로그인",
-      });
+      }).select();
 
-      if (!error) {
+      console.log('[Dashboard] Insert daily_login result:', { insertedLog, insertError });
+
+      if (!insertError && insertedLog) {
         justRecordedLogin = true;
       }
     }
@@ -138,7 +144,8 @@ export default async function DashboardPage() {
     justRecordedLogin,
     debugXpLogsCount,
     activityDataCount: activityData.length,
-    debugLogs: debugXpLogsCount > 0 ? debugLogs : []
+    debugLogs: debugXpLogsCount > 0 ? debugLogs : [],
+    allDates: activityData.map(a => a.date).sort()
   };
 
   const userStats = {
@@ -222,13 +229,15 @@ export default async function DashboardPage() {
           {/* Activity Heatmap - GitHub Style */}
           <div className="mt-5 bg-[#151a21] p-5 rounded-md  shadow-[0_4px_12px_rgba(0,0,0,0.3)]">
             {/* Debug info - remove after testing */}
-            <div className="mb-4 p-3 bg-[#0d1117] rounded text-xs text-[#8b949e] font-mono overflow-auto max-h-40">
+            <div className="mb-4 p-3 bg-[#0d1117] rounded text-xs text-[#8b949e] font-mono overflow-auto max-h-60">
               <div className="font-bold mb-2">🔍 디버그 정보:</div>
               <div>- Today KST: {debugInfo.todayKST}</div>
               <div>- Just recorded login: {debugInfo.justRecordedLogin ? 'Yes' : 'No'}</div>
               <div>- Total xp_logs from DB: {debugInfo.debugXpLogsCount}</div>
               <div>- Activity data count: {debugInfo.activityDataCount}</div>
+              <div>- All dates with activity: {JSON.stringify(debugInfo.allDates)}</div>
               <div>- Last 5 activities: {JSON.stringify(activityData.slice(-5))}</div>
+              <div className="mt-2 text-yellow-400">⚠️ 서버 콘솔에서 daily_login 로그 확인 필요</div>
               {debugInfo.debugLogs.length > 0 && (
                 <div className="mt-2">
                   <div className="font-semibold">Sample logs (first 3 & last 3):</div>
