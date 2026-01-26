@@ -208,7 +208,7 @@ export default async function DashboardPage() {
         <div className="h-px w-full bg-[#21262d]" />
       </div>
 
-      <div className="container relative pb-6 sm:pb-8 space-y-8">
+      <div className="container relative pb-6 sm:pb-8 space-y-10 sm:space-y-12">
         {/* Curriculum Section Header */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-5 sm:gap-6">
           <div className="flex-1">
