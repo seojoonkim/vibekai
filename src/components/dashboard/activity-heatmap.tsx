@@ -195,16 +195,17 @@ export function ActivityHeatmap({ activities, className }: ActivityHeatmapProps)
       {/* Heatmap Grid - Responsive, no scroll */}
       <div className="w-full">
         {/* Month labels */}
-        <div className="flex mb-1 pl-5">
+        <div className="flex mb-1" style={{ paddingLeft: '26px' }}>
           {monthLabels.map(({ month, weekIndex }, i) => {
-            // Calculate position based on week index
+            // Calculate position based on week index (including gap)
             const nextLabelIndex = monthLabels[i + 1]?.weekIndex ?? displayWeeks.length;
             const span = nextLabelIndex - weekIndex;
+            // Each week = 13px cell + 2px gap = 15px total
             return (
               <div
                 key={i}
                 className="text-[10px] text-[#8b949e] shrink-0"
-                style={{ width: `${span * 13}px` }}
+                style={{ width: `${span * 15 - (i === monthLabels.length - 1 ? 2 : 0)}px` }}
               >
                 {span >= 3 ? month : ''}
               </div>
@@ -239,6 +240,12 @@ export function ActivityHeatmap({ activities, className }: ActivityHeatmapProps)
                   const count = activityMap.get(dateStr) || 0;
                   const intensity = getIntensity(count);
                   const isToday = dateStr === todayStr;
+                  const dayOfWeek = ['일', '월', '화', '수', '목', '금', '토'][date.getDay()];
+
+                  // Create tooltip text
+                  const tooltipText = count > 0
+                    ? `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일 (${dayOfWeek})\n수련 ${count}회`
+                    : `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일 (${dayOfWeek})\n수련 기록 없음`;
 
                   return (
                     <div
@@ -247,9 +254,9 @@ export function ActivityHeatmap({ activities, className }: ActivityHeatmapProps)
                         "w-full aspect-square max-w-[11px] max-h-[11px] rounded-[2px]",
                         intensityColors[intensity],
                         isToday && "ring-1 ring-[#e6edf3] ring-offset-0",
-                        "hover:ring-1 hover:ring-[#8b949e] cursor-pointer transition-all"
+                        "hover:ring-2 hover:ring-[#daa520] cursor-pointer transition-all hover:scale-110"
                       )}
-                      title={`${date.getMonth() + 1}월 ${date.getDate()}일: ${count}회 수련`}
+                      title={tooltipText}
                     />
                   );
                 })}
