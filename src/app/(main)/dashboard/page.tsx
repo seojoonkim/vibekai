@@ -25,6 +25,8 @@ export default async function DashboardPage() {
     const kstDate = new Date(now.getTime() + 9 * 60 * 60 * 1000);
     const todayKST = kstDate.toISOString().split('T')[0]; // YYYY-MM-DD in KST
 
+    console.log('[Dashboard] Today KST:', todayKST);
+
     // Check if already logged activity today (KST)
     const { data: existingLog } = await supabase
       .from("xp_logs")
@@ -35,22 +37,29 @@ export default async function DashboardPage() {
       .limit(1)
       .maybeSingle();
 
+    console.log('[Dashboard] Existing log:', existingLog);
+
     let shouldRecordLogin = true;
     if (existingLog) {
       // Convert last login to KST and check if it's today
       const lastLoginUTC = new Date(existingLog.created_at);
       const lastLoginKST = new Date(lastLoginUTC.getTime() + 9 * 60 * 60 * 1000);
       const lastLoginDateKST = lastLoginKST.toISOString().split('T')[0];
+      console.log('[Dashboard] Last login date KST:', lastLoginDateKST);
       shouldRecordLogin = lastLoginDateKST !== todayKST;
     }
 
+    console.log('[Dashboard] Should record login:', shouldRecordLogin);
+
     if (shouldRecordLogin) {
-      const { error } = await supabase.from("xp_logs").insert({
+      const { data: insertedData, error } = await supabase.from("xp_logs").insert({
         user_id: user.id,
         action: "daily_login",
         xp_amount: 0,
         description: "일일 로그인",
-      });
+      }).select();
+
+      console.log('[Dashboard] Insert result:', { data: insertedData, error });
 
       if (!error) {
         recordedLoginToday = true;
@@ -93,6 +102,8 @@ export default async function DashboardPage() {
       .gte("created_at", startDate.toISOString())
       .order("created_at", { ascending: true });
 
+    console.log('[Dashboard] XP logs count:', xpLogs?.length);
+
     if (xpLogs) {
       const countByDate = new Map<string, number>();
       xpLogs.forEach((log) => {
@@ -106,6 +117,8 @@ export default async function DashboardPage() {
         countByDate.set(date, (countByDate.get(date) || 0) + 1);
       });
 
+      console.log('[Dashboard] Count by date before adding today:', Object.fromEntries(countByDate));
+
       // Ensure today is included if we just recorded login (DB might not be synced yet)
       if (recordedLoginToday) {
         const now = new Date();
@@ -114,6 +127,7 @@ export default async function DashboardPage() {
         const month = String(kstDate.getUTCMonth() + 1).padStart(2, '0');
         const day = String(kstDate.getUTCDate()).padStart(2, '0');
         const todayKST = `${year}-${month}-${day}`;
+        console.log('[Dashboard] Adding today to map:', todayKST);
         // Only add 1 if not already counted (to avoid duplicate from the fetch above)
         if (!countByDate.has(todayKST)) {
           countByDate.set(todayKST, 1);
@@ -121,6 +135,7 @@ export default async function DashboardPage() {
       }
 
       activityData = Array.from(countByDate.entries()).map(([date, count]) => ({ date, count }));
+      console.log('[Dashboard] Final activity data:', activityData);
     }
   }
 
