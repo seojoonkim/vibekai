@@ -432,6 +432,21 @@ export default function ChapterDetailPage() {
       { onConflict: "user_id,chapter_id" }
     );
 
+    // 5. Notify Discord bot (fire-and-forget)
+    const chapterNum = parseInt(chapter.id, 10);
+    fetch("/api/discord/notify-chapter-complete", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        chapter_num: chapterNum,
+        chapter_title: markdownTitle || chapter.title_ko,
+        unlocked_chapter: chapterNum < 30 ? chapterNum + 1 : undefined,
+        part_complete: nextChapter ? nextChapter.part !== chapter.part : chapterNum === 30,
+        total_progress: chapterNum,
+        xp_reward: chapter.xp_reward,
+      }),
+    }).catch(() => {/* fire-and-forget */});
+
     setProgress({ status: "completed", completed_at: new Date().toISOString() });
     setCompletionData({
       difficultyRating: data.difficultyRating,
