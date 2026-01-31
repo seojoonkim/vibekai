@@ -15,6 +15,12 @@ export default function SettingsPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
 
+  // Discord integration state
+  const [discordUsername, setDiscordUsername] = useState<string | null>(null);
+  const [discordLinkCode, setDiscordLinkCode] = useState<string | null>(null);
+  const [discordCodeExpiry, setDiscordCodeExpiry] = useState<string | null>(null);
+  const [discordLoading, setDiscordLoading] = useState(false);
+
   // Username change form
   const [currentUsername, setCurrentUsername] = useState("");
   const [newUsername, setNewUsername] = useState("");
@@ -39,7 +45,7 @@ export default function SettingsPage() {
       if (user) {
         const { data: profile } = await supabase
           .from("profiles")
-          .select("username, display_name")
+          .select("username, display_name, discord_username")
           .eq("id", user.id)
           .single();
         if (profile) {
@@ -47,6 +53,7 @@ export default function SettingsPage() {
           setNewUsername(profile.username || "");
           setCurrentDisplayName(profile.display_name || "");
           setNewDisplayName(profile.display_name || "");
+          setDiscordUsername(profile.discord_username || null);
         }
       }
     }
@@ -214,6 +221,57 @@ export default function SettingsPage() {
       setMessage({ type: "error", text: "비밀번호 변경 중 오류가 발생했습니다." });
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleDiscordConnect = async () => {
+    setDiscordLoading(true);
+    setMessage(null);
+
+    try {
+      const res = await fetch("/api/discord/generate-link-code", {
+        method: "POST",
+      });
+      const data = await res.json();
+
+      if (!res.ok) {
+        setMessage({ type: "error", text: data.error || "코드 생성에 실패했습니다." });
+      } else {
+        setDiscordLinkCode(data.code);
+        setDiscordCodeExpiry(data.expires_at);
+      }
+    } catch {
+      setMessage({ type: "error", text: "Discord 연동 코드 생성 중 오류가 발생했습니다." });
+    } finally {
+      setDiscordLoading(false);
+    }
+  };
+
+  const handleDiscordDisconnect = async () => {
+    setDiscordLoading(true);
+    setMessage(null);
+
+    try {
+      const supabase = createClient();
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+
+      const { error } = await supabase
+        .from("profiles")
+        .update({ discord_id: null, discord_username: null })
+        .eq("id", user.id);
+
+      if (error) {
+        setMessage({ type: "error", text: error.message });
+      } else {
+        setDiscordUsername(null);
+        setDiscordLinkCode(null);
+        setMessage({ type: "success", text: "Discord 연결이 해제되었습니다." });
+      }
+    } catch {
+      setMessage({ type: "error", text: "Discord 연결 해제 중 오류가 발생했습니다." });
+    } finally {
+      setDiscordLoading(false);
     }
   };
 
@@ -406,6 +464,62 @@ export default function SettingsPage() {
                   {isLoading ? "변경 중..." : "비밀번호 변경"}
                 </Button>
               </form>
+            </CardContent>
+          </Card>
+
+          {/* Discord Integration */}
+          <Card className="bg-[#1c2128] border-0 shadow-[0_4px_12px_rgba(0,0,0,0.35)]">
+            <CardHeader>
+              <CardTitle className="text-base text-[#c9d1d9]">Discord 연결</CardTitle>
+              <CardDescription className="text-[#8b949e]">
+                {discordUsername ? (
+                  <>연결됨: <span className="text-[#7289da] font-mono">{discordUsername}</span></>
+                ) : (
+                  "Discord 계정을 연결하면 챕터 완료 시 XP와 역할이 자동 부여됩니다."
+                )}
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              {discordUsername ? (
+                <Button
+                  onClick={handleDiscordDisconnect}
+                  disabled={discordLoading}
+                  variant="outline"
+                  className="border-[#f85149]/40 text-[#f85149] hover:bg-[#f85149]/10 hover:text-[#f85149] hover:border-[#f85149]/60 bg-transparent"
+                >
+                  {discordLoading ? "해제 중..." : "연결 해제"}
+                </Button>
+              ) : discordLinkCode ? (
+                <div className="space-y-3">
+                  <div className="bg-[#161b22] rounded-md p-4 text-center shadow-[inset_0_1px_4px_rgba(0,0,0,0.3)]">
+                    <p className="text-xs text-[#8b949e] mb-2">Discord에서 아래 명령어를 입력하세요</p>
+                    <code className="text-2xl font-mono font-bold tracking-widest text-[#7289da]">
+                      /link code:{discordLinkCode}
+                    </code>
+                    {discordCodeExpiry && (
+                      <p className="text-xs text-[#8b949e] mt-2">
+                        만료: {new Date(discordCodeExpiry).toLocaleTimeString("ko-KR")}
+                      </p>
+                    )}
+                  </div>
+                  <Button
+                    onClick={handleDiscordConnect}
+                    disabled={discordLoading}
+                    variant="outline"
+                    className="border-[#30363d] text-[#8b949e] hover:text-[#c9d1d9] hover:border-[#484f58] bg-transparent"
+                  >
+                    새 코드 발급
+                  </Button>
+                </div>
+              ) : (
+                <Button
+                  onClick={handleDiscordConnect}
+                  disabled={discordLoading}
+                  className="bg-[#5865F2] hover:bg-[#4752c4] text-white border-0"
+                >
+                  {discordLoading ? "연결 중..." : "Discord 연결하기"}
+                </Button>
+              )}
             </CardContent>
           </Card>
 
