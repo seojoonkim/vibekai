@@ -21,6 +21,7 @@ interface ChapterCompletionFormProps {
     difficultyRating: number;
     satisfactionRating: number;
     review: string;
+    quizPerfect: boolean;
   }) => Promise<void>;
   isSubmitting: boolean;
   isAlreadyCompleted?: boolean;
@@ -107,6 +108,7 @@ export function ChapterCompletionForm({
   const [showChecklistWarning, setShowChecklistWarning] = useState(false);
   const [showQuizModal, setShowQuizModal] = useState(false);
   const [quizPassed, setQuizPassed] = useState(false);
+  const [quizPerfect, setQuizPerfect] = useState(false);
 
   const handleStartCompletion = () => {
     // Check if all checkboxes are completed (if there are any)
@@ -118,8 +120,9 @@ export function ChapterCompletionForm({
     setShowQuizModal(true);
   };
 
-  const handleQuizPassed = () => {
+  const handleQuizPassed = (isPerfect: boolean) => {
     setQuizPassed(true);
+    setQuizPerfect(isPerfect);
   };
 
   const handleSubmit = () => {
@@ -127,6 +130,7 @@ export function ChapterCompletionForm({
       difficultyRating,
       satisfactionRating,
       review,
+      quizPerfect,
     });
   };
 

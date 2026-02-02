@@ -15,10 +15,49 @@ import {
   Trophy,
   ArrowRight,
   RotateCcw,
-  Sparkles
+  Sparkles,
+  Zap
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { createClient } from "@/lib/supabase/client";
+
+// Confetti particle component (shared with completion-celebration-modal)
+function QuizConfetti() {
+  const [particles, setParticles] = useState<
+    Array<{ id: number; x: number; delay: number; color: string; size: number; rotation: number }>
+  >([]);
+
+  useEffect(() => {
+    const colors = ["#f0b429", "#56d364", "#f7c948", "#3fb950", "#ffd700", "#4ecdc4"];
+    setParticles(
+      Array.from({ length: 40 }, (_, i) => ({
+        id: i,
+        x: Math.random() * 100,
+        delay: Math.random() * 0.5,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        size: Math.random() * 8 + 4,
+        rotation: Math.random() * 360,
+      }))
+    );
+  }, []);
+
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none z-10">
+      {particles.map((p) => (
+        <div
+          key={p.id}
+          className="absolute animate-confetti"
+          style={{ left: `${p.x}%`, animationDelay: `${p.delay}s`, top: "-20px" }}
+        >
+          <div
+            className="rounded-sm"
+            style={{ width: p.size, height: p.size, backgroundColor: p.color, transform: `rotate(${p.rotation}deg)` }}
+          />
+        </div>
+      ))}
+    </div>
+  );
+}
 
 interface QuizQuestion {
   id: string;
@@ -33,7 +72,7 @@ interface ChapterQuizModalProps {
   onOpenChange: (open: boolean) => void;
   chapterId: string;
   chapterTitle: string;
-  onQuizPassed: () => void;
+  onQuizPassed: (isPerfect: boolean) => void;
 }
 
 interface UserAnswer {
@@ -56,6 +95,8 @@ export function ChapterQuizModal({
   const [showResult, setShowResult] = useState(false);
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [showExplanation, setShowExplanation] = useState(false);
+  const [showConfetti, setShowConfetti] = useState(false);
+  const [correctPulse, setCorrectPulse] = useState(false);
 
   // Fetch quiz questions
   useEffect(() => {
@@ -128,6 +169,12 @@ export function ChapterQuizModal({
     });
 
     setShowExplanation(true);
+
+    // Trigger subtle pulse animation on correct answer
+    if (isCorrect) {
+      setCorrectPulse(true);
+      setTimeout(() => setCorrectPulse(false), 300);
+    }
   }, [selectedOption, currentQuestion, currentIndex]);
 
   const handleNextQuestion = useCallback(() => {
@@ -136,15 +183,22 @@ export function ChapterQuizModal({
       setSelectedOption(null);
       setShowExplanation(false);
     } else {
+      // Check if all answered correctly for confetti
+      const finalCorrect = userAnswers.filter(a => a.isCorrect === true).length;
+      if (finalCorrect === totalQuestions && totalQuestions > 0) {
+        setShowConfetti(true);
+      }
       setShowResult(true);
     }
-  }, [currentIndex, totalQuestions]);
+  }, [currentIndex, totalQuestions, userAnswers]);
 
   const handleRetry = useCallback(() => {
     setCurrentIndex(0);
     setShowResult(false);
     setSelectedOption(null);
     setShowExplanation(false);
+    setShowConfetti(false);
+    setCorrectPulse(false);
     setUserAnswers(questions.map(q => ({
       questionId: q.id,
       selectedAnswer: null,
@@ -172,8 +226,8 @@ export function ChapterQuizModal({
     }
 
     onOpenChange(false);
-    onQuizPassed();
-  }, [chapterId, correctCount, userAnswers, onOpenChange, onQuizPassed]);
+    onQuizPassed(isPassed);
+  }, [chapterId, correctCount, isPassed, userAnswers, onOpenChange, onQuizPassed]);
 
   // Loading state
   if (loading) {
@@ -211,7 +265,7 @@ export function ChapterQuizModal({
               <Button
                 onClick={() => {
                   onOpenChange(false);
-                  onQuizPassed();
+                  onQuizPassed(false);
                 }}
                 className="w-full h-12 text-base font-bold rounded-md bg-gradient-to-r from-[#f0b429] to-[#c49a4b] hover:from-[#f7c948] hover:to-[#f0b429] text-[#1a120b] shadow-[0_4px_20px_rgba(240,180,41,0.4)]"
               >
@@ -231,7 +285,8 @@ export function ChapterQuizModal({
       <Dialog open={open} onOpenChange={onOpenChange}>
         <DialogContent className="sm:max-w-[500px] bg-gradient-to-b from-[#1c2128] to-[#161b22] border-0 p-0 overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.5)]">
           <DialogTitle className="sr-only">퀴즈 결과</DialogTitle>
-          <div className="p-6 sm:p-8">
+          {showConfetti && <QuizConfetti />}
+          <div className="p-6 sm:p-8 relative">
             {isPassed ? (
               // Passed - all correct
               <div className="text-center">
@@ -247,15 +302,21 @@ export function ChapterQuizModal({
                 <h3 className="text-2xl font-bold text-[#e6edf3] mb-2">
                   축하합니다!
                 </h3>
-                <p className="text-sm text-[#8b949e] mb-4">
+                <p className="text-sm text-[#8b949e] mb-2">
                   모든 문제를 맞혔습니다
                 </p>
 
-                <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#56d364]/15 rounded-md mb-6">
+                <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#56d364]/15 rounded-md mb-3">
                   <Sparkles className="h-4 w-4 text-[#56d364]" />
                   <span className="text-lg font-bold text-[#56d364]">
                     {correctCount} / {totalQuestions}
                   </span>
+                </div>
+
+                {/* Bonus XP indicator */}
+                <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#f0b429]/15 rounded-md mb-6 ml-2">
+                  <Zap className="h-4 w-4 text-[#f0b429]" />
+                  <span className="text-sm font-bold text-[#f0b429]">+20 보너스 XP</span>
                 </div>
 
                 <Button
@@ -382,9 +443,10 @@ export function ChapterQuizModal({
                   onClick={() => handleSelectOption(index)}
                   disabled={showExplanation}
                   className={cn(
-                    "w-full p-4 rounded-md border-2 text-left transition-all",
+                    "w-full p-4 rounded-md border-2 text-left transition-all duration-150",
                     optionStyle,
-                    showExplanation ? "cursor-default" : "cursor-pointer"
+                    showExplanation ? "cursor-default" : "cursor-pointer",
+                    showExplanation && isCorrect && correctPulse && "scale-[1.02]"
                   )}
                 >
                   <div className="flex items-start gap-3">

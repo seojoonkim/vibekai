@@ -11,9 +11,12 @@ interface ActivityData {
 interface ActivityHeatmapProps {
   activities: ActivityData[];
   className?: string;
+  dbStreak?: number;
+  dbLongestStreak?: number;
+  isNewDay?: boolean;
 }
 
-export function ActivityHeatmap({ activities, className }: ActivityHeatmapProps) {
+export function ActivityHeatmap({ activities, className, dbStreak, dbLongestStreak, isNewDay }: ActivityHeatmapProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [visibleWeeks, setVisibleWeeks] = useState(53); // Default to full year
 
@@ -170,12 +173,41 @@ export function ActivityHeatmap({ activities, className }: ActivityHeatmapProps)
 
   return (
     <div ref={containerRef} className={cn("w-full", className)}>
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+      {/* Streak Hero + Stats */}
+      <div className="mb-4 space-y-3">
+        {/* Streak Counter - Prominent */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="flex items-center gap-3">
+            {(dbStreak ?? currentStreak) > 0 ? (
+              <div className="flex items-center gap-2 px-3 py-1.5 bg-gradient-to-r from-[#f0b429]/20 to-[#f97316]/20 rounded-md border border-[#f0b429]/30">
+                <span className="text-lg">🔥</span>
+                <div>
+                  <span className="text-lg font-bold text-[#f0b429] font-mono">{dbStreak ?? currentStreak}</span>
+                  <span className="text-sm text-[#e6edf3] ml-1">일 연속 수련 중</span>
+                </div>
+              </div>
+            ) : (
+              <div className="flex items-center gap-2 px-3 py-1.5 bg-[#f85149]/10 rounded-md border border-[#f85149]/20">
+                <span className="text-lg">⚡</span>
+                <span className="text-sm text-[#f85149]">오늘 수련하면 스트릭이 시작됩니다!</span>
+              </div>
+            )}
+            {(dbLongestStreak ?? 0) > 1 && (
+              <span className="text-xs text-[#8b949e] hidden sm:inline">
+                최장 기록: <span className="text-[#58a6ff] font-mono font-bold">{dbLongestStreak}</span>일
+              </span>
+            )}
+          </div>
+          {isNewDay === false && (dbStreak ?? currentStreak) > 0 && (
+            <div className="flex items-center gap-1.5 px-2.5 py-1 bg-[#f85149]/10 rounded-md border border-[#f85149]/20 shrink-0">
+              <span className="text-[10px] text-[#f85149]/80">⚠️ 오늘 수련하지 않으면 스트릭이 끊깁니다!</span>
+            </div>
+          )}
+        </div>
+
+        {/* Activity Summary */}
         <div className="flex flex-wrap items-center gap-x-1 gap-y-1">
-          <span className="text-sm font-medium text-[#e6edf3]">
-            지난 1년간
-          </span>
+          <span className="text-sm font-medium text-[#e6edf3]">지난 1년간</span>
           <span className="text-sm font-medium">
             <span className="text-[#58a6ff] font-bold">{totalDays}</span>
             <span className="text-[#e6edf3]">일 방문,</span>
@@ -185,11 +217,6 @@ export function ActivityHeatmap({ activities, className }: ActivityHeatmapProps)
             <span className="text-[#e6edf3]">회 수련</span>
           </span>
         </div>
-        {currentStreak > 0 && (
-          <div className="flex items-center gap-1.5 px-2.5 py-1 bg-[#238636]/20 rounded-md border border-[#238636]/30 shrink-0">
-            <span className="text-xs text-[#3fb950] font-medium">🔥 {currentStreak}일 연속</span>
-          </div>
-        )}
       </div>
 
       {/* Heatmap Grid - Responsive, no scroll */}

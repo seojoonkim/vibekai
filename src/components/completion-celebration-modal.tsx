@@ -26,6 +26,8 @@ interface CompletionCelebrationModalProps {
   beltUp?: { from: Belt; to: Belt } | null;
   levelUp?: { from: Level; to: Level } | null;
   newBadges?: Badge[];
+  quizPerfect?: boolean;
+  quizBonusXp?: number;
 }
 
 // Confetti particle component
@@ -116,6 +118,8 @@ export function CompletionCelebrationModal({
   beltUp,
   levelUp,
   newBadges,
+  quizPerfect,
+  quizBonusXp,
 }: CompletionCelebrationModalProps) {
   const router = useRouter();
   const [showContent, setShowContent] = useState(false);
@@ -335,17 +339,40 @@ export function CompletionCelebrationModal({
             </div>
           </div>
 
-          {/* Review posted notice */}
+          {/* Review posted notice + Community CTA */}
           {hasReview && (
             <div
               className={cn(
-                "mb-6 p-3 bg-emerald-500/10 border border-emerald-500/30 rounded-md text-center transition-all duration-700 delay-[550ms]",
+                "mb-6 p-3 bg-emerald-500/10 border border-emerald-500/30 rounded-md text-center space-y-2 transition-all duration-700 delay-[550ms]",
                 showContent ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
               )}
             >
               <p className="text-xs text-emerald-400 flex items-center justify-center gap-2">
                 <Sparkles className="h-3 w-3" />
                 후기가 커뮤니티에 공유되었습니다
+              </p>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => router.push("/community")}
+                className="text-xs border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/10 hover:text-emerald-300"
+              >
+                커뮤니티에서 보기 →
+              </Button>
+            </div>
+          )}
+
+          {/* Quiz perfect bonus notice */}
+          {quizPerfect && quizBonusXp && quizBonusXp > 0 && (
+            <div
+              className={cn(
+                "mb-6 p-3 bg-[#f0b429]/10 border border-[#f0b429]/30 rounded-md text-center transition-all duration-700 delay-[550ms]",
+                showContent ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+              )}
+            >
+              <p className="text-xs text-[#f0b429] flex items-center justify-center gap-2">
+                <Zap className="h-3 w-3" />
+                퀴즈 만점 보너스 +{quizBonusXp} XP!
               </p>
             </div>
           )}

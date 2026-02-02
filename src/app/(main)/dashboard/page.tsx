@@ -7,6 +7,7 @@ import { Icons } from "@/components/icons";
 import { CURRICULUM_DATA, getAllChapters } from "@/lib/curriculum-data";
 import { CharacterDisplay } from "@/components/dashboard/character-display";
 import { ActivityHeatmap } from "@/components/dashboard/activity-heatmap";
+import { updateStreak } from "@/lib/streak";
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -85,12 +86,18 @@ export default async function DashboardPage() {
     }
   }
 
+  // Update streak (idempotent — safe to call on every page load)
+  let streakData = { currentStreak: 0, longestStreak: 0, isNewDay: false };
+  if (user) {
+    streakData = await updateStreak(user.id);
+  }
+
   // Fetch real user profile data from database
   let profile = null;
   if (user) {
     const { data } = await supabase
       .from("profiles")
-      .select("username, display_name, avatar_url, total_xp, current_streak, character_id")
+      .select("username, display_name, avatar_url, total_xp, current_streak, longest_streak, character_id")
       .eq("id", user.id)
       .single();
     profile = data;
@@ -223,7 +230,12 @@ export default async function DashboardPage() {
 
           {/* Activity Heatmap - GitHub Style */}
           <div className="mt-5 bg-[#1c2128] p-5 rounded-md shadow-[0_4px_12px_rgba(0,0,0,0.3)]">
-            <ActivityHeatmap activities={activityData} />
+            <ActivityHeatmap
+              activities={activityData}
+              dbStreak={profile?.current_streak ?? streakData.currentStreak}
+              dbLongestStreak={profile?.longest_streak ?? streakData.longestStreak}
+              isNewDay={streakData.isNewDay}
+            />
           </div>
         </div>
       </div>

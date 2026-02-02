@@ -138,6 +138,7 @@ function ChecklistAwareCompletionForm({
     difficultyRating: number;
     satisfactionRating: number;
     review: string;
+    quizPerfect: boolean;
   }) => Promise<void>;
   nextChapterId?: string | null;
 }) {
@@ -187,6 +188,8 @@ export default function ChapterDetailPage() {
     difficultyRating: number;
     satisfactionRating: number;
     hasReview: boolean;
+    quizPerfect: boolean;
+    quizBonusXp: number;
   } | null>(null);
   const [celebrationExtras, setCelebrationExtras] = useState<{
     beltUp: { from: Belt; to: Belt } | null;
@@ -360,6 +363,7 @@ export default function ChapterDetailPage() {
     difficultyRating: number;
     satisfactionRating: number;
     review: string;
+    quizPerfect: boolean;
   }) => {
     if (!chapter || completing) return;
 
@@ -405,6 +409,31 @@ export default function ChapterDetailPage() {
       amount: chapter.xp_reward,
     });
 
+    // 2a. Quiz perfect bonus XP (20) with dedupe
+    let quizBonusAwarded = false;
+    if (data.quizPerfect) {
+      const { count } = await supabase
+        .from("xp_logs")
+        .select("*", { count: "exact", head: true })
+        .eq("user_id", user.id)
+        .eq("action", "quiz_perfect")
+        .eq("reference_id", chapter.id);
+
+      if (count === 0) {
+        await supabase.from("xp_logs").insert({
+          user_id: user.id,
+          amount: 20,
+          action: "quiz_perfect",
+          reference_id: chapter.id,
+        });
+        await supabase.rpc("increment_xp", {
+          user_id: user.id,
+          amount: 20,
+        });
+        quizBonusAwarded = true;
+      }
+    }
+
     // 2b. Detect belt/level/badge changes
     const { data: profileData } = await supabase
       .from("profiles")
@@ -413,7 +442,8 @@ export default function ChapterDetailPage() {
       .single();
 
     const newTotalXp = profileData?.total_xp ?? 0;
-    const oldTotalXp = newTotalXp - chapter.xp_reward;
+    const totalXpAwarded = chapter.xp_reward + (quizBonusAwarded ? 20 : 0);
+    const oldTotalXp = newTotalXp - totalXpAwarded;
 
     const oldBelt = getBeltByXp(oldTotalXp);
     const newBelt = getBeltByXp(newTotalXp);
@@ -542,11 +572,16 @@ export default function ChapterDetailPage() {
       }),
     }).catch(() => {/* fire-and-forget */});
 
+    // 7. Update streak (fire-and-forget)
+    fetch("/api/streak", { method: "POST" }).catch(() => {});
+
     setProgress({ status: "completed", completed_at: new Date().toISOString() });
     setCompletionData({
       difficultyRating: data.difficultyRating,
       satisfactionRating: data.satisfactionRating,
       hasReview: !!data.review.trim(),
+      quizPerfect: data.quizPerfect,
+      quizBonusXp: quizBonusAwarded ? 20 : 0,
     });
     setCompleting(false);
     setShowCelebration(true);
@@ -1008,10 +1043,12 @@ export default function ChapterDetailPage() {
           open={showCelebration}
           onOpenChange={setShowCelebration}
           chapterTitle={markdownTitle || chapter.title_ko}
-          xpEarned={chapter.xp_reward}
+          xpEarned={chapter.xp_reward + completionData.quizBonusXp}
           difficultyRating={completionData.difficultyRating}
           satisfactionRating={completionData.satisfactionRating}
           hasReview={completionData.hasReview}
+          quizPerfect={completionData.quizPerfect}
+          quizBonusXp={completionData.quizBonusXp}
           nextChapterId={nextChapter?.id}
           isLastChapter={chapter.id === "30"}
           beltUp={celebrationExtras?.beltUp}
