@@ -8,8 +8,10 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Trophy, Zap, Star, Sparkles, ArrowRight } from "lucide-react";
+import { Trophy, Zap, Star, Sparkles, ArrowRight, Crown } from "lucide-react";
 import { cn } from "@/lib/utils";
+import type { Belt } from "@/lib/belt-system";
+import type { Level, Badge } from "@/lib/gamification";
 
 interface CompletionCelebrationModalProps {
   open: boolean;
@@ -20,6 +22,10 @@ interface CompletionCelebrationModalProps {
   satisfactionRating: number;
   hasReview: boolean;
   nextChapterId?: string | null;
+  isLastChapter?: boolean;
+  beltUp?: { from: Belt; to: Belt } | null;
+  levelUp?: { from: Level; to: Level } | null;
+  newBadges?: Badge[];
 }
 
 // Confetti particle component
@@ -106,6 +112,10 @@ export function CompletionCelebrationModal({
   satisfactionRating,
   hasReview,
   nextChapterId,
+  isLastChapter,
+  beltUp,
+  levelUp,
+  newBadges,
 }: CompletionCelebrationModalProps) {
   const router = useRouter();
   const [showContent, setShowContent] = useState(false);
@@ -145,12 +155,20 @@ export function CompletionCelebrationModal({
 
   const handleGoToCurriculum = useCallback(() => {
     onOpenChange(false);
-    // 다음 챕터가 있으면 해당 챕터로 스크롤
     const url = nextChapterId
       ? `/curriculum?scrollTo=${nextChapterId}`
       : "/curriculum";
     router.push(url);
   }, [onOpenChange, router, nextChapterId]);
+
+  const handleGoToNextChapter = useCallback(() => {
+    onOpenChange(false);
+    router.push(`/curriculum/${nextChapterId}`);
+  }, [onOpenChange, router, nextChapterId]);
+
+  const hasBeltUp = beltUp && beltUp.from.id !== beltUp.to.id;
+  const hasLevelUp = levelUp && levelUp.from.level !== levelUp.to.level;
+  const hasBadges = newBadges && newBadges.length > 0;
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -174,7 +192,11 @@ export function CompletionCelebrationModal({
             <div className="relative">
               <div className="absolute inset-0 bg-[#f0b429]/30 rounded-full blur-2xl animate-pulse" />
               <div className="relative w-24 h-24 rounded-full bg-gradient-to-br from-[#f0b429] to-[#8b5a2b] flex items-center justify-center shadow-[0_0_40px_rgba(212,165,90,0.5)]">
-                <Trophy className="h-12 w-12 text-[#1a120b]" />
+                {isLastChapter ? (
+                  <Crown className="h-12 w-12 text-[#1a120b]" />
+                ) : (
+                  <Trophy className="h-12 w-12 text-[#1a120b]" />
+                )}
               </div>
             </div>
           </div>
@@ -187,7 +209,7 @@ export function CompletionCelebrationModal({
             )}
           >
             <h2 className="text-2xl sm:text-3xl font-bold text-[#f0e6d6] mb-2">
-              수련 완료!
+              {isLastChapter ? "커리큘럼 완료!" : "수련 완료!"}
             </h2>
             <p className="text-sm text-[#c4b5a0]">
               {chapterTitle}
@@ -197,7 +219,7 @@ export function CompletionCelebrationModal({
           {/* XP Earned */}
           <div
             className={cn(
-              "flex justify-center mb-6 transition-all duration-700 delay-300",
+              "flex justify-center mb-4 transition-all duration-700 delay-300",
               showContent ? "opacity-100 scale-100" : "opacity-0 scale-90"
             )}
           >
@@ -210,10 +232,72 @@ export function CompletionCelebrationModal({
             </div>
           </div>
 
+          {/* Belt Upgrade */}
+          {hasBeltUp && (
+            <div
+              className={cn(
+                "mb-3 p-3 bg-[#0d0906]/50 border border-[#2a1f15] rounded-md text-center transition-all duration-700 delay-[350ms]",
+                showContent ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+              )}
+            >
+              <p className="text-xs text-[#8b7355] mb-1.5">승급!</p>
+              <div className="flex items-center justify-center gap-2">
+                <span
+                  className="inline-block w-4 h-4 rounded-full border border-[#3d444d]"
+                  style={{ backgroundColor: beltUp!.from.color }}
+                />
+                <span className="text-sm text-[#c4b5a0]">{beltUp!.from.nameKo}</span>
+                <ArrowRight className="h-3 w-3 text-[#8b7355]" />
+                <span
+                  className="inline-block w-4 h-4 rounded-full border border-[#3d444d]"
+                  style={{ backgroundColor: beltUp!.to.color }}
+                />
+                <span className="text-sm font-medium text-[#f0e6d6]">{beltUp!.to.nameKo}</span>
+              </div>
+            </div>
+          )}
+
+          {/* Level Up */}
+          {hasLevelUp && (
+            <div
+              className={cn(
+                "mb-3 p-3 bg-[#0d0906]/50 border border-[#2a1f15] rounded-md text-center transition-all duration-700 delay-[400ms]",
+                showContent ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+              )}
+            >
+              <p className="text-xs text-[#8b7355] mb-1.5">레벨 업!</p>
+              <div className="flex items-center justify-center gap-2">
+                <span className="text-sm text-[#c4b5a0]">{levelUp!.from.name.ko}</span>
+                <ArrowRight className="h-3 w-3 text-[#8b7355]" />
+                <span className="text-sm font-medium text-[#f0e6d6]">{levelUp!.to.name.ko}</span>
+              </div>
+            </div>
+          )}
+
+          {/* New Badges */}
+          {hasBadges && (
+            <div
+              className={cn(
+                "mb-3 p-3 bg-[#0d0906]/50 border border-[#2a1f15] rounded-md text-center transition-all duration-700 delay-[450ms]",
+                showContent ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+              )}
+            >
+              <p className="text-xs text-[#8b7355] mb-1.5">배지 획득!</p>
+              <div className="flex items-center justify-center gap-3">
+                {newBadges!.map((badge) => (
+                  <div key={badge.id} className="flex items-center gap-1.5">
+                    <span className="text-lg">{badge.icon}</span>
+                    <span className="text-sm text-[#f0e6d6]">{badge.name.ko}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
           {/* Ratings Summary */}
           <div
             className={cn(
-              "grid grid-cols-2 gap-4 mb-6 transition-all duration-700 delay-400",
+              "grid grid-cols-2 gap-4 mb-6 transition-all duration-700 delay-500",
               showContent ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
             )}
           >
@@ -255,7 +339,7 @@ export function CompletionCelebrationModal({
           {hasReview && (
             <div
               className={cn(
-                "mb-6 p-3 bg-emerald-500/10 border border-emerald-500/30 rounded-md text-center transition-all duration-700 delay-500",
+                "mb-6 p-3 bg-emerald-500/10 border border-emerald-500/30 rounded-md text-center transition-all duration-700 delay-[550ms]",
                 showContent ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
               )}
             >
@@ -266,19 +350,36 @@ export function CompletionCelebrationModal({
             </div>
           )}
 
-          {/* Action Button */}
+          {/* Action Buttons */}
           <div
             className={cn(
-              "transition-all duration-700 delay-600",
+              "space-y-2 transition-all duration-700 delay-600",
               showContent ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
             )}
           >
+            {/* Primary CTA: Next Chapter (if available and not last) */}
+            {nextChapterId && !isLastChapter && (
+              <Button
+                onClick={handleGoToNextChapter}
+                className="w-full h-12 text-base font-bold rounded-md bg-gradient-to-r from-[#f0b429] to-[#c49a4b] hover:from-[#f7c948] hover:to-[#f0b429] text-[#1a120b] shadow-[0_4px_20px_rgba(212,165,90,0.4)] transition-all"
+              >
+                다음 챕터 시작하기
+                <ArrowRight className="h-5 w-5 ml-2" />
+              </Button>
+            )}
+            {/* Secondary CTA: Back to Curriculum */}
             <Button
               onClick={handleGoToCurriculum}
-              className="w-full h-12 text-base font-bold rounded-md bg-gradient-to-r from-[#f0b429] to-[#c49a4b] hover:from-[#f7c948] hover:to-[#f0b429] text-[#1a120b] shadow-[0_4px_20px_rgba(212,165,90,0.4)] transition-all"
+              variant="outline"
+              className={cn(
+                "w-full h-12 text-base font-bold rounded-md transition-all",
+                nextChapterId && !isLastChapter
+                  ? "border-[#f0b429]/30 text-[#c4b5a0] hover:bg-[#f0b429]/10 hover:text-[#f0e6d6]"
+                  : "bg-gradient-to-r from-[#f0b429] to-[#c49a4b] hover:from-[#f7c948] hover:to-[#f0b429] text-[#1a120b] border-0 shadow-[0_4px_20px_rgba(212,165,90,0.4)]"
+              )}
             >
               수련 과정으로 돌아가기
-              <ArrowRight className="h-5 w-5 ml-2" />
+              {(!nextChapterId || isLastChapter) && <ArrowRight className="h-5 w-5 ml-2" />}
             </Button>
           </div>
         </div>

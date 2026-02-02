@@ -444,3 +444,8 @@ export function getPartById(id: number): Part | undefined {
 export function getTotalXP(): number {
   return getAllChapters().reduce((sum, chapter) => sum + chapter.xpReward, 0);
 }
+
+export function getPartChapterIds(partNum: number): string[] {
+  const part = getPartById(partNum);
+  return part ? part.chapters.map((ch) => ch.id) : [];
+}

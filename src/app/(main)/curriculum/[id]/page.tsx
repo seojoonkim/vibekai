@@ -23,7 +23,11 @@ import {
   X,
 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
-import { getPartById } from "@/lib/curriculum-data";
+import { getPartById, getPartChapterIds } from "@/lib/curriculum-data";
+import { getBeltByXp } from "@/lib/belt-system";
+import type { Belt } from "@/lib/belt-system";
+import { calculateLevel, getBadgeById } from "@/lib/gamification";
+import type { Level, Badge as GamificationBadge } from "@/lib/gamification";
 import { Icons } from "@/components/icons";
 import { ChapterQuestionsPanel, TextSelection, Question } from "@/components/chapter-questions-panel";
 import { TextSelectionTooltip } from "@/components/text-selection-tooltip";
@@ -183,6 +187,11 @@ export default function ChapterDetailPage() {
     difficultyRating: number;
     satisfactionRating: number;
     hasReview: boolean;
+  } | null>(null);
+  const [celebrationExtras, setCelebrationExtras] = useState<{
+    beltUp: { from: Belt; to: Belt } | null;
+    levelUp: { from: Level; to: Level } | null;
+    newBadges: GamificationBadge[];
   } | null>(null);
 
   // Saved review data for completed chapters
@@ -396,6 +405,78 @@ export default function ChapterDetailPage() {
       amount: chapter.xp_reward,
     });
 
+    // 2b. Detect belt/level/badge changes
+    const { data: profileData } = await supabase
+      .from("profiles")
+      .select("total_xp")
+      .eq("id", user.id)
+      .single();
+
+    const newTotalXp = profileData?.total_xp ?? 0;
+    const oldTotalXp = newTotalXp - chapter.xp_reward;
+
+    const oldBelt = getBeltByXp(oldTotalXp);
+    const newBelt = getBeltByXp(newTotalXp);
+    const beltUpResult = oldBelt.id !== newBelt.id ? { from: oldBelt, to: newBelt } : null;
+
+    const oldLevel = calculateLevel(oldTotalXp);
+    const newLevel = calculateLevel(newTotalXp);
+    const levelUpResult = oldLevel.level !== newLevel.level ? { from: oldLevel, to: newLevel } : null;
+
+    // Check badge eligibility
+    const earnedBadges: GamificationBadge[] = [];
+    const chapterNumForBadge = parseInt(chapter.id, 10);
+
+    // first-chapter: first ever chapter completed
+    const { count: totalCompleted } = await supabase
+      .from("progress")
+      .select("*", { count: "exact", head: true })
+      .eq("user_id", user.id)
+      .eq("status", "completed");
+
+    if (totalCompleted === 1) {
+      const badge = getBadgeById("first-chapter");
+      if (badge) earnedBadges.push(badge);
+    }
+
+    // Part completion badges
+    const partChapterIds = getPartChapterIds(chapter.part);
+    if (partChapterIds.length > 0) {
+      const { count: partCompleted } = await supabase
+        .from("progress")
+        .select("*", { count: "exact", head: true })
+        .eq("user_id", user.id)
+        .eq("status", "completed")
+        .in("chapter_id", partChapterIds);
+
+      if (partCompleted === partChapterIds.length) {
+        if (chapter.part === 1) {
+          const badge = getBadgeById("part-1-complete");
+          if (badge) earnedBadges.push(badge);
+        }
+        if (chapter.part === 6) {
+          const badge = getBadgeById("web3-pioneer");
+          if (badge) earnedBadges.push(badge);
+        }
+      }
+    }
+
+    // full-curriculum badge
+    if (chapterNumForBadge === 30 && totalCompleted === 30) {
+      const badge = getBadgeById("full-curriculum");
+      if (badge) earnedBadges.push(badge);
+    }
+
+    // Insert earned badges
+    for (const badge of earnedBadges) {
+      await supabase.from("user_badges").upsert(
+        { user_id: user.id, badge_id: badge.id },
+        { onConflict: "user_id,badge_id" }
+      );
+    }
+
+    setCelebrationExtras({ beltUp: beltUpResult, levelUp: levelUpResult, newBadges: earnedBadges });
+
     // 3. Post completion to community (with review or default message)
     let postId: string | null = null;
     const reviewContent = data.review.trim() || `${markdownTitle || chapter.title_ko} 챕터를 완료했습니다! 🎉`;
@@ -432,7 +513,21 @@ export default function ChapterDetailPage() {
       { onConflict: "user_id,chapter_id" }
     );
 
-    // 5. Notify Discord bot (fire-and-forget)
+    // 5. Create web notifications (fire-and-forget)
+    fetch("/api/notifications/create-completion", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        chapterTitle: markdownTitle || chapter.title_ko,
+        chapterId: chapter.id,
+        xpEarned: chapter.xp_reward,
+        beltUp: beltUpResult,
+        levelUp: levelUpResult,
+        newBadges: earnedBadges,
+      }),
+    }).catch(() => {});
+
+    // 6. Notify Discord bot (fire-and-forget)
     const chapterNum = parseInt(chapter.id, 10);
     fetch("/api/discord/notify-chapter-complete", {
       method: "POST",
@@ -918,6 +1013,10 @@ export default function ChapterDetailPage() {
           satisfactionRating={completionData.satisfactionRating}
           hasReview={completionData.hasReview}
           nextChapterId={nextChapter?.id}
+          isLastChapter={chapter.id === "30"}
+          beltUp={celebrationExtras?.beltUp}
+          levelUp={celebrationExtras?.levelUp}
+          newBadges={celebrationExtras?.newBadges}
         />
       )}
 

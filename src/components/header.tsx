@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Icons } from "@/components/icons";
 import { LanguageSwitcher } from "@/components/language-switcher";
+import { NotificationBell } from "@/components/notification-bell";
 import { cn } from "@/lib/utils";
 
 interface HeaderProps {
@@ -89,6 +90,7 @@ export function Header({ isLoggedIn = false }: HeaderProps) {
           <LanguageSwitcher />
           {isLoggedIn ? (
             <div className="flex items-center gap-1 sm:gap-1.5">
+              <NotificationBell />
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button
