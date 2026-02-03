@@ -41,10 +41,14 @@ export function QuestionHighlightOverlay({
   });
   const [mounted, setMounted] = useState(false);
   const hideTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const showTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     setMounted(true);
-    return () => setMounted(false);
+    return () => {
+      setMounted(false);
+      if (showTimeoutRef.current) clearTimeout(showTimeoutRef.current);
+    };
   }, []);
 
   const findTextInContainer = useCallback((container: Element, searchText: string): Range | null => {
@@ -167,15 +171,24 @@ export function QuestionHighlightOverlay({
       hideTimeoutRef.current = null;
     }
 
-    setTooltip({
-      visible: true,
-      x: rect.left + rect.width / 2,
-      y: rect.bottom + 8,
-      question,
-    });
+    // 500ms 딜레이 후 툴팁 표시 (드래그 선택 기회 제공)
+    showTimeoutRef.current = setTimeout(() => {
+      setTooltip({
+        visible: true,
+        x: rect.left + rect.width / 2,
+        y: rect.bottom + 8,
+        question,
+      });
+    }, 500);
   }, []);
 
   const handleMouseLeave = useCallback(() => {
+    // 표시 대기 중이었다면 취소
+    if (showTimeoutRef.current) {
+      clearTimeout(showTimeoutRef.current);
+      showTimeoutRef.current = null;
+    }
+
     hideTimeoutRef.current = setTimeout(() => {
       setTooltip((prev) => ({ ...prev, visible: false }));
     }, 150);
@@ -230,45 +243,36 @@ export function QuestionHighlightOverlay({
         ))
       )}
 
-      {/* 텍스트 영역 전체 - 호버 및 클릭 가능 영역 */}
-      {highlightedRanges.map(({ question, rects }) =>
-        rects.map((rect, rectIndex) => (
+      {/* 질문 아이콘 - 마지막 rect 끝에만 표시 (텍스트 선택 방해 안함) */}
+      {highlightedRanges.map(({ question, rects }) => {
+        const lastRect = rects[rects.length - 1];
+        if (!lastRect) return null;
+        return (
           <div
-            key={`hover-${question.id}-${rectIndex}`}
-            className="pointer-events-auto cursor-pointer"
+            key={`icon-${question.id}`}
+            className="pointer-events-auto cursor-pointer group"
             style={{
               position: "fixed",
-              left: rect.left,
-              top: rect.top,
-              width: rect.width,
-              height: rect.height,
+              left: lastRect.right + 4,
+              top: lastRect.top + (lastRect.height - 16) / 2,
+              width: 16,
+              height: 16,
               zIndex: 10,
-              transition: "background 0.15s ease",
-              background: "transparent",
             }}
-            data-question-bg={question.id}
-            onMouseEnter={() => {
-              // 배경 하이라이트 표시
-              const bgElements = document.querySelectorAll(`[data-question-bg="${question.id}"]`);
-              bgElements.forEach((el) => {
-                (el as HTMLElement).style.background = question.is_resolved
-                  ? "rgba(139, 92, 246, 0.1)"
-                  : "rgba(251, 146, 60, 0.1)";
-              });
-              handleMouseEnter(question, rect);
-            }}
-            onMouseLeave={() => {
-              // 배경 하이라이트 제거
-              const bgElements = document.querySelectorAll(`[data-question-bg="${question.id}"]`);
-              bgElements.forEach((el) => {
-                (el as HTMLElement).style.background = "transparent";
-              });
-              handleMouseLeave();
-            }}
+            onMouseEnter={() => handleMouseEnter(question, lastRect)}
+            onMouseLeave={handleMouseLeave}
             onClick={() => handleClick(question.id)}
-          />
-        ))
-      )}
+          >
+            <MessageSquare
+              className={`h-4 w-4 transition-colors ${
+                question.is_resolved
+                  ? "text-violet-400/60 group-hover:text-violet-400"
+                  : "text-orange-400/60 group-hover:text-orange-400"
+              }`}
+            />
+          </div>
+        );
+      })}
 
       {/* 툴팁 팝업 */}
       {tooltip.visible && tooltip.question && (

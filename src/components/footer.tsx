@@ -27,14 +27,24 @@ export function Footer() {
             </Link>
           </p>
         </div>
-        <Link
-          href="https://github.com/vibedojo-by-hashed/VibecodingCurriculum"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-[#8b949e] hover:text-[#c9d1d9] transition-colors"
-        >
-          <Icons.github className="h-4 w-4" />
-        </Link>
+        <div className="flex items-center gap-3">
+          <Link
+            href="https://discord.gg/TxbJ56hS94"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[#8b949e] hover:text-[#5865F2] transition-colors"
+          >
+            <Icons.discord className="h-4 w-4" />
+          </Link>
+          <Link
+            href="https://github.com/vibedojo-by-hashed/VibecodingCurriculum"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[#8b949e] hover:text-[#c9d1d9] transition-colors"
+          >
+            <Icons.github className="h-4 w-4" />
+          </Link>
+        </div>
       </div>
     </footer>
   );

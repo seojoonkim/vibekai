@@ -456,6 +456,14 @@ export default async function LandingPage() {
           </div>
           <div className="flex items-center gap-3">
             <Link
+              href="https://discord.gg/TxbJ56hS94"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#a8b2bd] hover:text-[#5865F2] transition-all duration-300"
+            >
+              <Icons.discord className="h-4 w-4" />
+            </Link>
+            <Link
               href="https://github.com/anthropics/claude-code"
               target="_blank"
               rel="noopener noreferrer"
