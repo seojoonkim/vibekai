@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VibeDojo 수료 인증서</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&family=Playfair+Display:wght@700&display=swap');
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      font-family: 'Noto Sans KR', sans-serif;
+      padding: 20px;
+    }
+    
+    .certificate {
+      width: 900px;
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 25px 80px rgba(0,0,0,0.3);
+      overflow: hidden;
+      position: relative;
+    }
+    
+    .certificate-border {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      right: 15px;
+      bottom: 15px;
+      border: 3px solid #764ba2;
+      border-radius: 15px;
+      pointer-events: none;
+    }
+    
+    .certificate-content {
+      padding: 60px 80px;
+      text-align: center;
+    }
+    
+    .logo {
+      font-size: 28px;
+      font-weight: 700;
+      color: #764ba2;
+      margin-bottom: 10px;
+    }
+    
+    .logo span {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .certificate-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 48px;
+      color: #333;
+      margin: 30px 0 15px;
+      letter-spacing: 3px;
+    }
+    
+    .subtitle {
+      color: #666;
+      font-size: 16px;
+      margin-bottom: 40px;
+    }
+    
+    .recipient-label {
+      color: #999;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+    
+    .recipient-name {
+      font-size: 36px;
+      font-weight: 700;
+      color: #333;
+      border-bottom: 3px solid #764ba2;
+      display: inline-block;
+      padding: 0 30px 10px;
+      margin-bottom: 30px;
+    }
+    
+    .description {
+      color: #555;
+      font-size: 18px;
+      line-height: 1.8;
+      max-width: 600px;
+      margin: 0 auto 40px;
+    }
+    
+    .track-badge {
+      display: inline-block;
+      padding: 12px 30px;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 16px;
+      margin-bottom: 40px;
+    }
+    
+    .track-30 {
+      background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+      color: white;
+    }
+    
+    .track-60 {
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      color: white;
+    }
+    
+    .track-90 {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+    
+    .details {
+      display: flex;
+      justify-content: center;
+      gap: 60px;
+      margin-bottom: 40px;
+    }
+    
+    .detail-item {
+      text-align: center;
+    }
+    
+    .detail-label {
+      color: #999;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 5px;
+    }
+    
+    .detail-value {
+      color: #333;
+      font-size: 18px;
+      font-weight: 700;
+    }
+    
+    .signature-section {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 40px;
+      padding-top: 30px;
+      border-top: 1px solid #eee;
+    }
+    
+    .signature {
+      text-align: center;
+    }
+    
+    .signature-line {
+      width: 180px;
+      height: 50px;
+      border-bottom: 2px solid #333;
+      margin-bottom: 10px;
+    }
+    
+    .signature-name {
+      font-weight: 700;
+      color: #333;
+    }
+    
+    .signature-title {
+      color: #999;
+      font-size: 14px;
+    }
+    
+    .verification {
+      margin-top: 30px;
+      padding: 15px;
+      background: #f8f9fa;
+      border-radius: 10px;
+    }
+    
+    .verification-label {
+      color: #999;
+      font-size: 12px;
+      margin-bottom: 5px;
+    }
+    
+    .verification-code {
+      font-family: monospace;
+      font-size: 14px;
+      color: #764ba2;
+      letter-spacing: 1px;
+    }
+    
+    .decorative-corner {
+      position: absolute;
+      width: 80px;
+      height: 80px;
+      opacity: 0.1;
+    }
+    
+    .corner-tl {
+      top: 30px;
+      left: 30px;
+      border-top: 8px solid #764ba2;
+      border-left: 8px solid #764ba2;
+    }
+    
+    .corner-tr {
+      top: 30px;
+      right: 30px;
+      border-top: 8px solid #764ba2;
+      border-right: 8px solid #764ba2;
+    }
+    
+    .corner-bl {
+      bottom: 30px;
+      left: 30px;
+      border-bottom: 8px solid #764ba2;
+      border-left: 8px solid #764ba2;
+    }
+    
+    .corner-br {
+      bottom: 30px;
+      right: 30px;
+      border-bottom: 8px solid #764ba2;
+      border-right: 8px solid #764ba2;
+    }
+    
+    @media print {
+      body {
+        background: white;
+        padding: 0;
+      }
+      .certificate {
+        box-shadow: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="certificate">
+    <div class="certificate-border"></div>
+    <div class="decorative-corner corner-tl"></div>
+    <div class="decorative-corner corner-tr"></div>
+    <div class="decorative-corner corner-bl"></div>
+    <div class="decorative-corner corner-br"></div>
+    
+    <div class="certificate-content">
+      <div class="logo">
+        <span>🥋 VibeDojo</span>
+      </div>
+      
+      <h1 class="certificate-title">CERTIFICATE</h1>
+      <p class="subtitle">AI 코딩 바이브코딩 커리큘럼 수료 인증서</p>
+      
+      <p class="recipient-label">이 인증서는</p>
+      <p class="recipient-name" id="recipientName">{{RECIPIENT_NAME}}</p>
+      
+      <p class="description">
+        위 수료자가 VibeDojo 바이브코딩 커리큘럼을 성실히 이수하고,<br>
+        AI와 함께 코딩하는 역량을 갖추었음을 인증합니다.
+      </p>
+      
+      <div class="track-badge track-90" id="trackBadge">
+        🏆 {{TRACK_NAME}} 완료
+      </div>
+      
+      <div class="details">
+        <div class="detail-item">
+          <p class="detail-label">수료일</p>
+          <p class="detail-value" id="completionDate">{{COMPLETION_DATE}}</p>
+        </div>
+        <div class="detail-item">
+          <p class="detail-label">완료 챕터</p>
+          <p class="detail-value" id="chaptersCompleted">{{CHAPTERS_COMPLETED}}</p>
+        </div>
+        <div class="detail-item">
+          <p class="detail-label">총 학습 시간</p>
+          <p class="detail-value" id="totalHours">{{TOTAL_HOURS}}</p>
+        </div>
+      </div>
+      
+      <div class="signature-section">
+        <div class="signature">
+          <div class="signature-line"></div>
+          <p class="signature-name">Simon Seojoon Kim</p>
+          <p class="signature-title">VibeDojo Founder</p>
+        </div>
+        <div class="signature">
+          <div class="signature-line"></div>
+          <p class="signature-name">Hashed</p>
+          <p class="signature-title">Education Partner</p>
+        </div>
+      </div>
+      
+      <div class="verification">
+        <p class="verification-label">검증 코드 (Verification Code)</p>
+        <p class="verification-code" id="verificationCode">{{VERIFICATION_UUID}}</p>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    // 인증서 데이터 채우기 (실제 구현 시 서버에서 데이터 받아옴)
+    // URL 파라미터에서 데이터 읽기 예시
+    const params = new URLSearchParams(window.location.search);
+    
+    if (params.get('name')) {
+      document.getElementById('recipientName').textContent = params.get('name');
+    }
+    if (params.get('date')) {
+      document.getElementById('completionDate').textContent = params.get('date');
+    }
+    if (params.get('track')) {
+      const track = params.get('track');
+      const badge = document.getElementById('trackBadge');
+      const trackMap = {
+        '30': { name: '30일 기초 트랙', class: 'track-30', chapters: '10개' },
+        '60': { name: '60일 중급 트랙', class: 'track-60', chapters: '20개' },
+        '90': { name: '90일 마스터 트랙', class: 'track-90', chapters: '30개' }
+      };
+      if (trackMap[track]) {
+        badge.textContent = `🏆 ${trackMap[track].name} 완료`;
+        badge.className = `track-badge ${trackMap[track].class}`;
+        document.getElementById('chaptersCompleted').textContent = trackMap[track].chapters;
+      }
+    }
+    if (params.get('hours')) {
+      document.getElementById('totalHours').textContent = params.get('hours') + '시간';
+    }
+    if (params.get('uuid')) {
+      document.getElementById('verificationCode').textContent = params.get('uuid');
+    }
+  </script>
+</body>
+</html>
