@@ -1,0 +1,82 @@
+{
+  "$schema": "https://claude.ai/schemas/settings.json",
+  "_comment": "팀 협업용 Claude Code 설정 (엄격한 규칙)",
+  
+  "project": {
+    "name": "Team Project",
+    "team": "Team Name",
+    "description": "팀 프로젝트 설명"
+  },
+  
+  "preferences": {
+    "language": "ko",
+    "outputStyle": "detailed",
+    "askBeforeWrite": true,
+    "askBeforeDelete": true,
+    "codeStyle": "team-standard",
+    "_comment_codestyle": "팀 코딩 표준 적용"
+  },
+  
+  "permissions": {
+    "_comment_permissions": "최소 권한 원칙",
+    "autoApprove": [
+      "Read",
+      "Glob",
+      "Grep"
+    ],
+    "_comment_test": "테스트는 자동 승인",
+    "autoApprovePatterns": [
+      "Bash(npm test)",
+      "Bash(npm run test:*)",
+      "Bash(npm run lint)",
+      "Bash(npm run typecheck)"
+    ],
+    "_comment_deny": "위험한 명령어 차단",
+    "deny": [
+      "Bash(rm -rf *)",
+      "Bash(rm -rf /)",
+      "Bash(sudo *)",
+      "Bash(git push --force)",
+      "Bash(git push -f)",
+      "Bash(DROP TABLE*)",
+      "Bash(DELETE FROM*)",
+      "Bash(*production*)",
+      "Bash(*prod*)"
+    ]
+  },
+  
+  "hooks": {
+    "_comment_hooks": "품질 관리 훅",
+    "preCommit": "npm run lint && npm run typecheck",
+    "prePush": "npm test"
+  },
+  
+  "model": {
+    "default": "sonnet",
+    "planning": "opus",
+    "implementation": "sonnet",
+    "review": "opus"
+  },
+  
+  "context": {
+    "maxFiles": 100,
+    "excludePatterns": [
+      "node_modules/**",
+      ".git/**",
+      "dist/**",
+      "build/**",
+      "coverage/**",
+      "*.log",
+      ".env*",
+      "*.secret"
+    ],
+    "_comment_exclude": "민감한 파일 제외"
+  },
+  
+  "review": {
+    "_comment_review": "코드 리뷰 설정",
+    "requireReview": true,
+    "minReviewers": 1,
+    "checklistRequired": true
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "$schema": "https://claude.ai/schemas/settings.json",
+  "_comment": "1인 개발자를 위한 Claude Code 설정",
+  
+  "project": {
+    "name": "My Project",
+    "description": "프로젝트 설명을 여기에"
+  },
+  
+  "preferences": {
+    "language": "ko",
+    "outputStyle": "detailed",
+    "askBeforeWrite": true,
+    "askBeforeDelete": true
+  },
+  
+  "permissions": {
+    "_comment_permissions": "안전한 도구만 자동 승인",
+    "autoApprove": [
+      "Read",
+      "Glob",
+      "Grep",
+      "WebFetch",
+      "WebSearch"
+    ],
+    "_comment_dangerous": "위험한 작업은 항상 확인",
+    "deny": [
+      "Bash(rm -rf *)",
+      "Bash(rm -rf /)",
+      "Bash(sudo *)",
+      "Bash(git push --force)"
+    ]
+  },
+  
+  "hooks": {
+    "_comment_hooks": "자동화 훅 (선택사항)",
+    "preCommit": null,
+    "postSave": null
+  },
+  
+  "model": {
+    "_comment_model": "기본 모델 설정",
+    "default": "sonnet",
+    "planning": "opus",
+    "implementation": "sonnet"
+  },
+  
+  "context": {
+    "_comment_context": "컨텍스트 관리",
+    "maxFiles": 50,
+    "excludePatterns": [
+      "node_modules/**",
+      ".git/**",
+      "dist/**",
+      "build/**",
+      "*.log"
+    ]
+  }
+}
