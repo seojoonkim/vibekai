@@ -14,6 +14,12 @@ VibeDojo는 [Vibecoding Curriculum](https://github.com/vibedojo-by-hashed/Vibeco
 - 🌍 **다국어 지원** - 한국어 / English
 - 🚀 **원클릭 실습** - GitHub Codespaces 지원
 
+### 🚀 지금 바로 시작하기
+
+설치 없이 브라우저에서 바로 실습하세요:
+
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/seojoonkim/vibedojo-dev)
+
 ---
 
 ## 🗺️ 학습 로드맵
@@ -53,6 +59,14 @@ VibeDojo는 [Vibecoding Curriculum](https://github.com/vibedojo-by-hashed/Vibeco
 | 🟡 **60일 중급** | Ch 1-20 | 8주 | ~35시간 | 실제 프로젝트를 만들고 싶은 사람 |
 | 🔴 **90일 마스터** | Ch 1-30 | 12주 | ~60시간 | 프로 개발자 수준을 원하는 사람 |
 
+### 🎯 트랙 완료 시 만들 수 있는 것
+
+| 트랙 | 만들 수 있는 결과물 | 예시 |
+|------|-------------------|------|
+| 🟢 **30일 기초** | CLI 도구, 간단한 자동화 스크립트 | 파일 정리 봇, 할 일 관리 CLI, 데이터 변환 스크립트 |
+| 🟡 **60일 중급** | 풀스택 웹앱, API 서버 | 블로그 플랫폼, Todo 웹앱, REST API 서버, 실시간 채팅 |
+| 🔴 **90일 마스터** | AI 에이전트, 복잡한 멀티 에이전트 시스템 | 자동화 봇, MCP 통합 에이전트, Web3 dApp, NFT 마켓플레이스 |
+
 ### 파트별 커리큘럼 맵
 
 ```
@@ -70,6 +84,21 @@ Week 1-2        Week 3-4        Week 5-6        Week 7-8        Week 9-10       
   터미널 기초     프롬프팅        웹사이트        챗봇/API        자동화         스마트컨트랙트
                                   게임            풀스택          협업           Farcaster
 ```
+
+### 🎯 Daily Challenge
+
+매일 15-30분 투자로 실력을 쌓아보세요! [30일 챌린지](./challenges/README.md)
+
+```
+Week 1: 기초 다지기 (자기소개, 계산기, 타이머...)
+Week 2: 실용 도구 (Todo, 파일정리, API 연동...)
+Week 3: 웹 개발 입문 (HTML/CSS/JS, 반응형...)
+Week 4: 프로젝트 완성 (React, 배포, 문서화...)
+```
+
+### 🏆 프로젝트 쇼케이스
+
+만든 프로젝트를 공유하고 피드백을 받아보세요! [쇼케이스 →](./showcase/README.md)
 
 ### 🏆 수료 인증서
 
@@ -175,6 +204,17 @@ Run migrations in order from `supabase/migrations/`
 ## Contributing
 
 Contributions are welcome! Please read our contributing guidelines.
+
+## 📚 참고 자료 & 벤치마크
+
+이 커리큘럼은 글로벌 최고 수준의 교육 프로그램들을 벤치마크하여 설계되었습니다:
+
+- [Replit 100 Days of Python](https://replit.com/learn/100-days-of-python) - 일일 학습 로드맵
+- [Scrimba Frontend Career Path](https://scrimba.com/the-frontend-developer-career-path-c0j:details) - 인터랙티브 학습
+- [Buildspace](https://buildspace.so/) - 코호트 기반 빌더 커뮤니티
+- [GitHub Copilot Certification](https://learn.github.com/certification/COPILOT) - 공식 인증 체계
+- [Anthropic Claude Code Best Practices](https://www.anthropic.com/engineering/claude-code-best-practices) - CLAUDE.md 가이드
+- [Anthropic Courses](https://github.com/anthropics/courses) - 공식 API 튜토리얼
 
 ## License
 
