@@ -210,6 +210,48 @@ Every chapter also includes **Beginner Tips** that explain technical concepts in
 
 ---
 
+## 🚀 What You'll Build
+
+> **"What can I actually create after finishing this?"**
+
+| Track | Duration | What You Can Build |
+|-------|----------|-------------------|
+| 🟢 **30-Day Basic** | ~4 weeks | CLI tools, automation scripts, simple websites |
+| 🟡 **60-Day Intermediate** | ~8 weeks | Full-stack web apps, REST API servers, auth systems |
+| 🔴 **90-Day Master** | ~12 weeks | AI agents, multi-agent systems, Web3 Dapps |
+
+### Concrete Project Examples
+
+**After 30 days:**
+- Your own CLI todo manager
+- File organization automation script
+- Personal portfolio website
+
+**After 60 days:**
+- Blog platform with user authentication
+- Real-time chat web app
+- API-integrated dashboard
+
+**After 90 days:**
+- Custom AI coding agent
+- MCP server + client system
+- NFT-gated community platform
+
+---
+
+## 🎯 30-Day Daily Challenge
+
+Build your skills with 15-30 minute daily micro-projects!
+
+[![Start 30-Day Challenge](https://img.shields.io/badge/30_Day_Challenge-Start_Now-orange?style=for-the-badge)](./challenges/README.md)
+
+- **Week 1**: Foundation (Hello World → Simple Calculator)
+- **Week 2**: Files & Data (Memo Saver → Address Book)
+- **Week 3**: Web & API (HTML → Weather App)
+- **Week 4**: Real Projects (Git → Portfolio Deployment)
+
+---
+
 ## Curriculum Structure
 
 ### Learning Path Overview
@@ -501,6 +543,31 @@ Every chapter in this curriculum provides:
 - **🆘 Troubleshooting** - When things go wrong
 - **✅ Checklist** - Verify your understanding
 - **📖 Learn More** - Curated videos, docs, and tools
+
+---
+
+## 📚 References & Benchmarks
+
+This curriculum was designed by benchmarking the world's best educational programs:
+
+| Program | What We Learned |
+|---------|-----------------|
+| [Replit 100 Days of Python](https://replit.com/learn/100-days-of-python) | Daily learning roadmap, micro-projects |
+| [Scrimba Frontend Career Path](https://scrimba.com/the-frontend-developer-career-path-c0j:details) | Interactive learning, time estimates |
+| [Buildspace](https://buildspace.so/) | Cohort-based community, build-in-public |
+| [GitHub Copilot Certification](https://learn.github.com/certification/COPILOT) | Official certification, module structure |
+| [Anthropic Claude Code Best Practices](https://www.anthropic.com/engineering/claude-code-best-practices) | CLAUDE.md guide |
+| [Anthropic Courses](https://github.com/anthropics/courses) | Official API tutorials |
+
+---
+
+## 🤝 Community
+
+- [Community Guide](./COMMUNITY.md) - Streaks, badges, leaderboard
+- [30-Day Challenge](./challenges/README.md) - Daily 15-30 min micro-projects
+- [Project Showcase](./showcase/README.md) - Gallery of completed projects
+
+[![Discord](https://img.shields.io/badge/Discord-Join_Community-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/TxbJ56hS94)
 
 ---
 
