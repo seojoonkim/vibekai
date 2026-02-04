@@ -59,6 +59,14 @@ If you have questions while learning, ask on Discord!
 
 ## Quick Start
 
+### 🚀 원클릭 실습 환경
+
+브라우저에서 바로 실습을 시작하세요! 설치 없이 GitHub Codespaces에서 모든 챕터를 따라할 수 있습니다.
+
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/seojoonkim/vibedojo-dev)
+
+### 로컬 설치
+
 ```bash
 # Install Claude Code
 npm install -g @anthropic-ai/claude-code
