@@ -216,6 +216,48 @@ AI가 문법을 처리합니다. 당신은 **무엇**을 원하는지에만 집�
 
 ---
 
+## 🚀 트랙별 성과물
+
+> **"이거 끝나면 뭘 만들 수 있어?"**
+
+| 트랙 | 기간 | 완료 시 만들 수 있는 것 |
+|-----|------|----------------------|
+| 🟢 **30일 기초** | ~4주 | CLI 도구, 자동화 스크립트, 간단한 웹페이지 |
+| 🟡 **60일 중급** | ~8주 | 풀스택 웹앱, REST API 서버, 인증 시스템 |
+| 🔴 **90일 마스터** | ~12주 | AI 에이전트, 멀티 에이전트 시스템, Web3 Dapp |
+
+### 구체적인 프로젝트 예시
+
+**30일 완료 후:**
+- 나만의 CLI 할 일 관리 도구
+- 파일 정리 자동화 스크립트
+- 개인 포트폴리오 웹사이트
+
+**60일 완료 후:**
+- 사용자 인증이 있는 블로그 플랫폼
+- 실시간 채팅 웹앱
+- API 연동 대시보드
+
+**90일 완료 후:**
+- 커스텀 AI 코딩 에이전트
+- MCP 서버 + 클라이언트 시스템
+- NFT 게이팅 커뮤니티 플랫폼
+
+---
+
+## 🎯 30일 Daily Challenge
+
+매일 15-30분, 작은 프로젝트로 실력을 쌓으세요!
+
+[![30일 챌린지 시작하기](https://img.shields.io/badge/30일_챌린지-시작하기-orange?style=for-the-badge)](./challenges/README.md)
+
+- **Week 1**: 기초 다지기 (Hello World → 간단한 계산기)
+- **Week 2**: 파일과 데이터 (메모 저장 → 주소록)
+- **Week 3**: 웹과 API (HTML → 날씨 앱)
+- **Week 4**: 실전 프로젝트 (Git → 포트폴리오 배포)
+
+---
+
 ## 커리큘럼 구조
 
 ### 학습 경로 개요
@@ -508,6 +550,31 @@ Claude Code 팀과 숙련된 개발자들의 팁입니다:
 - **🆘 안 되면?** - 문제 해결
 - **✅ 체크리스트** - 이해도 확인
 - **📖 더 알아보기** - 엄선된 영상, 문서, 도구
+
+---
+
+## 📚 참고 자료 & 벤치마크
+
+이 커리큘럼은 글로벌 최고 수준의 교육 프로그램들을 벤치마크하여 설계되었습니다:
+
+| 프로그램 | 참고한 점 |
+|---------|----------|
+| [Replit 100 Days of Python](https://replit.com/learn/100-days-of-python) | 일일 학습 로드맵, 마이크로 프로젝트 |
+| [Scrimba Frontend Career Path](https://scrimba.com/the-frontend-developer-career-path-c0j:details) | 인터랙티브 학습, 시간 명시 |
+| [Buildspace](https://buildspace.so/) | 코호트 기반 커뮤니티, 빌드인퍼블릭 |
+| [GitHub Copilot Certification](https://learn.github.com/certification/COPILOT) | 공식 인증 체계, 모듈 구조 |
+| [Anthropic Claude Code Best Practices](https://www.anthropic.com/engineering/claude-code-best-practices) | CLAUDE.md 가이드 |
+| [Anthropic Courses](https://github.com/anthropics/courses) | 공식 API 튜토리얼 |
+
+---
+
+## 🤝 커뮤니티
+
+- [커뮤니티 가이드](./COMMUNITY.md) - 스트릭, 배지, 리더보드
+- [30일 챌린지](./challenges/README.md) - 매일 15-30분 미니 프로젝트
+- [프로젝트 쇼케이스](./showcase/README.md) - 완료 프로젝트 갤러리
+
+[![Discord](https://img.shields.io/badge/Discord-커뮤니티_참여하기-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/TxbJ56hS94)
 
 ---
 
