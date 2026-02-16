@@ -123,6 +123,22 @@ export default function SignupPage() {
                   </a>
                 </p>
 
+                <div className="flex items-center justify-center gap-2 mb-4 px-3 py-2.5 bg-[#5865F2]/10 rounded-md border border-[#5865F2]/20">
+                  <Icons.discord className="h-4 w-4 text-[#5865F2] flex-shrink-0" />
+                  <p className="text-[12px] text-[#8b949e]">
+                    질문이나 도움이 필요하면{" "}
+                    <a
+                      href="https://discord.gg/zpk3efB3aY"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[#5865F2] hover:underline font-medium"
+                    >
+                      디스코드 커뮤니티
+                    </a>
+                    에 참여하세요!
+                  </p>
+                </div>
+
                 <p className="text-[11px] text-[#6e7681] text-center leading-relaxed">
                   {t("termsAgreement")}
                 </p>
@@ -228,6 +244,22 @@ export default function SignupPage() {
                     GitHub 가입 →
                   </a>
                 </p>
+
+                <div className="flex items-center justify-center gap-2 mb-3 px-3 py-2 bg-[#5865F2]/10 rounded-md border border-[#5865F2]/20">
+                  <Icons.discord className="h-3.5 w-3.5 text-[#5865F2] flex-shrink-0" />
+                  <p className="text-[11px] text-[#8b949e]">
+                    도움이 필요하면{" "}
+                    <a
+                      href="https://discord.gg/zpk3efB3aY"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[#5865F2] hover:underline font-medium"
+                    >
+                      디스코드
+                    </a>
+                    에 참여하세요!
+                  </p>
+                </div>
 
                 <p className="text-[10px] text-[#6e7681] text-center leading-relaxed">
                   {t("termsAgreement")}
