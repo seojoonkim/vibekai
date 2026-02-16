@@ -341,6 +341,57 @@ ls                  # 현재 폴더의 파일 목록 보기
 > Claude Code와 함께 사용하면 더욱 강력합니다.
 > 다만 처음에는 기본 터미널로 원리를 이해하고, 나중에 전환하는 걸 권장합니다.
 
+#### 🇰🇷 한국어 사용자를 위한 터미널 추천
+
+한국어를 주로 사용하신다면, **한글 입력이 잘 되는 터미널**을 선택하는 것이 중요합니다. 터미널에서 한글을 입력할 때 글자가 깨지거나, 자음·모음이 따로 보이거나, 조합 중인 글자가 사라지는 문제가 있을 수 있거든요.
+
+##### Mac 사용자
+
+| 터미널 | 한글 입력 | 설명 |
+|--------|----------|------|
+| **iTerm2** ⭐ | ✅ 매우 좋음 | 한글 조합(자음+모음 입력 중) 처리가 안정적. Mac 한국어 사용자 1순위 추천 |
+| **기본 Terminal** | ✅ 좋음 | macOS 업데이트로 많이 개선됨. 기본으로도 충분 |
+| **Warp** | ✅ 좋음 | AI 기능 + 한글 입력 지원. 모던한 UI를 원한다면 추천 |
+
+> 💡 **팁:** iTerm2에서 한글이 어색하게 보인다면, `Preferences → Profiles → Text`에서 **Unicode normalization**을 `NFC`로 설정해보세요.
+
+##### Windows 사용자
+
+| 터미널 | 한글 입력 | 설명 |
+|--------|----------|------|
+| **Windows Terminal** ⭐ | ✅ 매우 좋음 | Microsoft 공식 앱. 한글 입력·표시 모두 안정적 |
+| **PowerShell (기본)** | ⚠️ 보통 | 한글 깨짐이 가끔 발생. Windows Terminal 안에서 쓰는 걸 추천 |
+
+> 💡 **팁:** Windows Terminal에서 한글이 깨져 보이면, 설정(`Ctrl + ,`) → 기본값 → **모양** → 글꼴을 한글 지원 폰트로 바꿔주세요.
+
+**Windows Terminal 설치:**
+- Microsoft Store에서 "Windows Terminal" 검색 → 설치 (무료)
+- 또는 [aka.ms/terminal](https://aka.ms/terminal)에서 다운로드
+
+##### 🔤 한글 지원 개발 폰트 추천
+
+터미널에서 코드를 볼 때, **한글과 영문이 모두 깔끔하게 보이는 폰트**를 쓰면 눈이 훨씬 편합니다.
+
+| 폰트 | 특징 | 다운로드 |
+|------|------|----------|
+| **D2Coding** ⭐ | 네이버 개발. 한글·영문 폭이 정확히 2:1. 가장 무난한 선택 | [github.com/naver/d2codingfont](https://github.com/naver/d2codingfont) |
+| **Pretendard Mono** | 세련된 디자인. 한글 가독성 우수 | [github.com/orioncactus/pretendard](https://github.com/orioncactus/pretendard) |
+| **NanumGothicCoding** | 네이버 나눔 시리즈. 가볍고 깔끔 | [hangeul.naver.com](https://hangeul.naver.com/font) |
+
+**폰트 적용 방법:**
+1. 위 링크에서 폰트 다운로드 및 설치
+2. 터미널 설정에서 폰트 변경:
+   - **iTerm2:** `Preferences → Profiles → Text → Font`
+   - **Windows Terminal:** `설정 → 기본값 → 모양 → 글꼴`
+   - **VS Code 터미널:** `설정 → terminal.integrated.fontFamily`에 `"D2Coding"` 입력
+
+> 💡 **비전공자 팁**
+>
+> 폰트 설정은 나중에 해도 괜찮아요! 기본 폰트로도 충분히 사용할 수 있습니다.
+> 다만 터미널에서 한글이 이상하게 보인다면, **D2Coding** 폰트 하나만 설치해보세요. 바로 차이를 느낄 수 있어요.
+
+---
+
 #### AI 코드 에디터: Cursor와 친구들
 
 ```
