@@ -889,6 +889,22 @@ export default function ChapterDetailPage() {
                             remarkPlugins={[remarkGfm]}
                             rehypePlugins={[rehypeRaw]}
                             components={{
+                              // Transform cross-chapter relative links to webapp routes
+                              a: ({ href, children, ...props }) => {
+                                if (href) {
+                                  // Match ../ChapterXX-*/README.ko.md or ../ChapterXX-*/README.md
+                                  const chapterMatch = href.match(/\.\.\/Chapter(\d+)-[^/]+\/README(?:\.ko)?\.md/);
+                                  if (chapterMatch) {
+                                    const chapterNum = parseInt(chapterMatch[1], 10).toString().padStart(2, "0");
+                                    return (
+                                      <Link href={`/curriculum/${chapterNum}`} {...props}>
+                                        {children}
+                                      </Link>
+                                    );
+                                  }
+                                }
+                                return <a href={href} {...props}>{children}</a>;
+                              },
                               // Custom checkbox input for task lists
                               input: ({ type, checked, ...props }) => {
                                 if (type === "checkbox") {
