@@ -367,13 +367,13 @@ No need to memorize. Just check when needed.
 |----------|----------|
 | `Shift + Tab` | Switch permission mode |
 | `Ctrl + C` | Cancel current task |
-| `Esc Esc` | Undo (return to last state) |
+| `Esc Esc` | Cancel current input/response |
 | `Ctrl + L` | Clear screen (conversation preserved) |
 | `Shift + Enter` | New line (when writing long messages) |
 
 > 💡 **Beginner Tip**
 >
-> The most important ones are `Shift + Tab` (mode switch) and `Esc Esc` (undo).
+> The most important ones are `Shift + Tab` (mode switch) and `Esc Esc` (cancel input).
 > Just remember these two!
 
 ### Shortcut Details
@@ -384,20 +384,28 @@ Normal 🔒 → Accept Edits ⚡ → Plan 📋 → Normal 🔒 ...
 ```
 Cycles in order. You can check current mode at the top of the screen.
 
-#### Esc Esc - Undo
-Cancels the action Claude just did.
+#### Esc Esc - Cancel Input
+Cancels your current input or stops Claude's in-progress response.
 ```
-> Change the file contents
-✓ Updated config.js
-
+> (typing a long message...)
 > (Esc Esc)
-↩ Reverted changes to config.js
+⊘ Input cancelled
 ```
 
 > 🔥 **Pro Tip**
 >
-> `Esc Esc` only undoes the last action.
-> Use Git to undo multiple actions.
+> `Esc Esc` cancels current input or an in-progress response.
+> To undo file changes, use the `/undo` command.
+
+#### /undo - Undo
+Reverts the file changes Claude just made.
+```
+> Change the file contents
+✓ Updated config.js
+
+> /undo
+↩ Reverted changes to config.js
+```
 
 #### Ctrl + C - Cancel Task
 Use when you want to stop Claude while it's generating a response.
@@ -711,7 +719,7 @@ Methods for getting better results when talking with Claude Code.
 > Change hello.txt contents to "Hello World"
 ```
 2. Confirm change after approval
-3. Press `Esc Esc` to undo
+3. Type `/undo` to revert the change
 4. Check if file contents returned to original
 
 ### Exercise 5: Practice Various Question Patterns
@@ -795,7 +803,7 @@ To create files, you need to switch to Normal or Accept Edits mode.
 <details>
 <summary>Show Answer</summary>
 
-Undoes the action Claude just did.
+Cancels current input or stops Claude's in-progress response. To undo file changes, use `/undo`.
 </details>
 
 ### Q4. What's the difference between /clear and Ctrl+L?
@@ -828,7 +836,7 @@ First understand the project structure, make a plan, then start modifications - 
 
 1. Get current folder structure analysis in Plan mode
 2. Switch to Normal mode and create `practice.txt` file
-3. Modify file contents and undo with `Esc Esc`
+3. Modify file contents and undo with `/undo`
 4. Experience the difference between `/clear` and `Ctrl+L` directly
 
 ### Difficulty 3: Challenge
@@ -942,7 +950,7 @@ To actually create it, please switch to Normal mode (Shift+Tab).
 
 **Situation:** Unwanted file was modified
 
-**Solution:** `Esc Esc` (press Escape twice) to undo. Or:
+**Solution:** `/undo` to revert file changes. Or:
 ```
 > Cancel what you just did
 ```
@@ -1014,7 +1022,7 @@ Claude often explains what it's going to do and why. Reading these explanations 
 | Mode doesn't change | Check `Shift + Tab`, or use `/plan` command |
 | Claude doesn't respond | Check internet connection, type `/help`, `/exit` and restart |
 | Approval dialog doesn't appear | Might be in Plan or Accept Edits mode. Switch to Normal mode with `Shift + Tab` |
-| Does unwanted action | Undo with `Esc Esc` |
+| Does unwanted action | Undo with `/undo` |
 | Doesn't remember previous conversation | Restore previous session with `claude --continue` |
 
 ---
@@ -1084,7 +1092,7 @@ Before finishing your learning, confirm:
 - [ ] I can explain the three permission modes (Plan, Normal, Accept Edits)
 - [ ] I can switch modes with `Shift + Tab`
 - [ ] I know a few slash commands (/help, /clear, /exit)
-- [ ] I can undo with `Esc Esc`
+- [ ] I can cancel input with `Esc Esc` and undo changes with `/undo`
 - [ ] I know the difference between good and bad questions
 - [ ] I know the difference between `/clear` and `Ctrl+L`
 
