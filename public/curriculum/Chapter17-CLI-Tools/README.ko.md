@@ -588,16 +588,16 @@ organize ./downloads --undo
 
 ### 🎯 미니 퀴즈
 
-1. `path.resolve()`와 `path.join()`의 차이는?
-2. `fs.existsSync()` vs `fs.exists()`의 차이는?
-3. `--dry-run` 옵션이 중요한 이유는?
+1. `--dry-run` 옵션이 중요한 이유는?
+2. `commander` 라이브러리는 어떤 역할을 하나요?
+3. CLI 도구에서 `chalk`는 무엇을 하나요?
 
 <details>
 <summary>정답 보기</summary>
 
-1. `path.resolve()`는 절대 경로를 반환, `path.join()`은 경로를 연결만 함
-2. `existsSync`는 동기, `exists`는 비동기 (deprecated)
-3. 실제 파일 변경 전에 미리보기로 확인 가능 - 실수 방지!
+1. 실제 파일 변경 전에 미리보기로 확인 가능 - 실수 방지!
+2. 명령줄 인자와 옵션을 쉽게 정의하고 파싱해주는 라이브러리입니다
+3. 터미널 출력에 색상을 입혀서 읽기 쉽게 만들어주는 라이브러리입니다
 
 </details>
 
