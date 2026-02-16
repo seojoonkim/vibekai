@@ -381,13 +381,13 @@ Accept Edits Mode ⚡
 |--------|------|
 | `Shift + Tab` | 권한 모드 전환 |
 | `Ctrl + C` | 현재 작업 취소 |
-| `Esc Esc` | 되돌리기 (마지막 상태로) |
+| `Esc Esc` | 현재 입력/응답 취소 |
 | `Ctrl + L` | 화면 정리 (대화는 유지) |
 | `Shift + Enter` | 줄바꿈 (긴 메시지 작성 시) |
 
 > 💡 **비전공자 팁**
 >
-> 가장 중요한 건 `Shift + Tab` (모드 전환)과 `Esc Esc` (되돌리기)입니다.
+> 가장 중요한 건 `Shift + Tab` (모드 전환)과 `Esc Esc` (입력 취소)입니다.
 > 이 두 개만 기억하세요!
 
 ### 단축키 상세 설명
@@ -398,20 +398,28 @@ Normal 🔒 → Accept Edits ⚡ → Plan 📋 → Normal 🔒 ...
 ```
 순서대로 순환합니다. 화면 상단에서 현재 모드를 확인할 수 있습니다.
 
-#### Esc Esc - 되돌리기
-Claude가 방금 한 작업을 취소합니다.
+#### Esc Esc - 입력 취소
+Claude가 응답을 생성하는 중이거나, 입력 중인 내용을 취소합니다.
 ```
-> 파일 내용 바꿔줘
-✓ Updated config.js
-
+> (긴 메시지 입력 중...)
 > (Esc Esc)
-↩ Reverted changes to config.js
+⊘ Input cancelled
 ```
 
 > 🔥 **프로 팁**
 >
-> `Esc Esc`는 마지막 작업만 되돌립니다.
-> 여러 작업을 되돌리려면 Git을 사용하세요.
+> `Esc Esc`는 현재 입력이나 진행 중인 응답을 취소합니다.
+> 파일 변경을 되돌리려면 `/undo` 명령어를 사용하세요.
+
+#### /undo - 되돌리기
+Claude가 방금 한 파일 변경을 되돌립니다.
+```
+> 파일 내용 바꿔줘
+✓ Updated config.js
+
+> /undo
+↩ Reverted changes to config.js
+```
 
 #### Ctrl + C - 작업 취소
 Claude가 응답을 생성하는 중에 멈추고 싶을 때 사용합니다.
@@ -725,7 +733,7 @@ Claude Code와 대화할 때 더 좋은 결과를 얻는 방법들입니다.
 > hello.txt 내용을 "Hello World"로 바꿔줘
 ```
 2. 승인 후 변경 확인
-3. `Esc Esc` 눌러서 되돌리기
+3. `/undo` 입력해서 되돌리기
 4. 파일 내용이 원래대로 돌아왔는지 확인
 
 ### 실습 5: 다양한 질문 패턴 연습
@@ -809,7 +817,7 @@ Allow this action? [y/n/a]
 <details>
 <summary>정답 보기</summary>
 
-Claude가 방금 한 작업을 되돌립니다 (Undo).
+현재 입력이나 진행 중인 Claude의 응답을 취소합니다. 파일 변경을 되돌리려면 `/undo`를 사용하세요.
 </details>
 
 ### Q4. /clear와 Ctrl+L의 차이는?
@@ -842,7 +850,7 @@ Plan 모드로 시작하는 것이 좋습니다.
 
 1. Plan 모드에서 현재 폴더 구조 분석 받기
 2. Normal 모드로 전환해서 `practice.txt` 파일 생성
-3. 파일 내용 수정 후 `Esc Esc`로 되돌리기
+3. 파일 내용 수정 후 `/undo`로 되돌리기
 4. `/clear`와 `Ctrl+L`의 차이 직접 경험하기
 
 ### 난이도 3: 도전
@@ -955,7 +963,7 @@ Plan 모드에서는 파일을 생성할 수 없습니다.
 
 **상황:** 원하지 않는 파일이 수정됨
 
-**해결:** `Esc Esc` (Escape 두 번)로 되돌리기. 또는:
+**해결:** `/undo`로 되돌리기. 또는:
 ```
 > 방금 거 취소해줘
 ```
@@ -1027,7 +1035,7 @@ Claude는 무엇을 할 것인지, 왜 하는지 자주 설명합니다. 이 설
 | 모드가 안 바뀜 | `Shift + Tab` 확인, 또는 `/plan` 명령어 사용 |
 | Claude가 응답 안 함 | 인터넷 연결 확인, `/help` 입력, `/exit` 후 재시작 |
 | 권한 대화상자가 안 나옴 | Plan 또는 Accept Edits 모드일 수 있음. `Shift + Tab`으로 Normal 모드로 전환 |
-| 원하지 않는 작업을 함 | `Esc Esc`로 되돌리기 |
+| 원하지 않는 작업을 함 | `/undo`로 되돌리기 |
 | 이전 대화 기억 못함 | `claude --continue`로 이전 세션 복원 |
 
 ---
@@ -1097,7 +1105,7 @@ Normal Mode 🔒
 - [ ] 세 가지 권한 모드를 설명할 수 있다 (Plan, Normal, Accept Edits)
 - [ ] `Shift + Tab`으로 모드를 전환할 수 있다
 - [ ] 슬래시 명령어를 몇 개 알고 있다 (/help, /clear, /exit)
-- [ ] `Esc Esc`로 되돌리기를 할 수 있다
+- [ ] `Esc Esc`로 입력 취소, `/undo`로 되돌리기를 할 수 있다
 - [ ] 좋은 질문과 나쁜 질문의 차이를 안다
 - [ ] `/clear`와 `Ctrl+L`의 차이를 안다
 
