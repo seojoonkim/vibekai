@@ -145,6 +145,21 @@ Now that you've seen the big picture, shall we take the first step?
 
 ---
 
+## 🙋 Who Are You?
+
+Before we start, check which of the following applies to you:
+
+- [ ] I have never coded before
+- [ ] I tried to learn coding but gave up because it was too hard
+- [ ] I have ideas but it's hard to find or hire a developer
+- [ ] I want to automate repetitive tasks
+
+**If even one applies to you, this chapter was made for you.**
+
+> 💡 No coding experience is required. In fact, you're exactly the core audience this curriculum is designed for.
+
+---
+
 ## Before We Begin: A Message for You
 
 **"I'm not a developer, can I learn this?"**
@@ -309,64 +324,19 @@ Result:
 
 #### Traditional Method
 
-First, you need to learn what HTML is:
-- What are HTML tags (`<html>`, `<head>`, `<body>`, etc.)
-- Tag structure and syntax
-- Opening and closing rules
+First, you need to learn what HTML and CSS are. Learning just these two can take at least 5-7 hours. Then you have to write every line of code yourself.
 
-Then you need to learn CSS:
-- What is CSS
-- What are Selectors
-- Properties and Values
+It's like wanting to play piano — you'd have to learn how to read sheet music → hand positioning → beginner exercises, spending months before you can play a song.
 
-And then write the code yourself:
-
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Page</title>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 20px;
-        }
-        h1 {
-            color: blue;
-            font-size: 32px;
-        }
-        p {
-            color: #333;
-            font-size: 18px;
-        }
-    </style>
-</head>
-<body>
-    <h1>Hello</h1>
-    <p>My name is John Doe.</p>
-</body>
-</html>
-```
-
-To write this code:
-- Understanding basic HTML structure: 2-3 hours
-- Understanding basic CSS: 2-3 hours
-- Writing and testing yourself: 1 hour
 - **Total time: About 5-7 hours** (for first-time learners)
 
 #### AI Coding Method
 
 Tell Claude like this:
 
-```
-Create a webpage that shows "Hello" in blue as a title,
-and "My name is John Doe" below it
-```
+> "Create a webpage that shows 'Hello' in blue as a title, and 'My name is John Doe' below it"
 
-Claude generates code similar to above.
+Claude generates all the necessary code and creates the files directly.
 
 - **Total time: 30 seconds**
 
@@ -864,6 +834,12 @@ Example: userName, isLoggedIn, totalPrice
 ---
 
 ## ❌ Common Mistakes
+
+> **💡 Quick reminder before we continue**
+>
+> **You don't need to know how to code. This curriculum starts from zero coding experience.**
+>
+> You don't need to go learn coding right now. Just follow along with this chapter as it is.
 
 ### Mistake 1: Thinking "I Need to Learn Coding First"
 
