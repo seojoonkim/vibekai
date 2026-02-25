@@ -133,8 +133,12 @@ export default async function LandingPage() {
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#daa520] via-[#e6b82e] to-[#daa520] break-keep">
                   {t("hero.title2")}
                 </span>
-                <br />
-                <span className="text-[#a8b2bd]">{t("hero.title3")}</span>
+                {t("hero.title3") && (
+                  <>
+                    <br />
+                    <span className="text-[#a8b2bd]">{t("hero.title3")}</span>
+                  </>
+                )}
               </h1>
 
               <p className="text-[#a8b2bd] text-[15px] sm:text-[17px] leading-[1.7] mb-7 sm:mb-7 lg:mb-8 max-w-[420px] animate-float-up opacity-0 stagger-3" style={{ animationFillMode: 'forwards' }}>
