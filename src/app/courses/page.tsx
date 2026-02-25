@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { Icons } from "@/components/icons";
 import { CURRICULUM_DATA, getAllChapters, getTotalXP } from "@/lib/curriculum-data";
 import { BELTS } from "@/lib/belt-system";
-import { LandingLanguageSwitcher } from "@/components/landing-language-switcher";
 
 // Part 이미지 매핑
 const PART_IMAGES: Record<number, string> = {
@@ -34,7 +33,6 @@ export default function CoursesPage() {
           </Link>
 
           <div className="flex items-center gap-2">
-            <LandingLanguageSwitcher />
             <Button
               asChild
               variant="outline"

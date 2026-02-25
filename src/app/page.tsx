@@ -6,7 +6,6 @@ import { Icons } from "@/components/icons";
 import { BELTS } from "@/lib/belt-system";
 import { CHARACTERS } from "@/lib/characters";
 import { CharacterPreview } from "@/components/character/character-avatar";
-import { LandingLanguageSwitcher } from "@/components/landing-language-switcher";
 
 export default async function LandingPage() {
   const t = await getTranslations("landing");
@@ -69,7 +68,6 @@ export default async function LandingPage() {
           </nav>
 
           <div className="flex items-center gap-2">
-            <LandingLanguageSwitcher />
             <Button
               asChild
               variant="outline"
