@@ -138,7 +138,7 @@ export default async function LandingPage() {
               </h1>
 
               <p className="text-[#a8b2bd] text-[15px] sm:text-[17px] leading-[1.7] mb-7 sm:mb-7 lg:mb-8 max-w-[420px] animate-float-up opacity-0 stagger-3" style={{ animationFillMode: 'forwards' }}>
-                {t("hero.description1")}
+                {t("hero.description1")}<br />{t("hero.description2")}
               </p>
 
               <div className="flex flex-row gap-2 sm:gap-3 mb-6 sm:mb-6 lg:mb-8 animate-float-up opacity-0 stagger-4" style={{ animationFillMode: 'forwards' }}>
