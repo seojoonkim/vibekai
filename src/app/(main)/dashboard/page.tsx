@@ -365,7 +365,7 @@ export default async function DashboardPage() {
           <div className="relative h-44 sm:h-56 md:h-64 bg-[#0a0c10]">
             <Image
               src="/images/bg.jpg"
-              alt="VibeDojo Key Visual"
+              alt="VibeKai Key Visual"
               fill
               className="object-cover object-center opacity-50 group-hover:opacity-60 group-hover:scale-105 transition-all duration-700 saturate-[0.8]"
             />

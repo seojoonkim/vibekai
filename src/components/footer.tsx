@@ -8,12 +8,12 @@ export function Footer() {
         <div className="flex items-center gap-2">
           <Icons.vibedojoSymbol className="w-6 h-6 sm:w-7 sm:h-7" />
           <span className="font-semibold text-xs sm:text-sm text-[#f0f6fc]">
-            VibeDojo
+            VibeKai
           </span>
         </div>
         <div className="flex flex-col items-center gap-0.5 sm:gap-1 order-last sm:order-none">
           <p className="text-xs sm:text-sm text-[#484f58]">
-            © 2026 VibeDojo. All rights reserved.
+            © 2026 VibeKai. All rights reserved.
           </p>
           <p className="text-xs sm:text-sm text-[#8b949e]">
             Powered by{" "}
@@ -37,7 +37,7 @@ export function Footer() {
             <Icons.discord className="h-4 w-4" />
           </Link>
           <Link
-            href="https://github.com/vibedojo-by-hashed/VibecodingCurriculum"
+            href="https://github.com/vibekai-by-hashed/VibecodingCurriculum"
             target="_blank"
             rel="noopener noreferrer"
             className="text-[#8b949e] hover:text-[#c9d1d9] transition-colors"

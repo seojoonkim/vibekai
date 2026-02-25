@@ -183,7 +183,7 @@ export function BeltProgressCard({ xp, className }: BeltProgressCardProps) {
 
       {/* All Belts Overview */}
       <div>
-        <p className="text-[10px] sm:text-xs text-[#8b949e] mb-3 sm:mb-4">VibeDojo 띠 등급 체계</p>
+        <p className="text-[10px] sm:text-xs text-[#8b949e] mb-3 sm:mb-4">VibeKai 띠 등급 체계</p>
         <div className="flex items-start gap-1 sm:gap-1.5">
           {BELTS.map((belt, index) => {
             const isCurrentOrPast = index <= currentBeltIndex;

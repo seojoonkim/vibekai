@@ -1343,7 +1343,7 @@ function InlinePostComposer({ onPostCreated, userAvatar, userInitials, userProfi
               <Lock className="h-8 w-8 text-[#f0b429]" />
             </div>
             <p className="text-[#8b949e] text-sm">
-              커뮤니티에 글을 작성하려면 VibeDojo에<br />
+              커뮤니티에 글을 작성하려면 VibeKai에<br />
               로그인하거나 입문해주세요
             </p>
           </div>

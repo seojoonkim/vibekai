@@ -1,6 +1,6 @@
 {
   "common": {
-    "appName": "VibeDojo",
+    "appName": "VibeKai",
     "login": "로그인",
     "signup": "입문하기",
     "logout": "퇴장",
@@ -22,10 +22,11 @@
   },
   "landing": {
     "hero": {
-      "badge": "Built with ❤️ by #Hashed",
-      "title1": "바이브 코딩 도장에서",
-      "title2": "단 한 줄의 코드 작성 없이",
-      "title3": "코딩의 무공을 익히세요",
+      "badge": "Vibe In. Build Out.",
+      "title1": "말로 설명하면, 앱이 된다.",
+      "title2": "",
+      "title3": "",
+      "slogan": "말로 만든다. 코드 없이, 감각으로.",
       "description1": "개발자 채용 없이도 앱을 만들 수 있습니다.",
       "description2": "바이브코딩",
       "description3": "은 AI에게 말로 설명하면 코드가 완성되는 새로운 개발 방식입니다.",
@@ -35,7 +36,7 @@
       "description7": " 나만의 웹사이트, 앱, 게임을 만들 수 있습니다.",
       "description8": "수강료 0원.",
       "description9": " 필요한 건 노트북과 아이디어뿐입니다.",
-      "cta": "무료로 시작하기",
+      "cta": "도장 입문하기",
       "secondaryCta": "커리큘럼 미리보기"
     },
     "stats": {
@@ -69,8 +70,8 @@
       }
     },
     "dojoSystem": {
-      "badge": "Vibe Dojo의 띠 시스템",
-      "title1": "VibeDojo의 ",
+      "badge": "VibeKai의 띠 시스템",
+      "title1": "VibeKai의 ",
       "title2": "수련 방식",
       "subtitle": "검증된 커리큘럼 · 함께하는 동료 · 게임처럼 재미있는 성장",
       "items": {
@@ -115,7 +116,7 @@
       "subtitle": "32종의 캐릭터 중 하나를 골라 도장에 입문하세요. 띠 색이 바뀔 때마다 캐릭터도 진화합니다."
     },
     "quote": {
-      "text1": "VibeDojo에서 배우는 것은 코딩 기술이 아닙니다. ",
+      "text1": "VibeKai에서 배우는 것은 코딩 기술이 아닙니다. ",
       "text2": "생각을 현실로 만드는 힘",
       "text3": "입니다.",
       "author": "— 바이브 코딩 도장의 수련 철학",
@@ -128,7 +129,7 @@
       "cta": "지금 바로 입문하기"
     },
     "footer": {
-      "copyright": "© 2025 VibeDojo by Hashed. All rights reserved.",
+      "copyright": "© 2026 VibeKai by Hashed. All rights reserved.",
       "terms": "이용약관",
       "privacy": "개인정보처리방침"
     }

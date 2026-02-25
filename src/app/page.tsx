@@ -42,7 +42,7 @@ export default async function LandingPage() {
           <Link href="/" className="flex items-center gap-1.5 group">
             <Icons.vibedojoSymbol className="w-8 h-8 transition-transform duration-300 group-hover:scale-110" />
             <span className="text-lg tracking-tighter font-black text-[#f0f6fc] group-hover:text-[#daa520] transition-colors">
-              VibeDojo
+              VibeKai
             </span>
           </Link>
 

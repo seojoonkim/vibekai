@@ -9,7 +9,7 @@ interface ChecklistState {
 }
 
 // LocalStorage key for checklist state
-const getStorageKey = (chapterId: string) => `vibedojo-checklist-${chapterId}`;
+const getStorageKey = (chapterId: string) => `vibekai-checklist-${chapterId}`;
 
 // Context for checklist state
 interface ChecklistContextType {

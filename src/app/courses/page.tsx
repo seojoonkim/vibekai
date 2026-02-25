@@ -29,7 +29,7 @@ export default function CoursesPage() {
           <Link href="/" className="flex items-center gap-1.5 group">
             <Icons.vibedojoSymbol className="w-8 h-8 transition-transform duration-300 group-hover:scale-110" />
             <span className="text-lg tracking-tighter font-black text-[#e6edf3] group-hover:text-[#daa520] transition-colors">
-              VibeDojo
+              VibeKai
             </span>
           </Link>
 
@@ -71,7 +71,7 @@ export default function CoursesPage() {
         <div className="container max-w-4xl text-center relative z-10">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md bg-[#1c2128] text-[#daa520] text-xs font-medium mb-4 shadow-[0_2px_8px_rgba(0,0,0,0.3)]">
             <Icons.scroll className="h-3.5 w-3.5" />
-            VibeDojo 수련 과정
+            VibeKai 수련 과정
           </div>
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#c9d1d9] mb-4">
             바이브코딩 마스터가 되기 위한{" "}
@@ -237,7 +237,7 @@ export default function CoursesPage() {
               className="rounded-md h-10 sm:h-11 px-5 sm:px-6 text-sm font-bold bg-[#daa520] hover:bg-[#e6b82e] text-[#0d1117] transition-all duration-300"
             >
               <Link href="/signup">
-                VibeDojo 입문하기
+                VibeKai 입문하기
                 <Icons.chevronRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
@@ -251,12 +251,12 @@ export default function CoursesPage() {
           <div className="flex items-center gap-2">
             <Icons.vibedojoSymbol className="w-6 h-6 sm:w-7 sm:h-7" />
             <span className="font-bold text-xs sm:text-sm text-[#e6edf3] tracking-tight">
-              VibeDojo
+            VibeKai
             </span>
           </div>
           <div className="flex flex-col items-center gap-0.5 sm:gap-1 order-last sm:order-none">
             <p className="text-xs sm:text-sm text-[#484f58]">
-              © 2026 VibeDojo. All rights reserved.
+              © 2026 VibeKai. All rights reserved.
             </p>
             <p className="text-xs sm:text-sm text-[#a8b2bd]">
               Powered by{" "}

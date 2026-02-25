@@ -67,7 +67,7 @@ const categoryConfig: Record<PostType, { icon: typeof HelpCircle; label: string;
     icon: MessageCircle,
     label: "건의사항",
     color: "bg-rose-50 text-rose-700 border-rose-300 hover:bg-rose-100",
-    description: "Vibe Dojo에 대한 의견, 개선 제안, 버그 리포트 등을 남겨주세요.",
+    description: "VibeKai에 대한 의견, 개선 제안, 버그 리포트 등을 남겨주세요.",
     placeholder: {
       title: "예: 학습 진도 표시 기능 개선 제안",
       content: "어떤 부분이 불편한지, 어떻게 개선되면 좋겠는지 구체적으로 설명해주세요.",

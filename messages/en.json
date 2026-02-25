@@ -1,6 +1,6 @@
 {
   "common": {
-    "appName": "VibeDojo",
+    "appName": "VibeKai",
     "login": "Login",
     "signup": "Sign Up",
     "logout": "Logout",
@@ -22,11 +22,12 @@
   },
   "landing": {
     "hero": {
-      "badge": "Built with ❤️ by #Hashed",
-      "title1": "At VibeDojo,",
-      "title2": "Master the art of coding",
-      "title3": "without writing a single line",
-      "description1": "VibeDojo is where you master the Way of coding with AI.",
+      "badge": "Vibe In. Build Out.",
+      "title1": "Describe it. Build it. Ship it.",
+      "title2": "",
+      "title3": "",
+      "slogan": "Your vibe is the new code.",
+      "description1": "VibeKai is where you master the Way of coding with AI.",
       "description2": "Vibe Coding",
       "description3": " - Start your creative journey turning ideas into reality.",
       "description4": "White belt beginner",
@@ -35,7 +36,7 @@
       "description7": " - Grow through our structured training program.",
       "description8": "Completely free",
       "description9": " learning community for vibe coders.",
-      "cta": "Join the Dojo",
+      "cta": "Enter the Dojo",
       "secondaryCta": "View Curriculum"
     },
     "stats": {
@@ -69,8 +70,8 @@
       }
     },
     "dojoSystem": {
-      "badge": "VibeDojo Belt System",
-      "title1": "VibeDojo's ",
+      "badge": "VibeKai Belt System",
+      "title1": "VibeKai's ",
       "title2": "Training Method",
       "subtitle": "Structured curriculum, fellow practitioners, belt progression system",
       "items": {
@@ -115,10 +116,10 @@
       "subtitle": "Choose from 32 animal characters and start your training at the dojo"
     },
     "quote": {
-      "text1": "What you learn at VibeDojo is not coding skills. ",
+      "text1": "What you learn at VibeKai is not coding skills. ",
       "text2": "It's the power to turn thoughts into reality",
       "text3": ".",
-      "author": "— VibeDojo Training Philosophy",
+      "author": "— VibeKai Training Philosophy",
       "description1": "Beyond a simple learning space, we're building a",
       "description2": "sustainable community",
       "description3": " where vibe coders grow and connect together.",
@@ -128,7 +129,7 @@
       "cta": "Join Now"
     },
     "footer": {
-      "copyright": "© 2025 VibeDojo. All rights reserved.",
+      "copyright": "© 2026 VibeKai. All rights reserved.",
       "terms": "Terms of Service",
       "privacy": "Privacy Policy"
     }

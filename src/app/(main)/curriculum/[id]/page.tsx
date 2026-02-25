@@ -1086,7 +1086,7 @@ export default function ChapterDetailPage() {
               <Icons.lock className="h-8 w-8 text-[#f0b429]" />
             </div>
             <p className="text-[#8b949e] text-sm">
-              챕터 학습을 시작하려면 VibeDojo에<br />
+              챕터 학습을 시작하려면 VibeKai에<br />
               로그인하거나 입문해주세요
             </p>
           </div>

@@ -30,9 +30,9 @@ const nanumGothicCoding = Nanum_Gothic_Coding({
 });
 
 export const metadata: Metadata = {
-  title: "VibeDojo - AI와 함께 코딩을 배우세요",
+  title: "VibeKai — 말로 만드는 바이브코딩 도장",
   description:
-    "Claude Code를 활용한 바이브코딩 커리큘럼으로 완전 초보부터 Web3 개발자까지",
+    "말로 설명하면 앱이 됩니다. 코딩 경험 없어도 OK. VibeKai에서 바이브코딩을 수련하세요.",
 };
 
 export default async function RootLayout({
