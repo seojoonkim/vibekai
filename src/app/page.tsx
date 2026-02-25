@@ -127,7 +127,7 @@ export default async function LandingPage() {
               </div>
 
               {/* Title */}
-              <h1 className="text-[1.65rem] sm:text-[2.125rem] md:text-[2.5rem] lg:text-[2.875rem] font-black tracking-tight mb-5 sm:mb-4 lg:mb-5 leading-snug sm:leading-tight animate-float-up opacity-0 stagger-2" style={{ animationFillMode: 'forwards' }}>
+              <h1 className="text-[1.65rem] sm:text-[2.125rem] md:text-[2.5rem] lg:text-[2.875rem] font-black tracking-tight mb-3 sm:mb-3 lg:mb-4 leading-snug sm:leading-tight animate-float-up opacity-0 stagger-2" style={{ animationFillMode: 'forwards' }}>
                 <span className="text-[#c9d1d9]">{t("hero.title1")}</span>
                 <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#daa520] via-[#e6b82e] to-[#daa520] break-keep">
@@ -137,7 +137,7 @@ export default async function LandingPage() {
                 <span className="text-[#a8b2bd]">{t("hero.title3")}</span>
               </h1>
 
-              <p className="text-[#8b949e] text-base leading-relaxed">
+              <p className="text-[#a8b2bd] text-[15px] sm:text-[17px] leading-[1.7] mb-7 sm:mb-7 lg:mb-8 max-w-[420px] animate-float-up opacity-0 stagger-3" style={{ animationFillMode: 'forwards' }}>
                 {t("hero.description1")}
               </p>
 
