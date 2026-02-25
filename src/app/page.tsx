@@ -137,17 +137,8 @@ export default async function LandingPage() {
                 <span className="text-[#a8b2bd]">{t("hero.title3")}</span>
               </h1>
 
-              <p className="text-[13px] sm:text-[15px] md:text-[15px] text-[#a8b2bd] mb-6 sm:mb-5 lg:mb-6 max-w-lg leading-relaxed animate-float-up opacity-0 stagger-3" style={{ animationFillMode: 'forwards' }}>
-                <span className="whitespace-nowrap">{t("hero.description1")}</span>
-                <br />
-                <span className="whitespace-nowrap"><span className="text-[#daa520] font-semibold">{t("hero.description2")}</span>{t("hero.description3")}</span>
-                <span className="hidden md:inline">
-                  <br /><br />
-                  <span className="whitespace-nowrap"><span className="text-[#c9d1d9] font-medium">{t("hero.description4")}</span>{t("hero.description5")}<span className="text-[#c9d1d9] font-medium">{t("hero.description6")}</span>{t("hero.description7")}</span>
-                  <br />
-                </span>
-                <br className="md:hidden" />
-                <span className="whitespace-nowrap"><span className="text-[#58a6ff] font-medium">{t("hero.description8")}</span>{t("hero.description9")}</span>
+              <p className="text-[#8b949e] text-base leading-relaxed">
+                {t("hero.description1")}
               </p>
 
               <div className="flex flex-row gap-2 sm:gap-3 mb-6 sm:mb-6 lg:mb-8 animate-float-up opacity-0 stagger-4" style={{ animationFillMode: 'forwards' }}>
