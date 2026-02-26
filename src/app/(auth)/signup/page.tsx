@@ -140,7 +140,15 @@ export default function SignupPage() {
                 </div>
 
                 <p className="text-[11px] text-[#6e7681] text-center leading-relaxed">
-                  {t("termsAgreement")}
+                  입문하시면{" "}
+                  <Link href="/terms" className="text-[#8b949e] hover:text-[#f0b429] underline underline-offset-2 transition-colors">
+                    도장 규칙
+                  </Link>
+                  과{" "}
+                  <Link href="/privacy" className="text-[#8b949e] hover:text-[#f0b429] underline underline-offset-2 transition-colors">
+                    개인정보 처리방침
+                  </Link>
+                  에 동의하게 됩니다.
                 </p>
               </div>
 
@@ -262,7 +270,15 @@ export default function SignupPage() {
                 </div>
 
                 <p className="text-[10px] text-[#6e7681] text-center leading-relaxed">
-                  {t("termsAgreement")}
+                  입문하시면{" "}
+                  <Link href="/terms" className="text-[#8b949e] hover:text-[#f0b429] underline underline-offset-2 transition-colors">
+                    도장 규칙
+                  </Link>
+                  과{" "}
+                  <Link href="/privacy" className="text-[#8b949e] hover:text-[#f0b429] underline underline-offset-2 transition-colors">
+                    개인정보 처리방침
+                  </Link>
+                  에 동의하게 됩니다.
                 </p>
               </div>
 

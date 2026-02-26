@@ -6,6 +6,7 @@ import { Icons } from "@/components/icons";
 import { BELTS } from "@/lib/belt-system";
 import { CHARACTERS } from "@/lib/characters";
 import { CharacterPreview } from "@/components/character/character-avatar";
+import { MobileNav } from "@/components/mobile-nav";
 
 export default async function LandingPage() {
   const t = await getTranslations("landing");
@@ -83,6 +84,7 @@ export default async function LandingPage() {
             >
               <Link href="/signup">{common("signup")}</Link>
             </Button>
+            <MobileNav />
           </div>
         </div>
       </header>
