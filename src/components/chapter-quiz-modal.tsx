@@ -146,7 +146,8 @@ export function ChapterQuizModal({
   const totalQuestions = questions.length;
   const correctCount = userAnswers.filter(a => a.isCorrect === true).length;
   const allAnswered = userAnswers.every(a => a.selectedAnswer !== null);
-  const isPassed = correctCount === totalQuestions && totalQuestions > 0;
+  const PASS_THRESHOLD = 0.8;
+  const isPassed = totalQuestions > 0 && (correctCount / totalQuestions) >= PASS_THRESHOLD;
 
   const handleSelectOption = useCallback((optionIndex: number) => {
     if (showExplanation) return; // Already answered
@@ -185,7 +186,7 @@ export function ChapterQuizModal({
     } else {
       // Check if all answered correctly for confetti
       const finalCorrect = userAnswers.filter(a => a.isCorrect === true).length;
-      if (finalCorrect === totalQuestions && totalQuestions > 0) {
+      if (totalQuestions > 0 && (finalCorrect / totalQuestions) >= 0.8) {
         setShowConfetti(true);
       }
       setShowResult(true);
@@ -303,13 +304,13 @@ export function ChapterQuizModal({
                   축하합니다!
                 </h3>
                 <p className="text-sm text-[#8b949e] mb-2">
-                  모든 문제를 맞혔습니다
+                  통과 기준(80%) 이상을 달성했습니다
                 </p>
 
                 <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#56d364]/15 rounded-md mb-3">
                   <Sparkles className="h-4 w-4 text-[#56d364]" />
                   <span className="text-lg font-bold text-[#56d364]">
-                    {correctCount} / {totalQuestions}
+                    {correctCount} / {totalQuestions} 정답 ({Math.round((correctCount / totalQuestions) * 100)}% 달성)
                   </span>
                 </div>
 
@@ -340,12 +341,12 @@ export function ChapterQuizModal({
                   아쉽습니다!
                 </h3>
                 <p className="text-sm text-[#8b949e] mb-4">
-                  모든 문제를 맞혀야 완료할 수 있습니다
+                  80% 이상 맞혀야 완료할 수 있습니다
                 </p>
 
                 <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#f85149]/15 rounded-md mb-6">
                   <span className="text-lg font-bold text-[#f85149]">
-                    {correctCount} / {totalQuestions}
+                    {correctCount} / {totalQuestions} 정답 ({Math.round((correctCount / totalQuestions) * 100)}% 달성)
                   </span>
                 </div>
 

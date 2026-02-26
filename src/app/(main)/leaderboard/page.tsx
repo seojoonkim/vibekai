@@ -4,7 +4,7 @@ import { LeaderboardTabs } from "@/components/leaderboard/leaderboard-tabs";
 
 // Disable caching to always fetch fresh data
 export const dynamic = "force-dynamic";
-export const revalidate = 0;
+export const revalidate = 60;
 
 interface LeaderboardUser {
   id: string;

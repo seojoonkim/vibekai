@@ -1,5 +1,7 @@
 "use client";
 
+export const revalidate = 60;
+
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -656,8 +658,13 @@ function QuestionCard({
   const [replyContent, setReplyContent] = useState("");
   const [isSubmittingReply, setIsSubmittingReply] = useState(false);
   const [localReplies, setLocalReplies] = useState(question.replies);
+  const [savedQuestion, setSavedQuestion] = useState(false);
   const replyInputRef = useRef<HTMLInputElement>(null);
   const isOwner = currentUserId === question.user_id;
+
+  const handleQuestionBookmark = () => {
+    setSavedQuestion(prev => !prev);
+  };
 
   // Check if user has liked this question
   useEffect(() => {
@@ -909,8 +916,8 @@ function QuestionCard({
           </button>
         </div>
         <div className="ml-auto">
-          <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium text-[#8b949e] hover:text-[#c9d1d9] hover:bg-[#1c2128] transition-all">
-            <Bookmark className="h-4 w-4" />
+          <button onClick={handleQuestionBookmark} className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium text-[#8b949e] hover:text-[#c9d1d9] hover:bg-[#1c2128] transition-all">
+            <Bookmark className={`h-4 w-4 ${savedQuestion ? "fill-[#f0b429]" : ""}`} />
           </button>
         </div>
       </div>
@@ -1383,7 +1390,12 @@ export default function CommunityPage() {
   const [editingPost, setEditingPost] = useState<Post | null>(null);
   const [currentUserId, setCurrentUserId] = useState<string | null>(null);
   const [currentUserProfile, setCurrentUserProfile] = useState<UserProfile | null>(null);
-  const [savedPostIds, setSavedPostIds] = useState<Set<string>>(new Set());
+  const [savedPostIds, setSavedPostIds] = useState<Set<string>>(() => {
+    try {
+      const stored = localStorage.getItem('vibekai_bookmarks');
+      return stored ? new Set(JSON.parse(stored)) : new Set();
+    } catch { return new Set(); }
+  });
 
   const fetchData = async (useCache = true) => {
     const supabase = createClient();
@@ -1480,6 +1492,7 @@ export default function CommunityPage() {
       } else {
         newSet.add(postId);
       }
+      localStorage.setItem('vibekai_bookmarks', JSON.stringify([...newSet]));
       return newSet;
     });
   };

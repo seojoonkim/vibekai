@@ -55,6 +55,7 @@ export default function LoginPage() {
             <div className="flex items-center gap-3 mb-4">
               <div className="h-[2px] w-10 bg-[#f0b429]" />
               <span className="text-[#f0b429] text-sm font-semibold tracking-[0.2em] drop-shadow-lg">再入場</span>
+              <span className="text-[10px] text-white/50">다시 입장</span>
             </div>
             <h2 className="text-4xl xl:text-5xl font-bold text-white leading-tight mb-4 drop-shadow-lg">
               도장에<br />돌아오셨군요
