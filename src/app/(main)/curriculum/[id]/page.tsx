@@ -31,6 +31,7 @@ import type { Level, Badge as GamificationBadge } from "@/lib/gamification";
 import { Icons } from "@/components/icons";
 import { ChapterQuestionsPanel, TextSelection, Question } from "@/components/chapter-questions-panel";
 import { TextSelectionTooltip } from "@/components/text-selection-tooltip";
+import { TextHighlighter } from "@/components/text-highlighter";
 import { QuestionHighlightOverlay } from "@/components/question-highlight-overlay";
 import { ChapterCompletionForm } from "@/components/chapter-completion-form";
 import { CompletionCelebrationModal } from "@/components/completion-celebration-modal";
@@ -509,7 +510,14 @@ export default function ChapterDetailPage() {
 
     // 3. Post completion to community (with review or default message)
     let postId: string | null = null;
-    const reviewContent = data.review.trim() || `${markdownTitle || chapter.title_ko} 챕터를 완료했습니다! 🎉`;
+    const engagementQuestions = [
+      "이번 챕터에서 가장 인상 깊었던 점은 뭔가요?",
+      "막혔던 부분이 있었다면 어떻게 해결했나요?",
+      "다음 챕터에서 기대되는 것이 있나요?",
+      "이번 내용을 활용해서 만들고 싶은 게 있나요?",
+    ];
+    const randomQuestion = engagementQuestions[Math.floor(Math.random() * engagementQuestions.length)];
+    const reviewContent = data.review.trim() || `${markdownTitle || chapter.title_ko} 챕터를 완료했습니다! 🎉\n\n💬 ${randomQuestion}`;
 
     const { data: postData, error: postError } = await supabase
       .from("posts")
@@ -769,6 +777,9 @@ export default function ChapterDetailPage() {
         containerSelector=".curriculum-content"
         onAskQuestion={handleAskQuestion}
       />
+
+      {/* Text Highlighter + Memo */}
+      <TextHighlighter chapterId={chapterId} containerSelector=".curriculum-content" />
 
       {/* Question Highlight Overlay */}
       {markdownContent && questions.length > 0 && (

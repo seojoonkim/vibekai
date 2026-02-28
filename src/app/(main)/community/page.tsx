@@ -285,6 +285,19 @@ function PostCard({
         // Award XP for writing comment
         await awardXp(supabase, currentUserId, XP_REWARDS.COMMENT_WRITTEN, "comment_created", data.id);
 
+        // Notify post author about the comment
+        if (post.author_id !== currentUserId) {
+          const commenterName = currentUserProfile?.display_name || currentUserProfile?.username || "누군가";
+          supabase.from("notifications").insert({
+            user_id: post.author_id,
+            type: "comment_reply",
+            title_ko: `${commenterName}님이 회원님의 글에 댓글을 달았습니다.`,
+            title_en: `${commenterName} commented on your post.`,
+            data: { postId: post.id, commentId: data.id },
+            is_read: false,
+          }).then(() => {}, () => {});
+        }
+
         const newCommentData: Comment = {
           ...data,
           profiles: {
@@ -513,6 +526,11 @@ function PostCard({
       {/* Comments Section - Unified with card */}
       {hasComments && (
         <div className="bg-[#0a0c10]/40">
+          {parentComments.length === 0 && currentUserId && (
+            <div className="px-5 py-6 text-center">
+              <p className="text-sm text-[#6e7681]">첫 번째 댓글을 달아보세요! 💬</p>
+            </div>
+          )}
           {parentComments.length > 0 && (
             <div className="px-5 py-4 space-y-4">
               {parentComments.map((comment) => (
